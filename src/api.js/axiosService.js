@@ -3,19 +3,19 @@ import axios from "axios";
 export const axiosService = {
   baseURL: "http://138.201.167.230:5050",
 
-  createInstance() {
+  createInstance(contentType = "application/json") {
     return axios.create({
       baseURL: this.baseURL,
       timeout: 10000,
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": contentType,
       },
     });
   },
 
-  async get(url, params = {}) {
+  async get(url, params = {}, contentType = "application/json") {
     try {
-      const instance = this.createInstance();
+      const instance = this.createInstance(contentType);
       const response = await instance.get(url, { params });
       return response.data;
     } catch (error) {
@@ -23,9 +23,9 @@ export const axiosService = {
     }
   },
 
-  async post(url, data = {}) {
+  async post(url, data = {}, contentType = "application/json") {
     try {
-      const instance = this.createInstance();
+      const instance = this.createInstance(contentType);
       const response = await instance.post(url, data);
       return response.data;
     } catch (error) {
@@ -33,9 +33,9 @@ export const axiosService = {
     }
   },
 
-  async put(url, data = {}) {
+  async put(url, data = {}, contentType = "application/json") {
     try {
-      const instance = this.createInstance();
+      const instance = this.createInstance(contentType);
       const response = await instance.put(url, data);
       return response.data;
     } catch (error) {
@@ -43,9 +43,9 @@ export const axiosService = {
     }
   },
 
-  async delete(url) {
+  async delete(url, contentType = "application/json") {
     try {
-      const instance = this.createInstance();
+      const instance = this.createInstance(contentType);
       const response = await instance.delete(url);
       return response.data;
     } catch (error) {
