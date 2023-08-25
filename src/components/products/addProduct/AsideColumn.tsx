@@ -3,25 +3,16 @@ import ProductDetails from "./ProductDetails";
 
 const AsideColumn = ({ setProductCategoryId, productCategoryId }: any) => {
   return (
-    <div className="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 mx-5">
-      {/* <!--begin::Thumbnail settings--> */}
-      {/* <div className="card card-flush py-4">
+    <div className="mx-5 d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7">
+      <div className="py-4 card card-flush">
         <div className="card-header">
           <div className="card-title">
             <h2>Thumbnail</h2>
           </div>
         </div>
-        <div className="card-body text-center pt-0">
-           <style>
-              .image-input-placeholder {
-                backgroundImage: url("assets/media/svg/files/blank-image.svg");
-              }
-              [data-bs-theme="dark"] .image-input-placeholder {
-                backgroundImage: url("assets/media/svg/files/blank-image-dark.svg");
-              }
-            </style> 
+        <div className="pt-0 text-center card-body">
           <div
-            className="image-input image-input-empty image-input-outline image-input-placeholder mb-3"
+            className="mb-3 image-input image-input-empty image-input-outline image-input-placeholder"
             data-kt-image-input="true"
             style={{
               backgroundImage: "url(/blank-image.svg)",
@@ -29,7 +20,7 @@ const AsideColumn = ({ setProductCategoryId, productCategoryId }: any) => {
           >
             <div className="image-input-wrapper w-150px h-150px"></div>
             <label
-              className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+              className="shadow btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body"
               data-kt-image-input-action="change"
               data-bs-toggle="tooltip"
               title="Change avatar"
@@ -39,7 +30,7 @@ const AsideColumn = ({ setProductCategoryId, productCategoryId }: any) => {
               <input type="hidden" name="avatar_remove" />
             </label>
             <span
-              className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+              className="shadow btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body"
               data-kt-image-input-action="cancel"
               data-bs-toggle="tooltip"
               title="Cancel avatar"
@@ -47,7 +38,7 @@ const AsideColumn = ({ setProductCategoryId, productCategoryId }: any) => {
               <i className="ki-outline ki-cross fs-2"></i>
             </span>
             <span
-              className="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+              className="shadow btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body"
               data-kt-image-input-action="remove"
               data-bs-toggle="tooltip"
               title="Remove avatar"
@@ -60,7 +51,7 @@ const AsideColumn = ({ setProductCategoryId, productCategoryId }: any) => {
             files are accepted
           </div>
         </div>
-      </div> */}
+      </div>
       <ProductDetails setProductCategoryId={setProductCategoryId} />
     </div>
   );

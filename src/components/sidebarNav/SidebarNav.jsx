@@ -15,7 +15,7 @@ const SidebarNav = () => {
           id="kt_app_sidebar_logo"
         >
           {/* <!--begin::Logo image--> */}
-          <a href="../../demo23/dist/index.html">
+          <a href="/">
             <Image
               width={150}
               height={150}

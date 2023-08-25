@@ -13,7 +13,7 @@ const UserMenuButton = () => {
         data-kt-menu-attach="parent"
         data-kt-menu-placement="bottom-end"
       >
-        <img src="300-2.jpg" alt="user" />
+        <img src="/300-2.jpg" alt="user" />
         <div className="absolute rounded-circle bg-success start-100 top-100 h-8px w-8px ms-n3 mt-n3"></div>
       </button>
 

@@ -38,7 +38,7 @@ const MainColumn = ({
               setShortDescription={setShortDescription}
               shortDescription={shortDescription}
             />
-            {/* <MediaSection /> */}
+            <MediaSection />
             <PricingSection
               discountType={discountType}
               setDiscountType={setDiscountType}
@@ -57,7 +57,7 @@ const MainColumn = ({
           <span className="indicator-label">ثبت</span>
           <span className="indicator-progress">
             Please wait...
-            <span className="spinner-border spinner-border-sm align-middle ms-2"></span>
+            <span className="align-middle spinner-border spinner-border-sm ms-2"></span>
           </span>
         </button>
         <a

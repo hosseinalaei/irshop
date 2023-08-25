@@ -8,7 +8,7 @@ const Logo = () => {
         width={150}
         height={150}
         alt="Logo"
-        src="demo23.svg"
+        src="/demo23.svg"
         className="h-20px h-lg-25px theme-light-show"
       />
     </a>

@@ -1,51 +1,125 @@
-import React from "react";
+import React, { useRef } from "react";
+import axios from "axios";
+import useFileUpload from "react-use-file-upload";
 
 const MediaSection = () => {
+  const {
+    files,
+    fileNames,
+    fileTypes,
+    totalSize,
+    totalSizeInBytes,
+    handleDragDropEvent,
+    clearAllFiles,
+    createFormData,
+    setFiles,
+    removeFile,
+  } = useFileUpload();
+
+  const inputRef = useRef();
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    const formData = createFormData();
+
+    // try {
+    //   axios.post("https://some-api.com", formData, {
+    //     "content-type": "multipart/form-data",
+    //   });
+    // } catch (error) {
+    //   console.error("Failed to submit files.");
+    // }
+  };
+
   return (
-    <>
-      {/* <!--begin::Media--> */}
-      <div className="card card-flush py-4">
-        {/* <!--begin::Card header--> */}
-        <div className="card-header">
-          <div className="card-title">
-            <h2>Media</h2>
-          </div>
+    <div className="py-4 card card-flush">
+      <div className="card-header">
+        <div className="card-title">
+          <h2>تصاویر</h2>
         </div>
-        {/* <!--end::Card header--> */}
-        {/* <!--begin::Card body--> */}
-        <div className="card-body pt-0">
-          {/* <!--begin::Input group--> */}
-          <div className="fv-row mb-2">
-            {/* <!--begin::Dropzone--> */}
-            <div className="dropzone" id="kt_ecommerce_add_product_media">
-              {/* <!--begin::Message--> */}
-              <div className="dz-message needsclick">
-                {/* <!--begin::Icon--> */}
-                <i className="ki-outline ki-file-up text-primary fs-3x"></i>
-                {/* <!--end::Icon--> */}
-                {/* <!--begin::Info--> */}
-                <div className="ms-4">
-                  <h3 className="fs-5 fw-bold text-gray-900 mb-1">
-                    Drop files here or click to upload.
-                  </h3>
-                  <span className="fs-7 fw-semibold text-gray-400">
-                    Upload up to 10 files
-                  </span>
-                </div>
-                {/* <!--end::Info--> */}
-              </div>
-            </div>
-            {/* <!--end::Dropzone--> */}
-          </div>
-          {/* <!--end::Input group--> */}
-          {/* <!--begin::Description--> */}
-          <div className="text-muted fs-7">Set the product media gallery.</div>
-          {/* <!--end::Description--> */}
-        </div>
-        {/* <!--end::Card header--> */}
       </div>
-      {/* <!--end::Media--> */}
-    </>
+      <div className="pt-0 card-body">
+        <div className="mb-2 fv-row">
+          <p>تصاویر محصول را انتخاب کنید</p>
+
+          <div className="form-container">
+            {/* Provide a drop zone and an alternative button inside it to upload files. */}
+            <div
+              className="flex flex-col items-center justify-center py-5 border border-2 border-dashed"
+              onDragEnter={(e: any) => handleDragDropEvent(e)}
+              onDragOver={(e: any) => handleDragDropEvent(e)}
+              onDrop={(e: any) => {
+                handleDragDropEvent(e);
+                setFiles(e, "a");
+              }}
+            >
+              <p>فایل را بکشید...</p>
+
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+
+                  inputRef.current?.click();
+                }}
+                className="px-4 py-2 text-white bg-blue-300 rounded-lg hover:bg-blue-400"
+              >
+                آپلود فایل
+              </button>
+
+              {/* Hide the crappy looking default HTML input */}
+              <input
+                ref={inputRef}
+                type="file"
+                multiple
+                style={{ display: "none" }}
+                onChange={(e) => {
+                  setFiles(e, "a");
+                  inputRef.current.value = null;
+                  handleSubmit(e);
+                }}
+              />
+            </div>
+            {/* Display the files to be uploaded */}
+            <div>
+              <ul>
+                {fileNames.map((name) => (
+                  <li key={name}>
+                    <span>
+                      {name?.length > 10
+                        ? "..." + name?.substring(0, 10)
+                        : name}
+                    </span>
+
+                    <span onClick={() => removeFile(name)}>
+                      <i className="fa fa-times" />
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              {files.length > 0 && (
+                <ul>
+                  {/* <li>File types found: {fileTypes.join(", ")}</li> */}
+                  {/* <li>Total Size: {totalSize}</li> */}
+                  {/* <li>Total Bytes: {totalSizeInBytes}</li> */}
+
+                  <li className="clear-all">
+                    <button onClick={() => clearAllFiles()}>
+                      پاک کردن همه
+                    </button>
+                  </li>
+                </ul>
+              )}
+            </div>
+          </div>
+
+          {/* <div className="submit">
+            <button onClick={handleSubmit}>Submit</button>
+          </div> */}
+        </div>
+      </div>
+    </div>
   );
 };
 
