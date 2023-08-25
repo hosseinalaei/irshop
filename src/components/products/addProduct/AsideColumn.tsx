@@ -1,7 +1,13 @@
 import React from "react";
 import ProductDetails from "./ProductDetails";
+import ProductStatus from "./ProductStatus";
 
-const AsideColumn = ({ setProductCategoryId, productCategoryId }: any) => {
+const AsideColumn = ({
+  setProductCategoryId,
+  productCategoryId,
+  productStatus,
+  setProductStatus,
+}: any) => {
   return (
     <div className="mx-5 d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7">
       <div className="py-4 card card-flush">
@@ -53,6 +59,10 @@ const AsideColumn = ({ setProductCategoryId, productCategoryId }: any) => {
         </div>
       </div>
       <ProductDetails setProductCategoryId={setProductCategoryId} />
+      <ProductStatus
+        productStatus={productStatus}
+        setProductStatus={setProductStatus}
+      />
     </div>
   );
 };

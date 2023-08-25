@@ -12,6 +12,9 @@ import { useRouter, usePathname } from "next/navigation";
 import Login from "@/components/login/Login";
 import { useLocation, useNavigate } from "react-router-dom";
 import SidebarMenu from "@/components/sidebarNav/SidebarMenu";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import MobileMenu from "@/components/mobileMenu/MobileMenu";
+import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -40,7 +43,7 @@ export default function RootLayout({
   };
 
   const [authenticated, setAuthenticated] = useState(
-    Boolean(localStorage.getItem("token")) || true
+    localStorage.getItem("token") || true
   );
 
   const router = useRouter();
@@ -57,15 +60,38 @@ export default function RootLayout({
     // !localStorage?.getItem("token") && router.push("/login");
   }, []);
 
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+
   return (
     <html lang="en" dir="rtl">
       <body style={{ fontFamily: "yekan" }} className="h-screen">
         {authenticated ? (
           <div className="flex w-full h-screen">
-            <div className="sticky top-0 w-1/4 h-screen py-10 mr-10">
+            <div className="sticky top-0 hidden w-1/4 h-screen py-10 mr-10 lg:block">
               {/* <SidebarNav /> */}
               <SidebarMenu />
             </div>
+            <div
+              className="absolute top-0 right-0 z-20 m-5 lg:hidden"
+              onClick={() => setShowMobileMenu(true)}
+            >
+              <FontAwesomeIcon icon={faBars} size="xl" />
+            </div>
+            {showMobileMenu && (
+              <div className="absolute top-0 z-20 w-1/4 h-screen py-10 bg-white lg:hidden">
+                {/* <SidebarNav /> */}
+                <div className="absolute top-3 left-3">
+                  <FontAwesomeIcon
+                    icon={faXmark}
+                    width={"20px"}
+                    size="xl"
+                    onClick={() => setShowMobileMenu(false)}
+                  />
+                </div>
+                <MobileMenu />
+              </div>
+            )}
+
             <div className="w-full h-screen py-10 mx-10 overflow-scroll">
               {/* <Menu /> */}
               {children}

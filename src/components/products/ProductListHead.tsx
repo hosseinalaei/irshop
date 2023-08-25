@@ -17,7 +17,7 @@ const ProductListHead = () => {
         </th>
         <th className="min-w-250px">دسته‌بندی</th>
         <th className="min-w-150px">نوع</th>
-        <th className="text-end min-w-70px">Actions</th>
+        <th className="text-end min-w-70px"></th>
       </tr>
     </thead>
   );

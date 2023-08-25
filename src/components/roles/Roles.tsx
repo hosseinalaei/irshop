@@ -44,12 +44,12 @@ const Roles = () => {
                 </div>
               </div>
               <div className="flex-wrap pt-0 card-footer">
-                <a
+                {/* <a
                   href="../../demo23/dist/apps/user-management/roles/view.html"
                   className="my-1 btn btn-light btn-active-primary me-2"
                 >
                   View Role
-                </a>
+                </a> */}
                 <button
                   type="button"
                   className="my-1 btn btn-light btn-active-light-primary"

@@ -12,6 +12,7 @@ const AddProduct = () => {
   const [productPrice, setProductPrice] = useState("");
   const [discountType, setDiscountType] = useState("");
   const [productCategoryId, setProductCategoryId] = useState("");
+  const [productStatus, setProductStatus] = useState("");
 
   const submitProduct = (e: any) => {
     e.preventDefault();
@@ -22,6 +23,7 @@ const AddProduct = () => {
       requestBody.append("description", productDescription);
       requestBody.append("price", productPrice);
       requestBody.append("ProductCategoryId", productCategoryId);
+      requestBody.append("IsExists", productStatus);
 
       axiosService
         .post(
@@ -35,40 +37,34 @@ const AddProduct = () => {
 
   return (
     <div className="d-flex flex-column flex-column-fluid">
-      <div id="kt_app_toolbar" className="app-toolbar py-3 py-lg-0">
-        <div
-          id="kt_app_toolbar_container"
-          className="app-container container-xxl d-flex flex-stack"
-        >
+      <div className="py-3 app-toolbar py-lg-0">
+        <div className="app-container container-xxl d-flex flex-stack">
           <div className="page-title d-flex flex-column justify-content-center me-3">
-            <h1 className="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
+            <h1 className="my-0 page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center">
               محصول جدید
             </h1>
 
-            <ul className="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+            <ul className="pt-1 my-0 breadcrumb breadcrumb-separatorless fw-semibold fs-7">
               <li className="breadcrumb-item text-muted">
-                <a
-                  href="../../demo23/dist/index.html"
-                  className="text-muted text-hover-primary"
-                >
+                <a href="/" className="text-muted text-hover-primary">
                   صفحه اصلی
                 </a>
               </li>
 
               <li className="breadcrumb-item">
-                <span className="bullet bg-gray-400 w-5px h-2px"></span>
+                <span className="bg-gray-400 bullet w-5px h-2px"></span>
               </li>
 
               <li className="breadcrumb-item text-muted">محصولات</li>
 
               <li className="breadcrumb-item">
-                <span className="bullet bg-gray-400 w-5px h-2px"></span>
+                <span className="bg-gray-400 bullet w-5px h-2px"></span>
               </li>
 
               <li className="breadcrumb-item text-muted">محصول جدید</li>
             </ul>
           </div>
-          {/* <div className="d-flex align-items-center gap-2 gap-lg-3">
+          {/* <div className="gap-2 d-flex align-items-center gap-lg-3">
             <div className="m-0">
               <a
                 href="#"
@@ -85,12 +81,12 @@ const AddProduct = () => {
                 data-kt-menu="true"
                 id="kt_menu_641ac9b4d0b04"
               >
-                <div className="px-7 py-5">
+                <div className="py-5 px-7">
                   <div className="fs-5 text-dark fw-bold">Filter Options</div>
                 </div>
-                <div className="separator border-gray-200"></div>
+                <div className="border-gray-200 separator"></div>
 
-                <div className="px-7 py-5">
+                <div className="py-5 px-7">
                   <div className="mb-10">
                     <label className="form-label fw-semibold">Status:</label>
 
@@ -185,15 +181,14 @@ const AddProduct = () => {
           </div> */}
         </div>
       </div>
-      <div id="kt_app_content" className="app-content flex-column-fluid">
-        <div
-          id="kt_app_content_container"
-          className="app-container container-xxl"
-        >
+      <div className="app-content flex-column-fluid">
+        <div className="">
           <form className="form d-flex flex-column flex-lg-row">
             <AsideColumn
               setProductCategoryId={setProductCategoryId}
               productCategoryId={productCategoryId}
+              setProductStatus={setProductStatus}
+              productStatus={productStatus}
             />
             <MainColumn
               productDetails={productDetails}

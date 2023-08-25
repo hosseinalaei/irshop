@@ -47,43 +47,18 @@ const ProductsListItem = () => {
         {/* <!--end::Badges--> */}
       </td>
       <td className="text-end">
-        <a
-          href="#"
-          className="btn btn-sm btn-light btn-active-light-primary btn-flex btn-center"
-          data-kt-menu-trigger="click"
-          data-kt-menu-placement="bottom-end"
-        >
-          Actions
-          <i className="ki-outline ki-down fs-5 ms-1"></i>
-        </a>
-        {/* <!--begin::Menu--> */}
-        <div
-          className="py-4 menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px"
-          data-kt-menu="true"
-        >
-          {/* <!--begin::Menu item--> */}
-          <div className="px-3 menu-item">
-            <a
-              href="../../demo23/dist/apps/ecommerce/catalog/add-category.html"
-              className="px-3 menu-link"
-            >
+        <div className="flex ">
+          <div className="px-3">
+            <a href="/products/add-product" className="">
               Edit
             </a>
           </div>
-          {/* <!--end::Menu item--> */}
-          {/* <!--begin::Menu item--> */}
-          <div className="px-3 menu-item">
-            <a
-              href="#"
-              className="px-3 menu-link"
-              data-kt-ecommerce-category-filter="delete_row"
-            >
+          <div className="px-3 ">
+            <a href="#" className="">
               Delete
             </a>
           </div>
-          {/* <!--end::Menu item--> */}
         </div>
-        {/* <!--end::Menu--> */}
       </td>
     </tr>
   );
