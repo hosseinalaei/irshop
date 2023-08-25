@@ -11,6 +11,7 @@ import { useRef, useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Login from "@/components/login/Login";
 import { useLocation, useNavigate } from "react-router-dom";
+import SidebarMenu from "@/components/sidebarNav/SidebarMenu";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -62,7 +63,8 @@ export default function RootLayout({
         {authenticated ? (
           <div className="flex w-full h-screen">
             <div className="sticky top-0 w-1/4 h-screen py-10 mr-10">
-              <SidebarNav />
+              {/* <SidebarNav /> */}
+              <SidebarMenu />
             </div>
             <div className="w-full h-screen py-10 mx-10 overflow-scroll">
               {/* <Menu /> */}
