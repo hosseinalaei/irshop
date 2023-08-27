@@ -1,6 +1,10 @@
+import { axiosService } from "@/api.js/axiosService";
 import React from "react";
 
-const ProductsListItem = () => {
+const ProductsListItem = ({ productName, shortDescription, price }: any) => {
+  // const getPic = () => {
+  //   axiosService.get("/Get/GetMedia")
+  // }
   return (
     <tr>
       <td>
@@ -30,20 +34,18 @@ const ProductsListItem = () => {
               className="mb-1 text-gray-800 text-hover-primary fs-5 fw-bold"
               data-kt-ecommerce-category-filter="category_name"
             >
-              Computers
+              {productName}
             </a>
             {/* <!--end::Title--> */}
             {/* <!--begin::Description--> */}
-            <div className="text-muted fs-7 fw-bold">
-              Our computers and tablets include all the big brands.
-            </div>
+            <div className="text-muted fs-7 fw-bold">{shortDescription}</div>
             {/* <!--end::Description--> */}
           </div>
         </div>
       </td>
       <td>
         {/* <!--begin::Badges--> */}
-        <div className="badge badge-light-success">Automated</div>
+        <div className="badge badge-light-success">{price}</div>
         {/* <!--end::Badges--> */}
       </td>
       <td className="text-end">

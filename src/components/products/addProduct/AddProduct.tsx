@@ -13,17 +13,42 @@ const AddProduct = () => {
   const [discountType, setDiscountType] = useState("");
   const [productCategoryId, setProductCategoryId] = useState("");
   const [productStatus, setProductStatus] = useState("");
+  const [productPolicy, setProductPolicy] = useState("");
+  const [originImage, setOriginImage] = useState("");
+  const [productGallery, setProductGallery] = useState("");
+  // const [productColor, setProductColor] = useState({
+  //   colorName: "",
+  //   colorCode: "",
+  //   price: "",
+  // });
+  const [colorName, setColorName] = useState("");
+  const [colorCode, setColorCode] = useState("");
+  const [colorPrice, setColorPrice] = useState("");
+  // console.log("productColorproductColor", productColor);
 
   const submitProduct = (e: any) => {
+    console.log("qqqqqqqqqqqq");
     e.preventDefault();
     if (productName && productDescription) {
       const requestBody = new FormData();
-      requestBody.append("ProductName", productName);
-      requestBody.append("ShortDescription", shortDescription);
-      requestBody.append("description", productDescription);
-      requestBody.append("price", productPrice);
-      requestBody.append("ProductCategoryId", productCategoryId);
-      requestBody.append("IsExists", productStatus);
+      productName && requestBody.append("ProductName", productName);
+      shortDescription &&
+        requestBody.append("ShortDescription", shortDescription);
+      productDescription &&
+        requestBody.append("description", productDescription);
+      productPrice && requestBody.append("price", productPrice);
+      productCategoryId &&
+        requestBody.append("ProductCategoryId", productCategoryId);
+      productStatus && requestBody.append("IsExists", productStatus);
+      // requestBody.append("productOriginImage", originImage);
+      // requestBody.append("ProductGalleries", productGallery);
+      // requestBody.append("ProductColor", [
+      //   {
+      //     colorName: productColor.colorName,
+      //     colorCode: productColor.colorCode,
+      //     price: productColor.price,
+      //   },
+      // ]);
 
       axiosService
         .post(
@@ -189,6 +214,9 @@ const AddProduct = () => {
               productCategoryId={productCategoryId}
               setProductStatus={setProductStatus}
               productStatus={productStatus}
+              setOriginImage={setOriginImage}
+              setProductPolicy={setProductPolicy}
+              productPolicy={productPolicy}
             />
             <MainColumn
               productDetails={productDetails}
@@ -197,13 +225,24 @@ const AddProduct = () => {
               setProductName={setProductName}
               productDescription={productDescription}
               setProductDescription={setProductDescription}
-              submitProduct={(e: any) => submitProduct(e)}
+              submitProduct={(e: any) => {
+                submitProduct(e);
+              }}
               setShortDescription={setShortDescription}
               shortDescription={shortDescription}
               discountType={discountType}
               setDiscountType={setDiscountType}
               productPrice={productPrice}
               setProductPrice={setProductPrice}
+              // productColor={productColor}
+              // setProductColor={setProductColor}
+              colorName={colorName}
+              setColorName={setColorName}
+              colorPrice={colorPrice}
+              setColorPrice={setColorPrice}
+              colorCode={colorCode}
+              setColorCode={setColorCode}
+              setProductGallery={setProductGallery}
             />
           </form>
         </div>

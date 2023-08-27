@@ -25,7 +25,7 @@ const SidebarMenu = () => {
         >
           <Logo />
 
-          <UserMenu />
+          {/* <UserMenu /> */}
         </div>
 
         <div className="text-xl">

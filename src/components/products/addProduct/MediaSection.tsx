@@ -1,8 +1,8 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import axios from "axios";
 import useFileUpload from "react-use-file-upload";
 
-const MediaSection = () => {
+const MediaSection = ({ setProductGallery }: any) => {
   const {
     files,
     fileNames,
@@ -31,6 +31,10 @@ const MediaSection = () => {
     //   console.error("Failed to submit files.");
     // }
   };
+
+  useEffect(() => {
+    setProductGallery(files);
+  }, [files, setProductGallery]);
 
   return (
     <div className="py-4 card card-flush">
@@ -113,10 +117,6 @@ const MediaSection = () => {
               )}
             </div>
           </div>
-
-          {/* <div className="submit">
-            <button onClick={handleSubmit}>Submit</button>
-          </div> */}
         </div>
       </div>
     </div>

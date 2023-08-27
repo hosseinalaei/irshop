@@ -64,7 +64,7 @@ export default function RootLayout({
 
   return (
     <html lang="en" dir="rtl">
-      <body style={{ fontFamily: "yekan" }} className="h-screen">
+      <body style={{ fontFamily: "yekan" }} className="h-screen ">
         {authenticated ? (
           <div className="flex w-full h-screen">
             <div className="sticky top-0 hidden w-1/4 h-screen py-10 mr-10 lg:block">
