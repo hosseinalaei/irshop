@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useFileUpload } from "react-use-file-upload/dist/lib/useFileUpload";
 
 const OriginImageProduct = ({ setOriginImage }) => {
@@ -22,8 +22,13 @@ const OriginImageProduct = ({ setOriginImage }) => {
 
     const formData = createFormData();
 
-    setOriginImage(files);
+    // setOriginImage(files);
   };
+
+  useEffect(() => {
+    console.log("filesfilesfilesfilesfiles", files);
+    files && setOriginImage(files);
+  }, [files]);
 
   return (
     <>

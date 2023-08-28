@@ -24,13 +24,8 @@ const ProductsList = () => {
       >
         <ProductListHead />
         <tbody className="text-gray-600 fw-semibold">
-          {products?.map((item) => (
-            <ProductsListItem
-              key={item?.id}
-              productName={item?.productName}
-              shortDescription={item?.shortDescription}
-              price={item?.price}
-            />
+          {products?.map((item, index) => (
+            <ProductsListItem key={index} product={item} />
           ))}
           {/* <ProductsListItem />
           <ProductsListItem />

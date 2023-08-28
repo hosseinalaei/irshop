@@ -1,10 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MainColumn from "./MainColumn";
 import { axiosService } from "@/api.js/axiosService";
 import AsideColumn from "./AsideColumn";
+import { useParams, useRouter } from "next/navigation";
 
-const AddProduct = () => {
+const AddProduct = ({ id }: any) => {
   const [productDetails, setProductDetails] = React.useState({});
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
@@ -16,18 +17,12 @@ const AddProduct = () => {
   const [productPolicy, setProductPolicy] = useState("");
   const [originImage, setOriginImage] = useState("");
   const [productGallery, setProductGallery] = useState("");
-  // const [productColor, setProductColor] = useState({
-  //   colorName: "",
-  //   colorCode: "",
-  //   price: "",
-  // });
   const [colorName, setColorName] = useState("");
   const [colorCode, setColorCode] = useState("");
   const [colorPrice, setColorPrice] = useState("");
   // console.log("productColorproductColor", productColor);
 
   const submitProduct = (e: any) => {
-    console.log("qqqqqqqqqqqq");
     e.preventDefault();
     if (productName && productDescription) {
       const requestBody = new FormData();
@@ -40,7 +35,8 @@ const AddProduct = () => {
       productCategoryId &&
         requestBody.append("ProductCategoryId", productCategoryId);
       productStatus && requestBody.append("IsExists", productStatus);
-      // requestBody.append("productOriginImage", originImage);
+
+      requestBody.append("productOriginImage", originImage);
       // requestBody.append("ProductGalleries", productGallery);
       // requestBody.append("ProductColor", [
       //   {
@@ -59,6 +55,16 @@ const AddProduct = () => {
         .then((res) => console.log(res));
     }
   };
+
+  const getProductForEdit = () => {
+    axiosService
+      .get(`/AdminProducts/get-product-for-edit/${id}`)
+      .then((res) => console.log("getProductForEditgetProductForEdit", res));
+  };
+
+  useEffect(() => {
+    id && getProductForEdit();
+  }, [id]);
 
   return (
     <div className="d-flex flex-column flex-column-fluid">

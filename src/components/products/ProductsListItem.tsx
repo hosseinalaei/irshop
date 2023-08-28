@@ -1,10 +1,32 @@
 import { axiosService } from "@/api.js/axiosService";
-import React from "react";
+import Link from "next/link";
+import React, { useState } from "react";
 
-const ProductsListItem = ({ productName, shortDescription, price }: any) => {
-  // const getPic = () => {
-  //   axiosService.get("/Get/GetMedia")
-  // }
+const ProductsListItem = ({
+  product,
+}: // productName,
+// shortDescription,
+// price,
+// id,
+any) => {
+  const [img, setImg] = useState();
+
+  const getPic = () => {
+    const body = {
+      id: product?.id,
+      mediaFieldName: "productImageName",
+    };
+    axiosService
+      .post("/Get/GetMedia", body)
+      .then((res) => {
+        setImg(res?.data?.result);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  React.useEffect(() => {
+    getPic();
+  }, []);
   return (
     <tr>
       <td>
@@ -15,16 +37,14 @@ const ProductsListItem = ({ productName, shortDescription, price }: any) => {
       <td>
         <div className="d-flex">
           {/* <!--begin::Thumbnail--> */}
-          <a
-            href="../../demo23/dist/apps/ecommerce/catalog/edit-category.html"
-            className="symbol symbol-50px"
-          >
-            <span
+          <a href="#" className="symbol symbol-50px">
+            {/* <span
               className="symbol-label"
               style={{
                 backgroundImage: "url(68.gif)",
               }}
-            ></span>
+            ></span> */}
+            <img src={`data:image/jpeg;base64,${img}`} alt="" />
           </a>
           {/* <!--end::Thumbnail--> */}
           <div className="ms-5">
@@ -34,30 +54,38 @@ const ProductsListItem = ({ productName, shortDescription, price }: any) => {
               className="mb-1 text-gray-800 text-hover-primary fs-5 fw-bold"
               data-kt-ecommerce-category-filter="category_name"
             >
-              {productName}
+              {product?.productName}
             </a>
             {/* <!--end::Title--> */}
             {/* <!--begin::Description--> */}
-            <div className="text-muted fs-7 fw-bold">{shortDescription}</div>
+            <div className="text-muted fs-7 fw-bold">
+              {product?.shortDescription}
+            </div>
             {/* <!--end::Description--> */}
           </div>
         </div>
       </td>
       <td>
         {/* <!--begin::Badges--> */}
-        <div className="badge badge-light-success">{price}</div>
+        <div className="badge badge-light-success">{product?.price}</div>
         {/* <!--end::Badges--> */}
       </td>
       <td className="text-end">
         <div className="flex ">
           <div className="px-3">
-            <a href="/products/add-product" className="">
-              Edit
-            </a>
+            <Link
+              href={{
+                pathname: `/products/editProduct/${product?.id}`,
+              }}
+            >
+              {/* <a href="/products/add-product" className=""> */}
+              ویرایش
+              {/* </a> */}
+            </Link>
           </div>
           <div className="px-3 ">
             <a href="#" className="">
-              Delete
+              حذف
             </a>
           </div>
         </div>
