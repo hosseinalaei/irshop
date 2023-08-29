@@ -1,10 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MainColumn from "./MainColumn";
 import { axiosService } from "@/api.js/axiosService";
 import AsideColumn from "./AsideColumn";
+import { useParams, useRouter } from "next/navigation";
 
-const AddProduct = () => {
+const AddProduct = ({ id }: any) => {
   const [productDetails, setProductDetails] = React.useState({});
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
@@ -12,16 +13,38 @@ const AddProduct = () => {
   const [productPrice, setProductPrice] = useState("");
   const [discountType, setDiscountType] = useState("");
   const [productCategoryId, setProductCategoryId] = useState("");
+  const [productStatus, setProductStatus] = useState("");
+  const [productPolicy, setProductPolicy] = useState("");
+  const [originImage, setOriginImage] = useState("");
+  const [productGallery, setProductGallery] = useState("");
+  const [colorName, setColorName] = useState("");
+  const [colorCode, setColorCode] = useState("");
+  const [colorPrice, setColorPrice] = useState("");
+  // console.log("productColorproductColor", productColor);
 
   const submitProduct = (e: any) => {
     e.preventDefault();
     if (productName && productDescription) {
       const requestBody = new FormData();
-      requestBody.append("ProductName", productName);
-      requestBody.append("ShortDescription", shortDescription);
-      requestBody.append("description", productDescription);
-      requestBody.append("price", productPrice);
-      requestBody.append("ProductCategoryId", productCategoryId);
+      productName && requestBody.append("ProductName", productName);
+      shortDescription &&
+        requestBody.append("ShortDescription", shortDescription);
+      productDescription &&
+        requestBody.append("description", productDescription);
+      productPrice && requestBody.append("price", productPrice);
+      productCategoryId &&
+        requestBody.append("ProductCategoryId", productCategoryId);
+      productStatus && requestBody.append("IsExists", productStatus);
+
+      requestBody.append("productOriginImage", originImage);
+      // requestBody.append("ProductGalleries", productGallery);
+      // requestBody.append("ProductColor", [
+      //   {
+      //     colorName: productColor.colorName,
+      //     colorCode: productColor.colorCode,
+      //     price: productColor.price,
+      //   },
+      // ]);
 
       axiosService
         .post(
@@ -33,42 +56,46 @@ const AddProduct = () => {
     }
   };
 
+  const getProductForEdit = () => {
+    axiosService
+      .get(`/AdminProducts/get-product-for-edit/${id}`)
+      .then((res) => console.log("getProductForEditgetProductForEdit", res));
+  };
+
+  useEffect(() => {
+    id && getProductForEdit();
+  }, [id]);
+
   return (
     <div className="d-flex flex-column flex-column-fluid">
-      <div id="kt_app_toolbar" className="app-toolbar py-3 py-lg-0">
-        <div
-          id="kt_app_toolbar_container"
-          className="app-container container-xxl d-flex flex-stack"
-        >
+      <div className="py-3 app-toolbar py-lg-0">
+        <div className="app-container container-xxl d-flex flex-stack">
           <div className="page-title d-flex flex-column justify-content-center me-3">
-            <h1 className="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
+            <h1 className="my-0 page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center">
               محصول جدید
             </h1>
 
-            <ul className="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+            <ul className="pt-1 my-0 breadcrumb breadcrumb-separatorless fw-semibold fs-7">
               <li className="breadcrumb-item text-muted">
-                <a
-                  href="../../demo23/dist/index.html"
-                  className="text-muted text-hover-primary"
-                >
+                <a href="/" className="text-muted text-hover-primary">
                   صفحه اصلی
                 </a>
               </li>
 
               <li className="breadcrumb-item">
-                <span className="bullet bg-gray-400 w-5px h-2px"></span>
+                <span className="bg-gray-400 bullet w-5px h-2px"></span>
               </li>
 
               <li className="breadcrumb-item text-muted">محصولات</li>
 
               <li className="breadcrumb-item">
-                <span className="bullet bg-gray-400 w-5px h-2px"></span>
+                <span className="bg-gray-400 bullet w-5px h-2px"></span>
               </li>
 
               <li className="breadcrumb-item text-muted">محصول جدید</li>
             </ul>
           </div>
-          {/* <div className="d-flex align-items-center gap-2 gap-lg-3">
+          {/* <div className="gap-2 d-flex align-items-center gap-lg-3">
             <div className="m-0">
               <a
                 href="#"
@@ -85,12 +112,12 @@ const AddProduct = () => {
                 data-kt-menu="true"
                 id="kt_menu_641ac9b4d0b04"
               >
-                <div className="px-7 py-5">
+                <div className="py-5 px-7">
                   <div className="fs-5 text-dark fw-bold">Filter Options</div>
                 </div>
-                <div className="separator border-gray-200"></div>
+                <div className="border-gray-200 separator"></div>
 
-                <div className="px-7 py-5">
+                <div className="py-5 px-7">
                   <div className="mb-10">
                     <label className="form-label fw-semibold">Status:</label>
 
@@ -185,15 +212,17 @@ const AddProduct = () => {
           </div> */}
         </div>
       </div>
-      <div id="kt_app_content" className="app-content flex-column-fluid">
-        <div
-          id="kt_app_content_container"
-          className="app-container container-xxl"
-        >
+      <div className="app-content flex-column-fluid">
+        <div className="">
           <form className="form d-flex flex-column flex-lg-row">
             <AsideColumn
               setProductCategoryId={setProductCategoryId}
               productCategoryId={productCategoryId}
+              setProductStatus={setProductStatus}
+              productStatus={productStatus}
+              setOriginImage={setOriginImage}
+              setProductPolicy={setProductPolicy}
+              productPolicy={productPolicy}
             />
             <MainColumn
               productDetails={productDetails}
@@ -202,13 +231,24 @@ const AddProduct = () => {
               setProductName={setProductName}
               productDescription={productDescription}
               setProductDescription={setProductDescription}
-              submitProduct={(e: any) => submitProduct(e)}
+              submitProduct={(e: any) => {
+                submitProduct(e);
+              }}
               setShortDescription={setShortDescription}
               shortDescription={shortDescription}
               discountType={discountType}
               setDiscountType={setDiscountType}
               productPrice={productPrice}
               setProductPrice={setProductPrice}
+              // productColor={productColor}
+              // setProductColor={setProductColor}
+              colorName={colorName}
+              setColorName={setColorName}
+              colorPrice={colorPrice}
+              setColorPrice={setColorPrice}
+              colorCode={colorCode}
+              setColorCode={setColorCode}
+              setProductGallery={setProductGallery}
             />
           </form>
         </div>

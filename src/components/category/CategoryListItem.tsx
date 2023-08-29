@@ -1,6 +1,6 @@
 import React from "react";
 
-const CategoryListItem = () => {
+const CategoryListItem = ({ title, urlTitle }: any) => {
   return (
     <>
       <tr>
@@ -31,22 +31,20 @@ const CategoryListItem = () => {
                 className="mb-1 text-gray-800 text-hover-primary fs-5 fw-bold"
                 data-kt-ecommerce-category-filter="category_name"
               >
-                Computers
+                {title}
               </a>
               {/* <!--end::Title--> */}
               {/* <!--begin::Description--> */}
-              <div className="text-muted fs-7 fw-bold">
-                Our computers and tablets include all the big brands.
-              </div>
+              <div className="text-muted fs-7 fw-bold">{urlTitle}</div>
               {/* <!--end::Description--> */}
             </div>
           </div>
         </td>
-        <td>
-          {/* <!--begin::Badges--> */}
+        {/* <td>
+          
           <div className="badge badge-light-success">Automated</div>
-          {/* <!--end::Badges--> */}
-        </td>
+          
+        </td> */}
         <td className="text-end">
           <a
             href="#"

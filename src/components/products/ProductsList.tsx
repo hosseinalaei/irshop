@@ -1,8 +1,20 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import ProductListHead from "./ProductListHead";
 import ProductsListItem from "./ProductsListItem";
+import { axiosService } from "@/api.js/axiosService";
 
 const ProductsList = () => {
+  const [products, setProducts] = useState([]);
+  const getProducts = () => {
+    axiosService.get("/Products/getLastProduct").then((res) => {
+      setProducts(res?.data);
+    });
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
   return (
     <div className="pt-0 card-body">
       {/* <!--begin::Table--> */}
@@ -12,9 +24,12 @@ const ProductsList = () => {
       >
         <ProductListHead />
         <tbody className="text-gray-600 fw-semibold">
+          {products?.map((item, index) => (
+            <ProductsListItem key={index} product={item} />
+          ))}
+          {/* <ProductsListItem />
           <ProductsListItem />
-          <ProductsListItem />
-          <ProductsListItem />
+          <ProductsListItem /> */}
         </tbody>
         {/* <!--end::Table body--> */}
       </table>

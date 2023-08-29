@@ -2,6 +2,7 @@ import React from "react";
 import GeneralSection from "./GeneralSection";
 import MediaSection from "./MediaSection";
 import PricingSection from "./PricingSection";
+import SelectColor from "./SelectColor";
 
 const MainColumn = ({
   setProductDetails,
@@ -17,6 +18,15 @@ const MainColumn = ({
   setDiscountType,
   productPrice,
   setProductPrice,
+  productColor,
+  setProductColor,
+  colorName,
+  setColorName,
+  colorPrice,
+  setColorPrice,
+  colorCode,
+  setColorCode,
+  setProductGallery,
 }: any) => {
   return (
     <div className="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
@@ -38,12 +48,22 @@ const MainColumn = ({
               setShortDescription={setShortDescription}
               shortDescription={shortDescription}
             />
-            {/* <MediaSection /> */}
+            <MediaSection setProductGallery={setProductGallery} />
             <PricingSection
               discountType={discountType}
               setDiscountType={setDiscountType}
               productPrice={productPrice}
               setProductPrice={setProductPrice}
+            />
+            <SelectColor
+              // productColor={productColor}
+              // setProductColor={setProductColor}
+              colorName={colorName}
+              setColorName={setColorName}
+              colorPrice={colorPrice}
+              setColorPrice={setColorPrice}
+              colorCode={colorCode}
+              setColorCode={setColorCode}
             />
           </div>
         </div>
@@ -57,7 +77,7 @@ const MainColumn = ({
           <span className="indicator-label">ثبت</span>
           <span className="indicator-progress">
             Please wait...
-            <span className="spinner-border spinner-border-sm align-middle ms-2"></span>
+            <span className="align-middle spinner-border spinner-border-sm ms-2"></span>
           </span>
         </button>
         <a

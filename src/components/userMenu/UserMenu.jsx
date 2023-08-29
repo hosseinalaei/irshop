@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 const UserMenu = ({ setShowUserMenu }) => {
@@ -13,7 +14,7 @@ const UserMenu = ({ setShowUserMenu }) => {
           <div className="px-3 menu-content d-flex align-items-center">
             {/* <!--begin::Avatar--> */}
             <div className="symbol symbol-50px me-5">
-              <img alt="Logo" src="300-2.jpg" />
+              <img alt="Logo" src="/300-2.jpg" />
             </div>
             {/* <!--end::Avatar--> */}
             {/* <!--begin::Username--> */}
@@ -40,20 +41,14 @@ const UserMenu = ({ setShowUserMenu }) => {
         {/* <!--end::Menu separator--> */}
         {/* <!--begin::Menu item--> */}
         <div className="px-5 menu-item">
-          <a
-            href="../../demo23/dist/account/overview.html"
-            className="px-5 menu-link"
-          >
+          <a href="#" className="px-5 menu-link">
             My Profile
           </a>
         </div>
         {/* <!--end::Menu item--> */}
         {/* <!--begin::Menu item--> */}
         <div className="px-5 menu-item">
-          <a
-            href="../../demo23/dist/apps/projects/list.html"
-            className="px-5 menu-link"
-          >
+          <a href="#" className="px-5 menu-link">
             <span className="menu-text">My Projects</span>
             <span className="menu-badge">
               <span className="badge badge-light-danger badge-circle fw-bold fs-7">

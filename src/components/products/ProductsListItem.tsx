@@ -1,6 +1,32 @@
-import React from "react";
+import { axiosService } from "@/api.js/axiosService";
+import Link from "next/link";
+import React, { useState } from "react";
 
-const ProductsListItem = () => {
+const ProductsListItem = ({
+  product,
+}: // productName,
+// shortDescription,
+// price,
+// id,
+any) => {
+  const [img, setImg] = useState();
+
+  const getPic = () => {
+    const body = {
+      id: product?.id,
+      mediaFieldName: "productImageName",
+    };
+    axiosService
+      .post("/Get/GetMedia", body)
+      .then((res) => {
+        setImg(res?.data?.result);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  React.useEffect(() => {
+    getPic();
+  }, []);
   return (
     <tr>
       <td>
@@ -11,16 +37,14 @@ const ProductsListItem = () => {
       <td>
         <div className="d-flex">
           {/* <!--begin::Thumbnail--> */}
-          <a
-            href="../../demo23/dist/apps/ecommerce/catalog/edit-category.html"
-            className="symbol symbol-50px"
-          >
-            <span
+          <a href="#" className="symbol symbol-50px">
+            {/* <span
               className="symbol-label"
               style={{
                 backgroundImage: "url(68.gif)",
               }}
-            ></span>
+            ></span> */}
+            <img src={`data:image/jpeg;base64,${img}`} alt="" />
           </a>
           {/* <!--end::Thumbnail--> */}
           <div className="ms-5">
@@ -30,12 +54,12 @@ const ProductsListItem = () => {
               className="mb-1 text-gray-800 text-hover-primary fs-5 fw-bold"
               data-kt-ecommerce-category-filter="category_name"
             >
-              Computers
+              {product?.productName}
             </a>
             {/* <!--end::Title--> */}
             {/* <!--begin::Description--> */}
             <div className="text-muted fs-7 fw-bold">
-              Our computers and tablets include all the big brands.
+              {product?.shortDescription}
             </div>
             {/* <!--end::Description--> */}
           </div>
@@ -43,47 +67,28 @@ const ProductsListItem = () => {
       </td>
       <td>
         {/* <!--begin::Badges--> */}
-        <div className="badge badge-light-success">Automated</div>
+        <div className="badge badge-light-success">{product?.price}</div>
         {/* <!--end::Badges--> */}
       </td>
       <td className="text-end">
-        <a
-          href="#"
-          className="btn btn-sm btn-light btn-active-light-primary btn-flex btn-center"
-          data-kt-menu-trigger="click"
-          data-kt-menu-placement="bottom-end"
-        >
-          Actions
-          <i className="ki-outline ki-down fs-5 ms-1"></i>
-        </a>
-        {/* <!--begin::Menu--> */}
-        <div
-          className="py-4 menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px"
-          data-kt-menu="true"
-        >
-          {/* <!--begin::Menu item--> */}
-          <div className="px-3 menu-item">
-            <a
-              href="../../demo23/dist/apps/ecommerce/catalog/add-category.html"
-              className="px-3 menu-link"
+        <div className="flex ">
+          <div className="px-3">
+            <Link
+              href={{
+                pathname: `/products/editProduct/${product?.id}`,
+              }}
             >
-              Edit
+              {/* <a href="/products/add-product" className=""> */}
+              ویرایش
+              {/* </a> */}
+            </Link>
+          </div>
+          <div className="px-3 ">
+            <a href="#" className="">
+              حذف
             </a>
           </div>
-          {/* <!--end::Menu item--> */}
-          {/* <!--begin::Menu item--> */}
-          <div className="px-3 menu-item">
-            <a
-              href="#"
-              className="px-3 menu-link"
-              data-kt-ecommerce-category-filter="delete_row"
-            >
-              Delete
-            </a>
-          </div>
-          {/* <!--end::Menu item--> */}
         </div>
-        {/* <!--end::Menu--> */}
       </td>
     </tr>
   );

@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CategoryListItem from "./CategoryListItem";
 import CategoryListHead from "./CategoryListHead";
+import { axiosService } from "@/api.js/axiosService";
 
 const CategoriesList = () => {
+  const [categories, setCategories] = useState([]);
+  const getProducts = () => {
+    axiosService.get("/Products/product-active-categories").then((res) => {
+      setCategories(res?.data);
+      console.log("res?.datares?.data", res?.data);
+    });
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
   return (
     <>
       <div className="pt-0 card-body">
@@ -12,9 +24,16 @@ const CategoriesList = () => {
         >
           <CategoryListHead />
           <tbody className="text-gray-600 fw-semibold">
+            {categories?.map((item) => (
+              <CategoryListItem
+                key={item?.id}
+                title={item?.title}
+                urlTitle={item?.urlTitle}
+              />
+            ))}
+            {/* <CategoryListItem />
             <CategoryListItem />
-            <CategoryListItem />
-            <CategoryListItem />
+            <CategoryListItem /> */}
           </tbody>
         </table>
       </div>
