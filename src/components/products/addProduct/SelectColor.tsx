@@ -1,13 +1,81 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const SelectColor = ({
-  colorName,
-  setColorName,
-  colorPrice,
-  setColorPrice,
-  colorCode,
-  setColorCode,
-}: any) => {
+const InputGroup = ({ values, onChange }: any) => (
+  <div className="input-group">
+    {/* <input type="text" value={values.text} onChange={onChange('text')} placeholder="Enter something" />
+    <input type="number" value={values.number} onChange={onChange('number')} placeholder="Enter a number" /> */}
+    <div className="flex justify-between pt-0 card-body">
+      <div className="mb-10 ">
+        <label className="required form-label">نام رنگ</label>
+        <input
+          type="text"
+          // name="product_name"
+          className="mb-2 form-control"
+          placeholder="نام رنگ"
+          value={values.name}
+          onChange={(e) => onChange("name", e.target.value)}
+        />
+      </div>
+
+      <div className="mb-10 ">
+        <label className="required form-label">کد رنگ</label>
+        <input
+          type="text"
+          // name="product_name"
+          className="mb-2 form-control"
+          placeholder="کد رنگ"
+          value={values.code}
+          // onChange={(e) => setProductName(e.target.value)}
+          onChange={(e) => onChange("code", e.target.value)}
+        />
+      </div>
+      <div className="mb-10 ">
+        <label className="required form-label">قیمت</label>
+        <input
+          type="text"
+          // name="product_name"
+          className="mb-2 form-control"
+          placeholder="ریال"
+          value={values.price}
+          // onChange={(e) => setProductName(e.target.value)}
+          onChange={(e) => onChange("price", e.target.value)}
+        />
+      </div>
+    </div>
+    {/* <button className="remove-btn" onClick={onRemove}>
+      Remove
+    </button> */}
+  </div>
+);
+
+const SelectColor = ({ setProductColor, productColor }: any) => {
+  const [inputGroups, setInputGroups] = useState([
+    { name: "", code: "", price: "" },
+  ]);
+
+  useEffect(() => {
+    console.log("inputGroupsinputGroupsinputGroups", inputGroups);
+    // setProductColor(inputGroups);
+  }, [inputGroups]);
+
+  const handleInputChange =
+    (index: string) => (fieldName: string, newValue: any) => {
+      const newInputGroups = [...inputGroups];
+      newInputGroups[index][fieldName] = newValue;
+      setInputGroups(newInputGroups);
+      setProductColor([...inputGroups]);
+    };
+
+  const addInputGroup = () => {
+    setInputGroups([...inputGroups, { name: "", code: "", price: "" }]);
+  };
+
+  const removeInputGroup = (index: number) => {
+    const newInputGroups = [...inputGroups];
+    newInputGroups.splice(index, 1);
+    setInputGroups(newInputGroups);
+  };
+
   // const [colorArray, s/etColorArray] = useState([
   //   {
   //     name: "",
@@ -28,64 +96,37 @@ const SelectColor = ({
         </div>
       </div>
       {/* {colorArray?.map((item, index) => ( */}
-      <div className="flex justify-between pt-0 card-body">
-        <div className="mb-10 ">
-          <label className="required form-label">نام رنگ</label>
-          <input
-            type="text"
-            // name="product_name"
-            className="mb-2 form-control"
-            placeholder="نام رنگ"
-            value={colorName}
-            onChange={(e) => setColorName(e?.target?.value)}
-          />
-        </div>
 
-        <div className="mb-10 ">
-          <label className="required form-label">کد رنگ</label>
-          <input
-            type="text"
-            // name="product_name"
-            className="mb-2 form-control"
-            placeholder="کد رنگ"
-            value={colorCode}
-            // onChange={(e) => setProductName(e.target.value)}
-            onChange={(e) => setColorCode(e.target.value)}
-          />
-        </div>
-        <div className="mb-10 ">
-          <label className="required form-label">قیمت</label>
-          <input
-            type="text"
-            // name="product_name"
-            className="mb-2 form-control"
-            placeholder="ریال"
-            value={colorPrice}
-            // onChange={(e) => setProductName(e.target.value)}
-            onChange={(e) => setColorPrice(e.target.value)}
-          />
-        </div>
-      </div>
+      {inputGroups.map((group, index) => (
+        <InputGroup
+          key={index}
+          values={group}
+          onChange={handleInputChange(index)}
+          // onRemove={() => removeInputGroup(index)}
+        />
+      ))}
+
       {/* ))} */}
 
-      {/* <button
+      <button
         onClick={(e) => {
           e.preventDefault();
-          setColorArray([
-            ...colorArray,
-            {
-              name: "",
-              code: "",
-              price: "",
-            },
-          ]);
+          addInputGroup();
+          // setColorArray([
+          //   ...colorArray,
+          //   {
+          //     name: "",
+          //     code: "",
+          //     price: "",
+          //   },
+          // ]);
 
           //   inputRef.current?.click();
         }}
         className="px-4 py-2 text-white bg-blue-300 rounded-lg hover:bg-blue-400"
       >
         افزودن
-      </button> */}
+      </button>
     </div>
   );
 };
