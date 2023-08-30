@@ -23,10 +23,10 @@ const ProductStatus = ({ productStatus, setProductStatus }: any) => {
           onChange={(e) => setProductStatus(e.target.value)}
         >
           <option></option>
-          <option value="true" selected>
+          <option value={true} selected>
             موجود
           </option>
-          <option value="false">ناموجود</option>
+          <option value={false}>ناموجود</option>
         </select>
         <div className="text-muted fs-7">وضعیت موجودی محصول را انتخاب کنید</div>
       </div>

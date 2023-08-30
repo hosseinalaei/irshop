@@ -14,11 +14,12 @@ const AddProduct = ({ id }: any) => {
   const [productPrice, setProductPrice] = useState("");
   const [discountType, setDiscountType] = useState("");
   const [productCategoryId, setProductCategoryId] = useState("");
-  const [productStatus, setProductStatus] = useState("");
+  const [productStatus, setProductStatus] = useState(true);
   const [productPolicy, setProductPolicy] = useState("");
   const [originImage, setOriginImage] = useState("");
   const [productGallery, setProductGallery] = useState("");
   const [productColor, setProductColor] = useState("");
+  const [productSpecial, setProductSpecial] = useState(false);
 
   console.log("productColorproductColorproductColorproductColor", productColor);
 
@@ -38,9 +39,10 @@ const AddProduct = ({ id }: any) => {
 
       requestBody.append("productOriginImage", originImage);
       requestBody.append("id", uuidv4());
-      requestBody.append("policyId", "3fa85f64-5717-4562-b3fc-2c963f66afa6");
-      requestBody.append("ProductGalleries", productGallery);
-      requestBody.append("ProductColor", [productColor]);
+      requestBody.append("policyId", productPolicy);
+      requestBody.append("ProductGalleries", JSON.stringify(productGallery));
+      requestBody.append("ProductColor", JSON.stringify(productColor));
+      requestBody.append("IsSpecial", productSpecial);
 
       axiosService
         .post(
@@ -224,6 +226,8 @@ const AddProduct = ({ id }: any) => {
               setOriginImage={setOriginImage}
               setProductPolicy={setProductPolicy}
               productPolicy={productPolicy}
+              productSpecial={productSpecial}
+              setProductSpecial={setProductSpecial}
             />
             <MainColumn
               productDetails={productDetails}

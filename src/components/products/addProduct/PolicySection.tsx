@@ -29,7 +29,7 @@ const PolicySection = ({ setProductPolicy, productPolicy }: any) => {
           <option></option>
           {policies?.length > 0 ? (
             policies?.map((item, index) => (
-              <option key={index} value="true" selected>
+              <option key={index} value={item?.id} selected>
                 {item?.title}
               </option>
             ))
