@@ -19,14 +19,6 @@ const PolicySection = ({ setProductPolicy, productPolicy }: any) => {
         <div className="card-title">
           <h2>سیاست (policy)</h2>
         </div>
-        {/* <div className="card-toolbar">
-          <div
-            className={`rounded-circle  w-15px h-15px ${
-              productStatus ? "bg-success" : "bg-red-500"
-            }`}
-            id="kt_ecommerce_add_product_status"
-          ></div>
-        </div> */}
       </div>
       <div className="pt-0 card-body">
         <select
@@ -35,15 +27,15 @@ const PolicySection = ({ setProductPolicy, productPolicy }: any) => {
           onChange={(e) => setProductPolicy(e.target.value)}
         >
           <option></option>
-          {policies?.map((item, index) => (
-            <option key={index} value="true" selected>
-              موجود
-            </option>
-          ))}
-          <option value="true" selected>
-            موجود
-          </option>
-          <option value="false">ناموجود</option>
+          {policies?.length > 0 ? (
+            policies?.map((item, index) => (
+              <option key={index} value={item?.id} selected>
+                {item?.title}
+              </option>
+            ))
+          ) : (
+            <div>موردی وجود ندارد</div>
+          )}
         </select>
         {/* <div className="text-muted fs-7">وضعیت موجودی محصول را انتخاب کنید</div> */}
       </div>

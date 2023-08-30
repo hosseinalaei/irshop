@@ -1,34 +1,44 @@
-import React, { useEffect, useRef } from "react";
-import { useFileUpload } from "react-use-file-upload/dist/lib/useFileUpload";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 
-const OriginImageProduct = ({ setOriginImage }) => {
-  const {
-    files,
-    fileNames,
-    fileTypes,
-    totalSize,
-    totalSizeInBytes,
-    handleDragDropEvent,
-    clearAllFiles,
-    createFormData,
-    setFiles,
-    removeFile,
-  } = useFileUpload();
-
-  const inputRef = useRef();
-
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-
-    const formData = createFormData();
-
-    // setOriginImage(files);
-  };
+const OriginImageProduct = ({ setOriginImage }: any) => {
+  const [file, setFile] = useState<File>();
+  const inputRef = React.useRef(null);
 
   useEffect(() => {
-    console.log("filesfilesfilesfilesfiles", files);
-    files && setOriginImage(files);
-  }, [files]);
+    console.log("file: ", file);
+  }, [file]);
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFile(e.target.files[0]);
+      setOriginImage(e.target.files[0]);
+    }
+  };
+  const handleDragDropEvent = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.target.files) {
+      setFile(e.target.files[0]);
+      setOriginImage(e.target.files[0]);
+    }
+  };
+
+  const handleDrop = (e: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // console.log("Dropped event:", e);
+
+    const droppedFiles = e.dataTransfer.files;
+
+    if (droppedFiles.length > 0) {
+      const droppedFile = droppedFiles[0];
+      // console.log("Dropped file:", droppedFile);
+
+      setFile(droppedFile);
+      setOriginImage(droppedFile);
+    }
+  };
 
   return (
     <>
@@ -46,23 +56,25 @@ const OriginImageProduct = ({ setOriginImage }) => {
             }}
           >
             <div
-              className="image-input-wrapper w-150px h-150px"
-              onDragEnter={(e: any) => handleDragDropEvent(e)}
+              className="cursor-pointer image-input-wrapper w-150px h-150px"
+              onClick={() => {
+                inputRef?.current?.click();
+              }}
+              onDragEnter={(e: any) => {
+                handleDragDropEvent(e);
+                console.log(e);
+              }}
               onDragOver={(e: any) => handleDragDropEvent(e)}
               onDrop={(e: any) => {
-                handleDragDropEvent(e);
-                setFiles(e, "a");
+                handleDrop(e);
               }}
             >
               <input
                 ref={inputRef}
                 type="file"
-                multiple
                 style={{ display: "none" }}
-                onChange={(e) => {
-                  setFiles(e, "a");
-                  inputRef.current.value = null;
-                  handleSubmit(e);
+                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                  handleFileChange(e);
                 }}
               />
             </div>
@@ -72,16 +84,7 @@ const OriginImageProduct = ({ setOriginImage }) => {
               data-kt-image-input-action="change"
               data-bs-toggle="tooltip"
               title="Change avatar"
-              onClick={(e) => {
-                e.preventDefault();
-
-                inputRef.current?.click();
-              }}
-            >
-              {/* <i className="ki-outline ki-pencil fs-7"></i>
-              <input type="file" name="avatar" accept=".png, .jpg, .jpeg" />
-              <input type="hidden" name="avatar_remove" /> */}
-            </label>
+            ></label>
             <span
               className="shadow btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body"
               data-kt-image-input-action="cancel"

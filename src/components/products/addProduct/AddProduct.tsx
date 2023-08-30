@@ -4,6 +4,7 @@ import MainColumn from "./MainColumn";
 import { axiosService } from "@/api.js/axiosService";
 import AsideColumn from "./AsideColumn";
 import { useParams, useRouter } from "next/navigation";
+import { v4 as uuidv4 } from "uuid";
 
 const AddProduct = ({ id }: any) => {
   const [productDetails, setProductDetails] = React.useState({});
@@ -13,14 +14,14 @@ const AddProduct = ({ id }: any) => {
   const [productPrice, setProductPrice] = useState("");
   const [discountType, setDiscountType] = useState("");
   const [productCategoryId, setProductCategoryId] = useState("");
-  const [productStatus, setProductStatus] = useState("");
+  const [productStatus, setProductStatus] = useState(true);
   const [productPolicy, setProductPolicy] = useState("");
   const [originImage, setOriginImage] = useState("");
   const [productGallery, setProductGallery] = useState("");
-  const [colorName, setColorName] = useState("");
-  const [colorCode, setColorCode] = useState("");
-  const [colorPrice, setColorPrice] = useState("");
-  // console.log("productColorproductColor", productColor);
+  const [productColor, setProductColor] = useState("");
+  const [productSpecial, setProductSpecial] = useState(false);
+
+  console.log("productColorproductColorproductColorproductColor", productColor);
 
   const submitProduct = (e: any) => {
     e.preventDefault();
@@ -37,14 +38,11 @@ const AddProduct = ({ id }: any) => {
       productStatus && requestBody.append("IsExists", productStatus);
 
       requestBody.append("productOriginImage", originImage);
-      // requestBody.append("ProductGalleries", productGallery);
-      // requestBody.append("ProductColor", [
-      //   {
-      //     colorName: productColor.colorName,
-      //     colorCode: productColor.colorCode,
-      //     price: productColor.price,
-      //   },
-      // ]);
+      requestBody.append("id", uuidv4());
+      requestBody.append("policyId", productPolicy);
+      requestBody.append("ProductGalleries", JSON.stringify(productGallery));
+      requestBody.append("ProductColor", JSON.stringify(productColor));
+      requestBody.append("IsSpecial", productSpecial);
 
       axiosService
         .post(
@@ -55,6 +53,11 @@ const AddProduct = ({ id }: any) => {
         .then((res) => console.log(res));
     }
   };
+
+  console.log(
+    "productGalleryproductGalleryproductGalleryproductGallery",
+    productGallery
+  );
 
   const getProductForEdit = () => {
     axiosService
@@ -223,6 +226,8 @@ const AddProduct = ({ id }: any) => {
               setOriginImage={setOriginImage}
               setProductPolicy={setProductPolicy}
               productPolicy={productPolicy}
+              productSpecial={productSpecial}
+              setProductSpecial={setProductSpecial}
             />
             <MainColumn
               productDetails={productDetails}
@@ -240,14 +245,8 @@ const AddProduct = ({ id }: any) => {
               setDiscountType={setDiscountType}
               productPrice={productPrice}
               setProductPrice={setProductPrice}
-              // productColor={productColor}
-              // setProductColor={setProductColor}
-              colorName={colorName}
-              setColorName={setColorName}
-              colorPrice={colorPrice}
-              setColorPrice={setColorPrice}
-              colorCode={colorCode}
-              setColorCode={setColorCode}
+              productColor={productColor}
+              setProductColor={setProductColor}
               setProductGallery={setProductGallery}
             />
           </form>

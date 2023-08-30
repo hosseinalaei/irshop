@@ -20,12 +20,6 @@ const MainColumn = ({
   setProductPrice,
   productColor,
   setProductColor,
-  colorName,
-  setColorName,
-  colorPrice,
-  setColorPrice,
-  colorCode,
-  setColorCode,
   setProductGallery,
 }: any) => {
   return (
@@ -56,14 +50,8 @@ const MainColumn = ({
               setProductPrice={setProductPrice}
             />
             <SelectColor
-              // productColor={productColor}
-              // setProductColor={setProductColor}
-              colorName={colorName}
-              setColorName={setColorName}
-              colorPrice={colorPrice}
-              setColorPrice={setColorPrice}
-              colorCode={colorCode}
-              setColorCode={setColorCode}
+              productColor={productColor}
+              setProductColor={setProductColor}
             />
           </div>
         </div>

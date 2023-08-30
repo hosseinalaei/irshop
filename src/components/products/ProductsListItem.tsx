@@ -19,7 +19,7 @@ any) => {
     axiosService
       .post("/Get/GetMedia", body)
       .then((res) => {
-        setImg(res?.data?.result);
+        setImg(res?.data);
       })
       .catch((err) => console.log(err));
   };
