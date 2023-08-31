@@ -1,0 +1,44 @@
+{
+  "menu": [
+    {
+      "id": 1,
+      "name": "داشبورد",
+      "url": "/"
+    },
+    {
+      "id": 2,
+      "name": "نقش‌ها",
+      "url": "/roles"
+    },
+    {
+      "id": 3,
+      "name": "دسته‌بندی محصولات",
+
+      "subMenu": [
+        {
+          "name": "لیست دسته‌بندی‌ها",
+          "url": "/categories"
+        },
+        {
+          "name": "دسته‌بندی جدید",
+          "url": "/categories/add-category"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "محصولات",
+
+      "subMenu": [
+        {
+          "name": "لیست محصولات",
+          "url": "/products"
+        },
+        {
+          "name": "محصول جدید",
+          "url": "/products/add-product"
+        }
+      ]
+    }
+  ]
+}
