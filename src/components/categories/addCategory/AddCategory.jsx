@@ -4,6 +4,7 @@ import ParentCategory from "./asideColumn/ParentCategory";
 import GeneralSection from "./mainColumn/GeneralSection";
 import { v4 as uuidv4 } from "uuid";
 import { axiosService } from "../../../services/axiosService";
+import SliderSection from "./mainColumn/SliderSection";
 
 const AddCategory = () => {
   const [category, setCategory] = useState({
@@ -12,6 +13,7 @@ const AddCategory = () => {
     isDelete: false,
     parentId: "",
     originImage: null,
+    sliderImage: [],
   });
 
   console.log("category: ", category);
@@ -26,6 +28,8 @@ const AddCategory = () => {
     requestBody.append("IsDelete", category.isDelete);
     category.originImage &&
       requestBody.append("originImage", category.originImage);
+    category.sliderImage.length > 0 &&
+      requestBody.append("sliderImage", category.sliderImage[0]);
 
     console.log("requestBody: ", requestBody);
 
@@ -51,6 +55,7 @@ const AddCategory = () => {
             </div>
             <div className="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
               <GeneralSection category={category} setCategory={setCategory} />
+              <SliderSection category={category} setCategory={setCategory} />
             </div>
           </form>
           <div className="d-flex justify-content-end">
