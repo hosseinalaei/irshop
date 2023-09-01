@@ -27,8 +27,9 @@ const CategoriesList = () => {
             {categories?.map((item) => (
               <CategoryListItem
                 key={item?.id}
-                title={item?.title}
-                urlTitle={item?.urlTitle}
+                category={item}
+                // title={item?.title}
+                // urlTitle={item?.urlTitle}
               />
             ))}
             {/* <CategoryListItem />

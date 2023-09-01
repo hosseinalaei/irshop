@@ -7,6 +7,9 @@ import AddProductPage from "../pages/products/AddProduct";
 import CategoriesPage from "../pages/categories/CategoriesPage";
 import AddCategoryPage from "../pages/categories/addCategory/AddCategory";
 import RolesPage from "../pages/roles/RolesPage";
+import PolicyPage from "../pages/policy/PolicyPage";
+import AddNewPolicy from "../components/policy/AddNewPolicy";
+import AddNewPolicyPage from "../pages/policy/addPolicy/AddNewPolicyPage";
 
 function Layout() {
   return (
@@ -34,6 +37,8 @@ function Layout() {
             />
           </Route>
           <Route path="/roles" element={<RolesPage />} />
+          <Route path="/policies" element={<PolicyPage />} />
+          <Route path="/policies/add-policy" element={<AddNewPolicyPage />} />
         </Routes>
       </div>
     </div>

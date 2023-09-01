@@ -1,6 +1,6 @@
 import React from "react";
 
-const GeneralSection = () => {
+const GeneralSection = ({ category, setCategory }) => {
   return (
     <div className="py-4 card card-flush">
       <div className="card-header">
@@ -17,7 +17,10 @@ const GeneralSection = () => {
             name="category_name"
             className="mb-2 form-control"
             placeholder="نام"
-            value=""
+            value={category.title}
+            onChange={(e) =>
+              setCategory({ ...category, title: e.target.value })
+            }
           />
           <div className="text-muted fs-7">
             لطفا نام منحصر به فرد انتخاب کنید
@@ -31,11 +34,11 @@ const GeneralSection = () => {
             name="category_url"
             className="mb-2 form-control"
             placeholder="آدرس"
-            value=""
+            value={category.urlTitle}
+            onChange={(e) =>
+              setCategory({ ...category, urlTitle: e.target.value })
+            }
           />
-          {/* <div className="text-muted fs-7">
-            Set a description to the category for better visibility.
-          </div> */}
         </div>
       </div>
     </div>
