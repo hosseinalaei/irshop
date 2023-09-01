@@ -3,16 +3,12 @@ import AddNewRole from "../roles/AddNewRole";
 import EditRole from "../roles/EditRole";
 import { axiosService } from "../../services/axiosService";
 import AddNewPolicy from "./AddNewPolicy";
+import { NavLink, useParams } from "react-router-dom";
 
 const PoliciesList = () => {
   const [policies, setPolicies] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedPolicy, setSelectedPolicy] = useState({});
-
-  const showEditModalFun = (item) => {
-    setShowEditModal(true);
-    setSelectedPolicy(item);
-  };
 
   const getPolicies = () => {
     axiosService.get("/AdminProducts/getActivePolicies").then((res) => {
@@ -92,13 +88,17 @@ const PoliciesList = () => {
               >
                 View Role
               </a> */}
-                  <button
+                  <NavLink
+                    to={{
+                      pathname: `/policies/edit-policy/id=${item?.id}`,
+                    }}
+                    state={item}
                     type="button"
                     className="my-1 btn btn-light btn-active-light-primary"
-                    onClick={() => showEditModalFun(item)}
+                    // onClick={() => showEditModalFun(item)}
                   >
                     ویرایش
-                  </button>
+                  </NavLink>
                 </div>
               </div>
             </div>

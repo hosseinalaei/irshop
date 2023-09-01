@@ -3,29 +3,70 @@ import MainColumn from "./mainColumn/MainColumn";
 import { axiosService } from "../../../services/axiosService";
 import AsideColumn from "./asideColumn/AsideColumn";
 import { v4 as uuidv4 } from "uuid";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 const AddProduct = () => {
-  const params = useParams();
-  // console.log("mmmmmmmmmmmmmmm", params);
+  const location = useLocation();
+  const selectedProduct = location?.state;
+
+  console.log("selectedProductselectedProduct", selectedProduct);
 
   const [product, setProduct] = useState({
-    name: "",
-    description: "",
-    shortDescription: "",
-    policy: "",
-    categoryId: "",
-    status: true,
-    gallery: [],
-    originImage: [],
-    color: [],
-    special: false,
+    name: selectedProduct?.productName || "",
+    description: selectedProduct?.description || "",
+    shortDescription: selectedProduct?.shortDescription || "",
+    policy: selectedProduct?.policyId || "",
+    categoryId: selectedProduct?.productSelectedCategories || [],
+    status: selectedProduct?.isExists,
+    gallery: selectedProduct?.productGalleries || [],
+    originImage: selectedProduct?.productImageName || "",
+    color: selectedProduct?.productColor || [],
+    special: selectedProduct?.isSpecial || false,
     isDelete: false,
   });
 
-  console.log("llllllllllllll", product);
+  const updateProduct = (e) => {
+    e.preventDefault();
+    const requestBody = new FormData();
 
-  // console.log("productColorproductColorproductColorproductColor", productColor);
+    product?.name && requestBody?.append("ProductName", product?.name);
+
+    product?.shortDescription &&
+      requestBody?.append("ShortDescription", product?.shortDescription);
+
+    product?.description &&
+      requestBody?.append("description", product?.description);
+
+    product?.price && requestBody.append("price", product?.price);
+
+    product?.categoryId &&
+      requestBody?.append("ProductCategoryId", product?.categoryId);
+
+    product?.status && requestBody.append("IsExists", product?.status);
+
+    product?.originImage &&
+      requestBody.append("productOriginImage", [
+        {
+          originImage: product?.originImage,
+        },
+      ]);
+
+    requestBody.append("id", selectedProduct?.id);
+
+    product?.policy && requestBody.append("policyId", product?.policy);
+
+    product?.gallery.length > 0 &&
+      requestBody.append("ProductGalleries", JSON.stringify(product?.gallery));
+
+    product?.color?.length > 0 &&
+      requestBody.append("ProductColor", JSON.stringify(product?.color));
+
+    product?.special && requestBody.append("IsSpecial", product?.special);
+
+    axiosService
+      .put("/AdminProducts/updateProduct", requestBody)
+      .then((res) => console.log(res));
+  };
 
   const submitProduct = (e) => {
     e.preventDefault();
@@ -79,31 +120,27 @@ const AddProduct = () => {
     }
   };
 
-  const getProductForEdit = () => {
-    axiosService
-      .get(`/AdminProducts/get-product-for-edit/${params?.id}`)
-      .then((res) => {
-        console.log("getProductForEditgetProductForEdit", res);
-        // const selectedProduct = res?.data
-        // setProduct({
-        //   name: "",
-        //   description: "",
-        //   shortDescription: "",
-        //   policy: "",
-        //   categoryId: "",
-        //   status: true,
-        //   gallery: [],
-        //   originImage: [],
-        //   color: [],
-        //   special: false,
-        //   isDelete: false,
-        // })
-      });
-  };
-
-  useEffect(() => {
-    params?.id && getProductForEdit();
-  }, [params?.id]);
+  // const getProductForEdit = () => {
+  //   axiosService
+  //     .get(`/AdminProducts/get-product-for-edit/${params?.id}`)
+  //     .then((res) => {
+  //       console.log("getProductForEditgetProductForEdit", res);
+  //       // const selectedProduct = res?.data
+  //       // setProduct({
+  //       //   name: "",
+  //       //   description: "",
+  //       //   shortDescription: "",
+  //       //   policy: "",
+  //       //   categoryId: "",
+  //       //   status: true,
+  //       //   gallery: [],
+  //       //   originImage: [],
+  //       //   color: [],
+  //       //   special: false,
+  //       //   isDelete: false,
+  //       // })
+  //     });
+  // };
 
   return (
     <div className="d-flex flex-column flex-column-fluid">
@@ -144,7 +181,7 @@ const AddProduct = () => {
               setProduct={setProduct}
               product={product}
               submitProduct={(e) => {
-                submitProduct(e);
+                selectedProduct ? updateProduct(e) : submitProduct(e);
               }}
             />
           </form>

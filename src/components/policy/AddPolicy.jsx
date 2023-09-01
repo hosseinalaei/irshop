@@ -1,30 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DiscountSection from "./DiscountSection";
 import BasketSection from "./BasketSection";
 import { axiosService } from "../../services/axiosService";
 import { v4 as uuidv4 } from "uuid";
+import { useLocation, useParams } from "react-router-dom";
 
 const AddPolicy = () => {
+  const location = useLocation();
+  const selectedPolicy = location.state;
+
   const [policy, setPolicy] = useState({
-    title: "",
+    title: selectedPolicy?.title,
     basket: {
-      basketType: "",
-      basketPriority: "",
-      basketSpecial: "",
-      basketProductCount: "",
-      basketDuration: "",
+      basketType: selectedPolicy?.basketType,
+      basketPriority: selectedPolicy?.basketPriority,
+      basketSpecial: selectedPolicy?.basketSpecial,
+      basketProductCount: selectedPolicy?.basketProductCount,
+      basketDuration: selectedPolicy?.basketDuration,
     },
     discount: {
-      discountPr: "",
-      discountDuration: "",
-      discountType: "",
-      discountPriority: "",
+      discountPr: selectedPolicy?.discountPr,
+      discountDuration: selectedPolicy?.discountDuration,
+      discountType: selectedPolicy?.discountType,
+      discountPriority: selectedPolicy?.discountPriority,
     },
-    productCount: "",
-    productPolicy: "",
+    productCount: selectedPolicy?.productCount,
+    productPolicy: selectedPolicy?.productPolicy,
   });
 
-  console.log("llllllllllllll", policy);
+  // console.log("llllllllllllll", policy);
 
   const addPolicy = () => {
     const requestBody = {
@@ -48,6 +52,31 @@ const AddPolicy = () => {
 
     axiosService
       .post("/AdminProducts/registerPolicy", requestBody)
+      .then((res) => console.log(res));
+  };
+
+  const updatePolicy = () => {
+    const requestBody = {
+      title: policy?.title,
+
+      basketType: policy?.basket?.basketType,
+      basketPriority: policy?.basket?.basketPriority,
+      basketSpecial: policy?.basket?.basketSpecial,
+      basketProductCount: policy?.basket?.basketProductCount,
+      basketDuration: policy?.basket?.basketDuration,
+
+      discountPr: policy?.discount?.discountPr,
+      discountDuration: policy?.discount?.discountDuration,
+      discountType: policy?.discount?.discountType,
+      discountPriority: policy?.discount?.discountPriority,
+
+      productCount: policy?.productCount,
+      productPolicy: policy?.productPolicy,
+      id: uuidv4(),
+    };
+
+    axiosService
+      .put("/AdminProducts/updatePolicy", requestBody)
       .then((res) => console.log(res));
   };
 
@@ -148,7 +177,7 @@ const AddPolicy = () => {
           </form>
           <div className="d-flex justify-content-end">
             <button
-              onClick={(e) => addPolicy(e)}
+              onClick={() => (selectedPolicy ? updatePolicy() : addPolicy())}
               id="kt_ecommerce_add_product_submit"
               className="btn btn-primary"
             >

@@ -1,7 +1,7 @@
 import { axiosService } from "../../../services/axiosService";
 import React, { useEffect, useState } from "react";
 
-const ProductDetails = ({ setProductCategoryId }) => {
+const ProductDetails = ({ product, setProduct }) => {
   const [categories, setCategories] = useState([]);
   const getCategories = () => {
     axiosService
@@ -27,8 +27,14 @@ const ProductDetails = ({ setProductCategoryId }) => {
             // data-control="select2"
             // data-allow-clear="true"
             // multiple
+            value={product?.categoryId[0]?.productCategoryId}
             placeholder="انتخاب کنید"
-            onChange={(e) => setProductCategoryId(e.target.value)}
+            onChange={(e) =>
+              setProduct({
+                ...product,
+                categoryId: [{ productCategoryId: e.target.value }],
+              })
+            }
           >
             <option>انتخاب کنید</option>
             {categories?.map((category) => (

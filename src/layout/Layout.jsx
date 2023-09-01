@@ -39,6 +39,10 @@ function Layout() {
           <Route path="/roles" element={<RolesPage />} />
           <Route path="/policies" element={<PolicyPage />} />
           <Route path="/policies/add-policy" element={<AddNewPolicyPage />} />
+          <Route
+            path="/policies/edit-policy/:id"
+            element={<AddNewPolicyPage />}
+          />
         </Routes>
       </div>
     </div>

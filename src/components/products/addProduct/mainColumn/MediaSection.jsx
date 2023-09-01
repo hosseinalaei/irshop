@@ -1,8 +1,23 @@
 import React, { useEffect, useState } from "react";
+import { axiosService } from "../../../../services/axiosService";
 
-const MediaSection = ({ product, setProduct, setProductGallery }) => {
+const MediaSection = ({ product, setProduct }) => {
   const [file, setFile] = useState([]);
   const inputRef = React.useRef(null);
+  const [img, setImg] = useState();
+
+  useEffect(() => {
+    product?.gallery?.length > 0 &&
+      axiosService
+        .post("/Get/GetMedia", {
+          id: product?.id,
+          mediaFieldName: "productImageName",
+        })
+        .then((res) => {
+          setImg(res?.data);
+        })
+        .catch((err) => console.log(err));
+  }, [product?.gallery]);
 
   useEffect(() => {
     console.log("file: ", file);
@@ -54,6 +69,8 @@ const MediaSection = ({ product, setProduct, setProductGallery }) => {
       <div className="pt-0 card-body">
         <div className="mb-2 fv-row">
           <p>تصاویر محصول را انتخاب کنید</p>
+
+          {/* <img src={`data:image/jpeg;base64,${img}`} alt="" /> */}
 
           <div className="form-container">
             {/* Provide a drop zone and an alternative button inside it to upload files. */}

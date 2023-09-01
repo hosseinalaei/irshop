@@ -72,6 +72,7 @@ const ProductsListItem = ({ product }) => {
               to={{
                 pathname: `/products/edit-product/id=${product?.id}`,
               }}
+              state={product}
             >
               {/* <a href="/products/add-product" className=""> */}
               ویرایش

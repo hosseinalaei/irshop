@@ -38,14 +38,13 @@ const InputGroup = ({ values, onChange }) => (
   </div>
 );
 
-const SelectColor = ({
-  product,
-  setProduct,
-  setProductColor,
-  productColor,
-}) => {
+const SelectColor = ({ product, setProduct }) => {
   const [inputGroups, setInputGroups] = useState([
-    { colorName: "", colorCode: "", price: "" },
+    {
+      colorName: product?.color[0]?.colorName,
+      colorCode: product?.color[0]?.colorCode,
+      price: product?.color[0]?.price,
+    },
   ]);
 
   const handleInputChange = (index) => (fieldName, newValue) => {
