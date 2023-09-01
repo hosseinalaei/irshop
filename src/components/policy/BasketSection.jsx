@@ -194,17 +194,21 @@ const BasketSection = ({ policy, setPolicy }) => {
           <label className="form-label">تعداد محصول در سبد</label>
 
           <input
-            type="text"
+            type="number"
+            pattern="[0-9]*"
             className="mb-2 form-control"
             value={policy?.basket?.basketProductCount}
             onChange={(e) =>
-              setPolicy({
-                ...policy,
-                basket: {
-                  ...policy.basket,
-                  basketProductCount: e.target.value,
-                },
-              })
+              setPolicy(
+                () =>
+                  e.target.validity.valid && {
+                    ...policy,
+                    basket: {
+                      ...policy.basket,
+                      basketProductCount: e.target.value,
+                    },
+                  }
+              )
             }
           />
 
@@ -214,10 +218,12 @@ const BasketSection = ({ policy, setPolicy }) => {
           <label className="form-label">زمان اعتبار سبد خرید</label>
 
           <input
-            type="text"
+            type="number"
+            pattern="[0-9]*"
             className="mb-2 form-control"
             value={policy?.basket?.basketDuration}
             onChange={(e) =>
+              e.target.validity.valid &&
               setPolicy({
                 ...policy,
                 basket: { ...policy.basket, basketDuration: e.target.value },

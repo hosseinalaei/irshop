@@ -5,15 +5,22 @@ import GeneralSection from "./mainColumn/GeneralSection";
 import { v4 as uuidv4 } from "uuid";
 import { axiosService } from "../../../services/axiosService";
 import SliderSection from "./mainColumn/SliderSection";
+import { useLocation } from "react-router-dom";
 
 const AddCategory = () => {
+  const location = useLocation();
+
+  const selectedCategory = location?.state;
+  console.log(selectedCategory);
+
   const [category, setCategory] = useState({
-    title: "",
-    urlTitle: "",
+    title: selectedCategory?.title || "",
+    urlTitle: selectedCategory?.urlTitle || "",
     isDelete: false,
-    parentId: "",
-    originImage: null,
-    sliderImage: [],
+    parentId: selectedCategory?.parentId || "",
+    originImage: selectedCategory?.categoryImageName || null,
+    sliderImage: selectedCategory?.categorySliderImagename || [],
+    id: selectedCategory?.id || "",
   });
 
   console.log("category: ", category);
@@ -44,6 +51,24 @@ const AddCategory = () => {
     }
   };
 
+  const updateCategory = () => {
+    const requestBody = new FormData();
+
+    category.title && requestBody.append("Title", category.title);
+    category.urlTitle && requestBody.append("UrlTitle", category.urlTitle);
+    category.parentId && requestBody.append("ParentId", category.parentId);
+    requestBody.append("Id", uuidv4());
+    requestBody.append("IsDelete", category.isDelete);
+    category.originImage &&
+      requestBody.append("originImage", category.originImage);
+    category.sliderImage.length > 0 &&
+      requestBody.append("sliderImage", category.sliderImage[0]);
+
+    axiosService
+      .put("/AdminProducts/updateCategory", requestBody)
+      .then((res) => console.log(res));
+  };
+
   return (
     <>
       <div className="app-content flex-column-fluid">
@@ -59,7 +84,12 @@ const AddCategory = () => {
             </div>
           </form>
           <div className="d-flex justify-content-end">
-            <button onClick={() => addCategory()} className="btn btn-primary">
+            <button
+              onClick={() =>
+                selectedCategory ? updateCategory() : addCategory()
+              }
+              className="btn btn-primary"
+            >
               <span className="indicator-label">ثبت</span>
               <span className="indicator-progress">
                 لطفا صبر کنید

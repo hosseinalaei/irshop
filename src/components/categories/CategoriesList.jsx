@@ -5,7 +5,7 @@ import { axiosService } from "../../services/axiosService";
 
 const CategoriesList = () => {
   const [categories, setCategories] = useState([]);
-  const getProducts = () => {
+  const getCategories = () => {
     axiosService.get("/Products/product-active-categories").then((res) => {
       setCategories(res?.data);
       console.log("res?.datares?.data", res?.data);
@@ -13,7 +13,7 @@ const CategoriesList = () => {
   };
 
   useEffect(() => {
-    getProducts();
+    getCategories();
   }, []);
   return (
     <>

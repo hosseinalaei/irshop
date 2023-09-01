@@ -46,7 +46,7 @@ const AddPolicy = () => {
       discountPriority: policy?.discount?.discountPriority,
 
       productCount: policy?.productCount,
-      productPolicy: policy?.productPolicy,
+      // productPolicy: policy?.productPolicy,
       id: uuidv4(),
     };
 
@@ -71,7 +71,7 @@ const AddPolicy = () => {
       discountPriority: policy?.discount?.discountPriority,
 
       productCount: policy?.productCount,
-      productPolicy: policy?.productPolicy,
+      // productPolicy: policy?.productPolicy,
       id: uuidv4(),
     };
 
@@ -135,12 +135,14 @@ const AddPolicy = () => {
                 <div className="px-10 mb-10 fv-row">
                   <label className="required form-label">تعداد محصول</label>
                   <input
-                    type="text"
+                    type="number"
+                    pattern="[0-9]*"
                     name="short-description"
                     className="mb-2 form-control"
                     placeholder="تعداد محصول"
                     value={policy?.productCount}
                     onChange={(e) =>
+                      e.target.validity.valid &&
                       setPolicy({
                         ...policy,
                         productCount: e.target.value,
@@ -148,7 +150,7 @@ const AddPolicy = () => {
                     }
                   />
                 </div>
-                <div className="px-10 mb-10 fv-row">
+                {/* <div className="px-10 mb-10 fv-row">
                   <label className="required form-label">product policy</label>
                   <input
                     type="text"
@@ -163,7 +165,7 @@ const AddPolicy = () => {
                       })
                     }
                   />
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">

@@ -44,10 +44,12 @@ const DiscountSection = ({ policy, setPolicy }) => {
           <label className="form-label">discountPr</label>
 
           <input
-            type="text"
+            type="number"
+            pattern="[0-9]*"
             className="mb-2 form-control"
             value={policy?.discount?.discountPr}
             onChange={(e) =>
+              e.target.validity.valid &&
               setPolicy({
                 ...policy,
                 discount: { ...policy.discount, discountPr: e.target.value },
@@ -62,10 +64,12 @@ const DiscountSection = ({ policy, setPolicy }) => {
           <label className="form-label">زمان اعتبار سبد خرید</label>
 
           <input
-            type="text"
+            type="number"
+            pattern="[0-9]*"
             className="mb-2 form-control"
             value={policy?.discount?.discountDuration}
             onChange={(e) =>
+              e.target.validity.valid &&
               setPolicy({
                 ...policy,
                 discount: {

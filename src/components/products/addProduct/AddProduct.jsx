@@ -23,6 +23,7 @@ const AddProduct = () => {
     color: selectedProduct?.productColor || [],
     special: selectedProduct?.isSpecial || false,
     isDelete: false,
+    price: selectedProduct?.price || "",
   });
 
   const updateProduct = (e) => {

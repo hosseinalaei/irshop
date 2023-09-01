@@ -69,9 +69,10 @@ const CategoryListItem = ({ category }) => {
           <div className="flex ">
             <div className="px-3">
               <NavLink
-              // to={{
-              //   pathname: `/products/edit-product/id=${product?.id}`,
-              // }}
+                to={{
+                  pathname: `/categories/edit-category/id=${category?.id}`,
+                }}
+                state={category}
               >
                 {/* <a href="/products/add-product" className=""> */}
                 ویرایش

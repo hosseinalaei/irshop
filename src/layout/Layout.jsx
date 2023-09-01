@@ -35,6 +35,10 @@ function Layout() {
               path="/categories/add-category"
               element={<AddCategoryPage />}
             />
+            <Route
+              path="/categories/edit-category/:id"
+              element={<AddCategoryPage />}
+            />
           </Route>
           <Route path="/roles" element={<RolesPage />} />
           <Route path="/policies" element={<PolicyPage />} />

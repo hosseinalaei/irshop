@@ -6,12 +6,14 @@ const SliderSection = ({ category, setCategory }) => {
   const inputRef = React.useRef(null);
   const [img, setImg] = useState();
 
+  console.log(category);
+
   useEffect(() => {
     category?.sliderImage?.length > 0 &&
       axiosService
         .post("/Get/GetMedia", {
           id: category?.id,
-          mediaFieldName: "productImageName",
+          mediaFieldName: "categorySliderImagename",
         })
         .then((res) => {
           setImg(res?.data);
@@ -103,7 +105,6 @@ const SliderSection = ({ category, setCategory }) => {
               {/* Hide the crappy looking default HTML input */}
               <input
                 ref={inputRef}
-                multiple
                 type="file"
                 style={{ display: "none" }}
                 onChange={(e) => {
