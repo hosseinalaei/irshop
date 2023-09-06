@@ -3,47 +3,60 @@
     {
       "id": 1,
       "name": "داشبورد",
-      "url": "/"
+      "url": "/",
+      "icon": "house"
     },
     {
       "id": 2,
       "name": "نقش‌ها",
-      "url": "/roles"
+      "url": "/roles",
+      "icon": "pen-ruler"
     },
     {
       "id": 3,
       "name": "دسته‌بندی محصولات",
-
+      "icon": "table",
       "subMenu": [
         {
+          "id": 1,
           "name": "لیست دسته‌بندی‌ها",
-          "url": "/categories"
+          "url": "/categories",
+          "icon": "rectangle-list"
         },
         {
+          "id": 2,
           "name": "دسته‌بندی جدید",
-          "url": "/categories/add-category"
+          "url": "/categories/add-category",
+          "icon": "square-plus"
         }
-      ]
+      ],
+      "expandedSubMenu": "false"
     },
     {
       "id": 4,
       "name": "محصولات",
-
+      "icon": "cubes",
       "subMenu": [
         {
+          "id": 1,
           "name": "لیست محصولات",
-          "url": "/products"
+          "url": "/products",
+          "icon": "rectangle-list"
         },
         {
+          "id": 2,
           "name": "محصول جدید",
-          "url": "/products/add-product"
+          "url": "/products/add-product",
+          "icon": "square-plus"
         }
-      ]
+      ],
+      "expandedSubMenu": "false"
     },
     {
       "id": 5,
       "name": "سیاست‌ها (policy)",
-      "url": "/policies"
+      "url": "/policies",
+      "icon": "check-double"
     }
   ]
 }

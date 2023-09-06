@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const axiosService = {
-  baseURL: "http://138.201.167.230:5050",
+  baseURL: "https://138.201.167.230:5050",
 
   createInstance(contentType = "application/json") {
     return axios.create({

@@ -8,16 +8,16 @@ import CategoriesPage from "../pages/categories/CategoriesPage";
 import AddCategoryPage from "../pages/categories/addCategory/AddCategory";
 import RolesPage from "../pages/roles/RolesPage";
 import PolicyPage from "../pages/policy/PolicyPage";
-import AddNewPolicy from "../components/policy/AddNewPolicy";
 import AddNewPolicyPage from "../pages/policy/addPolicy/AddNewPolicyPage";
 
 function Layout() {
   return (
     <div className="flex w-full h-screen">
-      <div className="sticky top-0 hidden w-1/4 h-screen py-10 mr-10 lg:block">
+      <div className="sticky top-0 w-[29vw] h-screen py-10 mr-10 hidden lg:block">
         <SidebarMenu />
       </div>
-      <div className="w-full h-screen py-10 mx-10 overflow-scroll">
+
+      <div className="w-full h-screen px-5 py-10 overflow-scroll">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
