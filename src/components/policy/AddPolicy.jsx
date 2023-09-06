@@ -26,6 +26,7 @@ const AddPolicy = () => {
     },
     productCount: selectedPolicy?.productCount,
     productPolicy: selectedPolicy?.productPolicy,
+    id: selectedPolicy?.id,
   });
 
   // console.log("llllllllllllll", policy);
@@ -73,7 +74,8 @@ const AddPolicy = () => {
 
       productCount: policy?.productCount,
       // productPolicy: policy?.productPolicy,
-      id: uuidv4(),
+      id: policy?.id,
+      isDelete: false,
     };
 
     axiosService
