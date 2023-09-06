@@ -65,7 +65,7 @@ const AddProduct = () => {
     product?.special && requestBody.append("IsSpecial", product?.special);
 
     axiosService
-      .put("/AdminProducts/updateProduct", requestBody)
+      .put("/AdminProducts/updateProduct", requestBody, "multipart/form-data")
       .then((res) => console.log(res));
   };
 
@@ -89,22 +89,21 @@ const AddProduct = () => {
 
       product?.status && requestBody.append("IsExists", product?.status);
 
-      product?.originImage &&
-        requestBody.append("productOriginImage", [
-          {
-            originImage: product?.originImage,
-          },
-        ]);
+      // product?.originImage &&
+      //   requestBody.append("productOriginImage", product?.originImage);
 
       requestBody.append("id", uuidv4());
 
       product?.policy && requestBody.append("policyId", product?.policy);
 
-      product?.gallery.length > 0 &&
+      for (let i = 0; i < product?.gallery.length; i++) {
         requestBody.append(
-          "ProductGalleries",
-          JSON.stringify(product?.gallery)
+          `productOriginImage[${i}].originImage`,
+          product?.gallery[i]
         );
+      }
+      // product?.gallery.length > 0 &&
+      //   requestBody.append("productOriginImage", product?.gallery);
 
       product?.color?.length > 0 &&
         requestBody.append("ProductColor", JSON.stringify(product?.color));

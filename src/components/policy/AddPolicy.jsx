@@ -48,6 +48,7 @@ const AddPolicy = () => {
       productCount: policy?.productCount,
       // productPolicy: policy?.productPolicy,
       id: uuidv4(),
+      isDelete: false,
     };
 
     axiosService

@@ -32,7 +32,7 @@ const ProductDetails = ({ product, setProduct }) => {
             onChange={(e) =>
               setProduct({
                 ...product,
-                categoryId: [{ productCategoryId: e.target.value }],
+                categoryId: e.target.value,
               })
             }
           >
