@@ -4,7 +4,7 @@ import { axiosService } from "../../services/axiosService";
 import React, { useState } from "react";
 
 const ProductsListItem = ({ product }) => {
-  const [img, setImg] = useState();
+  const [img, setImg] = useState(null);
 
   const getPic = () => {
     const body = {
@@ -39,7 +39,10 @@ const ProductsListItem = ({ product }) => {
                 backgroundImage: "url(68.gif)",
               }}
             ></span> */}
-            <img src={`data:image/jpeg;base64,${img}`} alt="" />
+            <img
+              src={img ? `data:image/jpeg;base64,${img}` : "/blank-image.svg"}
+              alt=""
+            />
           </a>
           {/* <!--end::Thumbnail--> */}
           <div className="ms-5">

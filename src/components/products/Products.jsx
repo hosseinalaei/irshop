@@ -24,8 +24,8 @@ const Products = () => {
       {loading ? (
         <Loading />
       ) : (
-        <div id="kt_app_content" className="app-content flex-column-fluid">
-          <div className="app-container container-xxl">
+        <div className="flex-column-fluid">
+          <div className="container-xxl">
             <div className="m-3 page-title d-flex flex-column justify-content-center">
               <h1 className="my-0 page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center">
                 لیست محصولات

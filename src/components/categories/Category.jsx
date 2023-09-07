@@ -46,11 +46,8 @@ const Category = () => {
                 </div> */}
                 </div>
 
-                <div className="card-toolbar">
-                  <a
-                    href="/categories/add-category"
-                    className="btn btn-primary"
-                  >
+                <div className="px-4 py-2 bg-blue-500 rounded-md shadow-sm hover:shadow-md hover:bg-blue-600">
+                  <a href="/categories/add-category" className="text-white">
                     افزودن دسته‌بندی
                   </a>
                 </div>

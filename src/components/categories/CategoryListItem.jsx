@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { axiosService } from "../../services/axiosService";
 
 const CategoryListItem = ({ category }) => {
-  const [img, setImg] = useState();
+  const [img, setImg] = useState(null);
 
   const getPic = () => {
     const body = {
@@ -39,13 +39,16 @@ const CategoryListItem = ({ category }) => {
                   backgroundImage: "url(68.gif)",
                 }}
               ></span> */}
-              <img src={`data:image/jpeg;base64,${img}`} alt="" />
+              <img
+                src={img ? `data:image/jpeg;base64,${img}` : "/blank-image.svg"}
+                alt=""
+              />
             </a>
             {/* <!--end::Thumbnail--> */}
             <div className="ms-5">
               {/* <!--begin::Title--> */}
               <a
-                href="../../demo23/dist/apps/ecommerce/catalog/edit-category.html"
+                href="#"
                 className="mb-1 text-gray-800 text-hover-primary fs-5 fw-bold"
                 data-kt-ecommerce-category-filter="category_name"
               >

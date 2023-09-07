@@ -47964,9 +47964,9 @@ label.rating-label:hover ~ .rating-label > i {
 .shadow-lg {
   box-shadow: var(--bs-box-shadow-lg);
 }
-.text-white {
+/* .text-white {
   color: var(--bs-text-white) !important;
-}
+} */
 .text-hover-white {
   transition: color 0.2s ease;
 }
