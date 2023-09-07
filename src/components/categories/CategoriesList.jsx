@@ -2,19 +2,9 @@ import React, { useEffect, useState } from "react";
 import CategoryListItem from "./CategoryListItem";
 import CategoryListHead from "./CategoryListHead";
 import { axiosService } from "../../services/axiosService";
+import Loading from "../common/Loading";
 
-const CategoriesList = () => {
-  const [categories, setCategories] = useState([]);
-  const getCategories = () => {
-    axiosService.get("/Products/product-active-categories").then((res) => {
-      setCategories(res?.data);
-      console.log("res?.datares?.data", res?.data);
-    });
-  };
-
-  useEffect(() => {
-    getCategories();
-  }, []);
+const CategoriesList = ({ loading, categories }) => {
   return (
     <>
       <div className="pt-0 card-body">
@@ -33,8 +23,8 @@ const CategoriesList = () => {
               />
             ))}
             {/* <CategoryListItem />
-            <CategoryListItem />
-            <CategoryListItem /> */}
+          <CategoryListItem />
+          <CategoryListItem /> */}
           </tbody>
         </table>
       </div>

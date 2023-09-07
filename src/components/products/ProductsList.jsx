@@ -4,17 +4,7 @@ import ProductListHead from "./ProductListHead";
 import ProductsListItem from "./ProductsListItem";
 import { axiosService } from "../../services/axiosService";
 
-const ProductsList = () => {
-  const [products, setProducts] = useState([]);
-  const getProducts = () => {
-    axiosService.get("/Products/getLastProduct").then((res) => {
-      setProducts(res?.data);
-    });
-  };
-
-  useEffect(() => {
-    getProducts();
-  }, []);
+const ProductsList = ({ products }) => {
   return (
     <div className="pt-0 card-body">
       {/* <!--begin::Table--> */}

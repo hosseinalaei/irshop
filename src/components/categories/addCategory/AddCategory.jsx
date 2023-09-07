@@ -6,12 +6,12 @@ import { v4 as uuidv4 } from "uuid";
 import { axiosService } from "../../../services/axiosService";
 import SliderSection from "./mainColumn/SliderSection";
 import { useLocation } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const AddCategory = () => {
   const location = useLocation();
 
   const selectedCategory = location?.state;
-  console.log(selectedCategory);
 
   const [category, setCategory] = useState({
     title: selectedCategory?.title || "",
@@ -22,8 +22,6 @@ const AddCategory = () => {
     sliderImage: selectedCategory?.categorySliderImagename || [],
     id: selectedCategory?.id || "",
   });
-
-  console.log("category: ", category);
 
   const addCategory = () => {
     const requestBody = new FormData();
@@ -38,8 +36,6 @@ const AddCategory = () => {
     category.sliderImage.length > 0 &&
       requestBody.append("sliderImage", category.sliderImage[0]);
 
-    console.log("requestBody: ", requestBody);
-
     if (category.title && category.urlTitle && category.originImage) {
       axiosService
         .post(
@@ -47,7 +43,31 @@ const AddCategory = () => {
           requestBody,
           "multipart/form-data"
         )
-        .then((res) => console.log(res));
+        .then((res) => {
+          res?.status === "Success"
+            ? toast.success("عملیات با موفقیت انجام شد", {
+                position: "top-left",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                // progress: undefined,
+                theme: "light",
+                style: { fontFamily: "inherit" },
+              })
+            : toast.error("مشکلی رخ داده است", {
+                position: "top-left",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                // progress: undefined,
+                theme: "light",
+                style: { fontFamily: "inherit" },
+              });
+        });
     }
   };
 
@@ -66,11 +86,36 @@ const AddCategory = () => {
 
     axiosService
       .put("/AdminProducts/updateCategory", requestBody)
-      .then((res) => console.log(res));
+      .then((res) => {
+        res?.status === "Success"
+          ? toast.success("عملیات با موفقیت انجام شد", {
+              position: "top-left",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              // progress: undefined,
+              theme: "light",
+              style: { fontFamily: "inherit" },
+            })
+          : toast.error("مشکلی رخ داده است", {
+              position: "top-left",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              // progress: undefined,
+              theme: "light",
+              style: { fontFamily: "inherit" },
+            });
+      });
   };
 
   return (
     <>
+      <ToastContainer />
       <div className="app-content flex-column-fluid">
         <div className="app-container container-xxl">
           <form className="form d-flex flex-column flex-lg-row">

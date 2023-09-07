@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { axiosService } from "../../services/axiosService";
+import { ToastContainer, toast } from "react-toastify";
 
 const EditRole = ({ setShowEditModal, selectedRole }) => {
   const [editedRole, setEditedRole] = useState({
@@ -19,11 +20,34 @@ const EditRole = ({ setShowEditModal, selectedRole }) => {
       id: editedRole?.id,
     };
     axiosService.put("/AdminAccount/updateRole", body).then((res) => {
-      console.log(res);
+      res?.status === "Success"
+        ? toast.success("عملیات با موفقیت انجام شد", {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            // progress: undefined,
+            theme: "light",
+            style: { fontFamily: "inherit" },
+          })
+        : toast.error("مشکلی رخ داده است", {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            // progress: undefined,
+            theme: "light",
+            style: { fontFamily: "inherit" },
+          });
     });
   };
   return (
     <>
+      <ToastContainer />
       <div
         style={{ height: "80%", overflow: "scroll" }}
         className="fixed z-50 w-full p-0 -translate-x-1/2 -translate-y-1/2 bg-white shadow-2xl top-1/2 left-1/2 rounded-2xl"

@@ -4,6 +4,7 @@ import { axiosService } from "../../../services/axiosService";
 import AsideColumn from "./asideColumn/AsideColumn";
 import { v4 as uuidv4 } from "uuid";
 import { useLocation, useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const AddProduct = () => {
   const location = useLocation();
@@ -66,7 +67,31 @@ const AddProduct = () => {
 
     axiosService
       .put("/AdminProducts/updateProduct", requestBody, "multipart/form-data")
-      .then((res) => console.log(res));
+      .then((res) => {
+        res?.status === "Success"
+          ? toast.success("عملیات با موفقیت انجام شد", {
+              position: "top-left",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              // progress: undefined,
+              theme: "light",
+              style: { fontFamily: "inherit" },
+            })
+          : toast.error("مشکلی رخ داده است", {
+              position: "top-left",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              // progress: undefined,
+              theme: "light",
+              style: { fontFamily: "inherit" },
+            });
+      });
   };
 
   const submitProduct = (e) => {
@@ -116,78 +141,83 @@ const AddProduct = () => {
           requestBody,
           "multipart/form-data"
         )
-        .then((res) => console.log(res));
+        .then((res) => {
+          res?.status === "Success"
+            ? toast.success("عملیات با موفقیت انجام شد", {
+                position: "top-left",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                // progress: undefined,
+                theme: "light",
+                style: { fontFamily: "inherit" },
+              })
+            : toast.error("مشکلی رخ داده است", {
+                position: "top-left",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                // progress: undefined,
+                theme: "light",
+                style: { fontFamily: "inherit" },
+              });
+        });
     }
   };
 
-  // const getProductForEdit = () => {
-  //   axiosService
-  //     .get(`/AdminProducts/get-product-for-edit/${params?.id}`)
-  //     .then((res) => {
-  //       console.log("getProductForEditgetProductForEdit", res);
-  //       // const selectedProduct = res?.data
-  //       // setProduct({
-  //       //   name: "",
-  //       //   description: "",
-  //       //   shortDescription: "",
-  //       //   policy: "",
-  //       //   categoryId: "",
-  //       //   status: true,
-  //       //   gallery: [],
-  //       //   originImage: [],
-  //       //   color: [],
-  //       //   special: false,
-  //       //   isDelete: false,
-  //       // })
-  //     });
-  // };
-
   return (
-    <div className="d-flex flex-column flex-column-fluid">
-      <div className="py-3 app-toolbar py-lg-0">
-        <div className="app-container container-xxl d-flex flex-stack">
-          <div className="page-title d-flex flex-column justify-content-center me-3">
-            <h1 className="my-0 page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center">
-              محصول جدید
-            </h1>
+    <>
+      <ToastContainer />
+      <div className="d-flex flex-column flex-column-fluid">
+        <div className="py-3 app-toolbar py-lg-0">
+          <div className="app-container container-xxl d-flex flex-stack">
+            <div className="page-title d-flex flex-column justify-content-center me-3">
+              <h1 className="my-0 page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center">
+                محصول جدید
+              </h1>
 
-            <ul className="pt-1 my-0 breadcrumb breadcrumb-separatorless fw-semibold fs-7">
-              <li className="breadcrumb-item text-muted">
-                <a href="/" className="text-muted text-hover-primary">
-                  صفحه اصلی
-                </a>
-              </li>
+              <ul className="pt-1 my-0 breadcrumb breadcrumb-separatorless fw-semibold fs-7">
+                <li className="breadcrumb-item text-muted">
+                  <a href="/" className="text-muted text-hover-primary">
+                    صفحه اصلی
+                  </a>
+                </li>
 
-              <li className="breadcrumb-item">
-                <span className="bg-gray-400 bullet w-5px h-2px"></span>
-              </li>
+                <li className="breadcrumb-item">
+                  <span className="bg-gray-400 bullet w-5px h-2px"></span>
+                </li>
 
-              <li className="breadcrumb-item text-muted">محصولات</li>
+                <li className="breadcrumb-item text-muted">محصولات</li>
 
-              <li className="breadcrumb-item">
-                <span className="bg-gray-400 bullet w-5px h-2px"></span>
-              </li>
+                <li className="breadcrumb-item">
+                  <span className="bg-gray-400 bullet w-5px h-2px"></span>
+                </li>
 
-              <li className="breadcrumb-item text-muted">محصول جدید</li>
-            </ul>
+                <li className="breadcrumb-item text-muted">محصول جدید</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div className="app-content flex-column-fluid">
+          <div className="">
+            <form className="form d-flex flex-column flex-lg-row">
+              <AsideColumn setProduct={setProduct} product={product} />
+              <MainColumn
+                setProduct={setProduct}
+                product={product}
+                submitProduct={(e) => {
+                  selectedProduct ? updateProduct(e) : submitProduct(e);
+                }}
+              />
+            </form>
           </div>
         </div>
       </div>
-      <div className="app-content flex-column-fluid">
-        <div className="">
-          <form className="form d-flex flex-column flex-lg-row">
-            <AsideColumn setProduct={setProduct} product={product} />
-            <MainColumn
-              setProduct={setProduct}
-              product={product}
-              submitProduct={(e) => {
-                selectedProduct ? updateProduct(e) : submitProduct(e);
-              }}
-            />
-          </form>
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
 

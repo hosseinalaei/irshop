@@ -1,7 +1,7 @@
 import Layout from "./layout/Layout";
 import "./assets/fonts/fonts-yekan/style.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "react-toastify/dist/ReactToastify.css";
 import * as Icons from "@fortawesome/free-solid-svg-icons";
 
 const iconList = Object.keys(Icons)

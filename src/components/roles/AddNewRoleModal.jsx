@@ -1,5 +1,6 @@
 import { axiosService } from "../../services/axiosService";
 import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 
 const AddNewRoleModal = ({ setShowAddModal }) => {
@@ -18,12 +19,35 @@ const AddNewRoleModal = ({ setShowAddModal }) => {
       id: uuidv4(),
     };
     axiosService.post("/AdminAccount/addrole", body).then((res) => {
-      console.log(res);
+      res?.status === "Success"
+        ? toast.success("عملیات با موفقیت انجام شد", {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            // progress: undefined,
+            theme: "light",
+            style: { fontFamily: "inherit" },
+          })
+        : toast.error("مشکلی رخ داده است", {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            // progress: undefined,
+            theme: "light",
+            style: { fontFamily: "inherit" },
+          });
     });
   };
 
   return (
     <>
+      <ToastContainer />
       <div
         style={{ height: "80%", overflow: "scroll" }}
         className="fixed z-50 w-full p-0 -translate-x-1/2 -translate-y-1/2 bg-white shadow-2xl top-1/2 left-1/2 rounded-2xl"
