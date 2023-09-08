@@ -138,34 +138,26 @@ const EditRole = ({ setShowEditModal, selectedRole }) => {
                   <button
                     type="reset"
                     className="btn btn-light me-3"
-                    // onClick={() => setShowAddModal(false)}
+                    onClick={() => setShowEditModal(false)}
                   >
                     انصراف
                   </button>
+
                   <button
                     type="submit"
-                    className="btn btn-primary"
                     onClick={() => {
                       updateRole();
                       setShowEditModal(false);
                     }}
+                    className="px-10 py-2 text-2xl font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600"
                   >
-                    <span className="indicator-label">ثیت</span>
-                    <span className="indicator-progress">
-                      لطفا صبر کنید...
-                      <span className="align-middle spinner-border spinner-border-sm ms-2"></span>
-                    </span>
+                    ثبت
                   </button>
                 </div>
-                {/* <!--end::Actions--> */}
               </form>
-              {/* <!--end::Form--> */}
             </div>
-            {/* <!--end::Modal body--> */}
           </div>
-          {/* <!--end::Modal content--> */}
         </div>
-        {/* <!--end::Modal dialog--> */}
       </div>
     </>
   );

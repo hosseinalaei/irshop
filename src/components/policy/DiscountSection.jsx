@@ -2,7 +2,8 @@ import React from "react";
 
 const DiscountSection = ({ policy, setPolicy }) => {
   return (
-    <div className="p-10">
+    <div className="px-10 py-5">
+      <h3 className="mb-3">تخفیف:</h3>
       <div className="flex-wrap gap-5 d-flex">
         <div className="fv-row w-100 flex-md-root">
           <label className="required form-label">اولویت تخفیف</label>

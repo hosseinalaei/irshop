@@ -9,15 +9,19 @@ import AddCategoryPage from "../pages/categories/addCategory/AddCategory";
 import RolesPage from "../pages/roles/RolesPage";
 import PolicyPage from "../pages/policy/PolicyPage";
 import AddNewPolicyPage from "../pages/policy/addPolicy/AddNewPolicyPage";
+import MobileSidebarMenu from "../components/sidebarMenu/MobileSidebarMenu";
 
 function Layout() {
   return (
     <div className="flex w-full h-screen">
-      <div className="sticky top-0 w-[29vw] h-screen py-10 mr-10 hidden lg:block">
+      <div className="lg:hidden">
+        <MobileSidebarMenu />
+      </div>
+      <div className="w-[29vw] h-screen py-10 mr-10 hidden lg:block">
         <SidebarMenu />
       </div>
 
-      <div className="w-full h-screen px-5 py-10 overflow-scroll">
+      <div className="w-full lg:w-[71vw] h-screen px-5 py-0 overflow-auto lg:py-10">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />

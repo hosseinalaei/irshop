@@ -21,25 +21,14 @@ const MainColumn = ({ product, setProduct, submitProduct }) => {
           </div>
         </div>
       </div>
+
       <div className="d-flex justify-content-end">
         <button
           onClick={(e) => submitProduct(e)}
-          id="kt_ecommerce_add_product_submit"
-          className="btn btn-primary"
+          className="px-10 py-2 text-2xl font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600"
         >
-          <span className="indicator-label">ثبت</span>
-          <span className="indicator-progress">
-            Please wait...
-            <span className="align-middle spinner-border spinner-border-sm ms-2"></span>
-          </span>
+          ثبت
         </button>
-        <a
-          href="/products"
-          id="kt_ecommerce_add_product_cancel"
-          className="btn btn-light me-5"
-        >
-          انصراف
-        </a>
       </div>
     </div>
   );

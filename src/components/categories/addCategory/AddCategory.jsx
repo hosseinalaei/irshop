@@ -5,7 +5,7 @@ import GeneralSection from "./mainColumn/GeneralSection";
 import { v4 as uuidv4 } from "uuid";
 import { axiosService } from "../../../services/axiosService";
 import SliderSection from "./mainColumn/SliderSection";
-import { useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
 const AddCategory = () => {
@@ -117,7 +117,28 @@ const AddCategory = () => {
     <>
       <ToastContainer />
       <div className="app-content flex-column-fluid">
-        <div className="app-container container-xxl">
+        <div className="container-xxl">
+          <div className="m-3 page-title d-flex flex-column justify-content-center">
+            <h1 className="my-0 page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center">
+              افزودن دسته‌بندی
+            </h1>
+
+            <ul className="pt-1 my-0 breadcrumb breadcrumb-separatorless fw-semibold fs-7">
+              <NavLink
+                to="/"
+                className="text-lg font-bold text-black hover:text-red-500"
+              >
+                صفحه اصلی
+              </NavLink>
+
+              <li className="breadcrumb-item">/</li>
+              <li className="text-lg font-bold text-black hover:text-red-500">
+                افزودن دسته‌بندی
+              </li>
+
+              {/* <li className="breadcrumb-item text-muted">نقش‌ها</li> */}
+            </ul>
+          </div>
           <form className="form d-flex flex-column flex-lg-row">
             <div className="mx-5 d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7">
               <OriginImage category={category} setCategory={setCategory} />
@@ -128,18 +149,15 @@ const AddCategory = () => {
               <SliderSection category={category} setCategory={setCategory} />
             </div>
           </form>
-          <div className="d-flex justify-content-end">
+
+          <div className="mt-5 d-flex justify-content-end">
             <button
               onClick={() =>
                 selectedCategory ? updateCategory() : addCategory()
               }
-              className="btn btn-primary"
+              className="px-10 py-2 text-2xl font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600"
             >
-              <span className="indicator-label">ثبت</span>
-              <span className="indicator-progress">
-                لطفا صبر کنید
-                <span className="align-middle spinner-border spinner-border-sm ms-2"></span>
-              </span>
+              ثبت
             </button>
           </div>
         </div>

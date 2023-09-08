@@ -3,7 +3,7 @@ import DiscountSection from "./DiscountSection";
 import BasketSection from "./BasketSection";
 import { axiosService } from "../../services/axiosService";
 import { v4 as uuidv4 } from "uuid";
-import { useLocation, useParams } from "react-router-dom";
+import { NavLink, useLocation, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
 const AddPolicy = () => {
@@ -110,34 +110,24 @@ const AddPolicy = () => {
     <>
       <ToastContainer />
       <div className="d-flex flex-column flex-column-fluid">
-        <div className="py-3 app-toolbar py-lg-0">
-          <div className="app-container container-xxl d-flex flex-stack">
-            <div className="page-title d-flex flex-column justify-content-center me-3">
-              <h1 className="my-0 page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center">
-                سیاست جدید
-              </h1>
+        <div className="m-3 page-title d-flex flex-column justify-content-center">
+          <h1 className="my-0 page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center">
+            افزودن policy
+          </h1>
 
-              <ul className="pt-1 my-0 breadcrumb breadcrumb-separatorless fw-semibold fs-7">
-                <li className="breadcrumb-item text-muted">
-                  <a href="/" className="text-muted text-hover-primary">
-                    صفحه اصلی
-                  </a>
-                </li>
+          <ul className="pt-1 my-0 breadcrumb breadcrumb-separatorless fw-semibold fs-7">
+            <NavLink
+              to="/"
+              className="text-lg font-bold text-black hover:text-red-500"
+            >
+              صفحه اصلی
+            </NavLink>
 
-                <li className="breadcrumb-item">
-                  <span className="bg-gray-400 bullet w-5px h-2px"></span>
-                </li>
-
-                <li className="breadcrumb-item text-muted">سیاست‌ها</li>
-
-                <li className="breadcrumb-item">
-                  <span className="bg-gray-400 bullet w-5px h-2px"></span>
-                </li>
-
-                <li className="breadcrumb-item text-muted"> سیاست جدید</li>
-              </ul>
-            </div>
-          </div>
+            <li className="breadcrumb-item">/</li>
+            <li className="text-lg font-bold text-black hover:text-red-500">
+              افزودن policy
+            </li>
+          </ul>
         </div>
         <div className="app-content flex-column-fluid">
           <div className="">
@@ -178,44 +168,23 @@ const AddPolicy = () => {
                       }
                     />
                   </div>
-                  {/* <div className="px-10 mb-10 fv-row">
-                  <label className="required form-label">product policy</label>
-                  <input
-                    type="text"
-                    name="short-description"
-                    className="mb-2 form-control"
-                    placeholder="product policy"
-                    value={policy?.productPolicy}
-                    onChange={(e) =>
-                      setPolicy({
-                        ...policy,
-                        productPolicy: e.target.value,
-                      })
-                    }
-                  />
-                </div> */}
                 </div>
               </div>
               <div className="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
-                <div className="py-4 card card-flush">
+                <div className="card card-flush">
                   <DiscountSection policy={policy} setPolicy={setPolicy} />
                 </div>
-                <div className="py-4 card card-flush">
+                <div className="card card-flush">
                   <BasketSection policy={policy} setPolicy={setPolicy} />
                 </div>
               </div>
             </form>
-            <div className="d-flex justify-content-end">
+            <div className="mt-5 d-flex justify-content-end">
               <button
                 onClick={() => (selectedPolicy ? updatePolicy() : addPolicy())}
-                id="kt_ecommerce_add_product_submit"
-                className="btn btn-primary"
+                className="px-10 py-2 text-2xl font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600"
               >
-                <span className="indicator-label">ثبت</span>
-                <span className="indicator-progress">
-                  Please wait...
-                  <span className="align-middle spinner-border spinner-border-sm ms-2"></span>
-                </span>
+                ثبت
               </button>
             </div>
           </div>

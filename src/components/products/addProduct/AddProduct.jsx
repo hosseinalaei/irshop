@@ -3,7 +3,7 @@ import MainColumn from "./mainColumn/MainColumn";
 import { axiosService } from "../../../services/axiosService";
 import AsideColumn from "./asideColumn/AsideColumn";
 import { v4 as uuidv4 } from "uuid";
-import { useLocation, useParams } from "react-router-dom";
+import { NavLink, useLocation, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
 const AddProduct = () => {
@@ -173,34 +173,26 @@ const AddProduct = () => {
     <>
       <ToastContainer />
       <div className="d-flex flex-column flex-column-fluid">
-        <div className="py-3 app-toolbar py-lg-0">
-          <div className="app-container container-xxl d-flex flex-stack">
-            <div className="page-title d-flex flex-column justify-content-center me-3">
-              <h1 className="my-0 page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center">
-                محصول جدید
-              </h1>
+        <div className="m-3 page-title d-flex flex-column justify-content-center">
+          <h1 className="my-0 page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center">
+            افزودن محصول
+          </h1>
 
-              <ul className="pt-1 my-0 breadcrumb breadcrumb-separatorless fw-semibold fs-7">
-                <li className="breadcrumb-item text-muted">
-                  <a href="/" className="text-muted text-hover-primary">
-                    صفحه اصلی
-                  </a>
-                </li>
+          <ul className="pt-1 my-0 breadcrumb breadcrumb-separatorless fw-semibold fs-7">
+            <NavLink
+              to="/"
+              className="text-lg font-bold text-black hover:text-red-500"
+            >
+              صفحه اصلی
+            </NavLink>
 
-                <li className="breadcrumb-item">
-                  <span className="bg-gray-400 bullet w-5px h-2px"></span>
-                </li>
+            <li className="breadcrumb-item">/</li>
+            <li className="text-lg font-bold text-black hover:text-red-500">
+              افزودن محصول
+            </li>
 
-                <li className="breadcrumb-item text-muted">محصولات</li>
-
-                <li className="breadcrumb-item">
-                  <span className="bg-gray-400 bullet w-5px h-2px"></span>
-                </li>
-
-                <li className="breadcrumb-item text-muted">محصول جدید</li>
-              </ul>
-            </div>
-          </div>
+            {/* <li className="breadcrumb-item text-muted">نقش‌ها</li> */}
+          </ul>
         </div>
         <div className="app-content flex-column-fluid">
           <div className="">

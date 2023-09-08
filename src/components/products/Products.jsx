@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ProductsList from "./ProductsList";
 import Loading from "../common/Loading";
 import { axiosService } from "../../services/axiosService";
+import { NavLink } from "react-router-dom";
 
 const Products = () => {
   const [loading, setLoading] = useState(true);
@@ -32,17 +33,19 @@ const Products = () => {
               </h1>
 
               <ul className="pt-1 my-0 breadcrumb breadcrumb-separatorless fw-semibold fs-7">
-                <li className="breadcrumb-item text-muted">
-                  <a href="/" className="text-muted text-hover-primary">
-                    صفحه اصلی
-                  </a>
+                <NavLink
+                  to="/"
+                  className="text-lg font-bold text-black hover:text-red-500"
+                >
+                  صفحه اصلی
+                </NavLink>
+
+                <li className="breadcrumb-item">/</li>
+                <li className="text-lg font-bold text-black hover:text-red-500">
+                  محصولات
                 </li>
 
-                <li className="breadcrumb-item">
-                  <span className="bg-gray-400 bullet w-5px h-2px"></span>
-                </li>
-
-                <li className="breadcrumb-item text-muted">محصولات</li>
+                {/* <li className="breadcrumb-item text-muted">نقش‌ها</li> */}
               </ul>
             </div>
             <div className="card card-flush">
