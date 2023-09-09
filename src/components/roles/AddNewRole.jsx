@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import AddNewRoleModal from "./AddNewRoleModal";
 
-const AddNewRole = () => {
-  const [showAddModal, setShowAddModal] = useState(false);
+const AddNewRole = ({ setShowToast, setShowAddModal, showAddModal }) => {
+  // const [showAddModal, setShowAddModal] = useState(false);
 
   return (
     <>
@@ -24,7 +24,12 @@ const AddNewRole = () => {
           </div>
         </div>
       </div>
-      {showAddModal && <AddNewRoleModal setShowAddModal={setShowAddModal} />}
+      {showAddModal && (
+        <AddNewRoleModal
+          setShowAddModal={setShowAddModal}
+          setShowToast={setShowToast}
+        />
+      )}
     </>
   );
 };

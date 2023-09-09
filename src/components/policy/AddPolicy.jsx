@@ -55,7 +55,31 @@ const AddPolicy = () => {
 
     axiosService
       .post("/AdminProducts/registerPolicy", requestBody)
-      .then((res) => console.log(res));
+      .then((res) =>
+        res?.status === "Success"
+          ? toast.success("عملیات با موفقیت انجام شد", {
+              position: "top-left",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              // progress: undefined,
+              theme: "light",
+              style: { fontFamily: "inherit" },
+            })
+          : toast.error("مشکلی رخ داده است", {
+              position: "top-left",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              // progress: undefined,
+              theme: "light",
+              style: { fontFamily: "inherit" },
+            })
+      );
   };
 
   const updatePolicy = () => {

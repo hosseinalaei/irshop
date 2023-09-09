@@ -17,11 +17,11 @@ function Layout() {
       <div className="lg:hidden">
         <MobileSidebarMenu />
       </div>
-      <div className="w-[29vw] h-screen py-10 mr-10 hidden lg:block">
+      <div className="w-[20vw] h-screen py-10 mr-10 hidden lg:block">
         <SidebarMenu />
       </div>
 
-      <div className="w-full lg:w-[71vw] h-screen px-5 py-0 overflow-auto lg:py-10">
+      <div className="w-full lg:w-[80vw] h-screen px-5 py-10 overflow-auto ">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />

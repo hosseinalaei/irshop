@@ -4,6 +4,7 @@ import EditRole from "./EditRole";
 import { axiosService } from "../../services/axiosService";
 import Loading from "../common/Loading";
 import { NavLink } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const Roles = () => {
   // const roles = data?.roles;
@@ -11,6 +12,33 @@ const Roles = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedRole, setSelectedRole] = useState({});
   const [loading, setLoading] = useState(true);
+  const [showToast, setShowToast] = useState("");
+
+  useEffect(() => {
+    showToast === "Success"
+      ? toast.success("عملیات با موفقیت انجام شد", {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          // progress: undefined,
+          theme: "light",
+          style: { fontFamily: "inherit" },
+        })
+      : toast.error("مشکلی رخ داده است", {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          // progress: undefined,
+          theme: "light",
+          style: { fontFamily: "inherit" },
+        });
+  }, [showToast]);
 
   const showEditModalFun = (item) => {
     setShowEditModal(true);
@@ -29,12 +57,15 @@ const Roles = () => {
     getRoles();
   }, []);
 
+  const [showAddModal, setShowAddModal] = useState(false);
+
   return (
     <>
       {loading ? (
         <Loading />
       ) : (
         <>
+          <ToastContainer />
           <div className="m-3 page-title d-flex flex-column justify-content-center">
             <h1 className="my-0 page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center">
               نقش‌ها
@@ -56,7 +87,7 @@ const Roles = () => {
               {/* <li className="breadcrumb-item text-muted">نقش‌ها</li> */}
             </ul>
           </div>
-          <div className="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-5 g-xl-9">
+          <div className="relative row row-cols-1 row-cols-md-2 row-cols-xl-3 g-5 g-xl-9">
             {roles &&
               roles?.map((item, index) => (
                 <div key={index} className="col-md-4">
@@ -92,7 +123,26 @@ const Roles = () => {
                 </div>
               ))}
 
-            <AddNewRole />
+            {(showAddModal || showEditModal) && (
+              <div>
+                <div
+                  className="fixed top-0 left-0 z-50 w-full h-full bg-black opacity-50"
+                  onClick={() =>
+                    showAddModal
+                      ? setShowAddModal(false)
+                      : setShowEditModal(false)
+                  }
+                >
+                  {/* Clicking on the backdrop should close the modal */}
+                </div>
+              </div>
+            )}
+            <AddNewRole
+              setShowToast={setShowToast}
+              setShowAddModal={setShowAddModal}
+              showAddModal={showAddModal}
+            />
+
             {showEditModal && (
               // <div className="z-50 w-1/2 h-full bg-black">
               <EditRole
