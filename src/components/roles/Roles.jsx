@@ -15,29 +15,31 @@ const Roles = () => {
   const [showToast, setShowToast] = useState("");
 
   useEffect(() => {
-    showToast === "Success"
-      ? toast.success("عملیات با موفقیت انجام شد", {
-          position: "top-left",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          // progress: undefined,
-          theme: "light",
-          style: { fontFamily: "inherit" },
-        })
-      : toast.error("مشکلی رخ داده است", {
-          position: "top-left",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          // progress: undefined,
-          theme: "light",
-          style: { fontFamily: "inherit" },
-        });
+    if (showToast === "Success") {
+      toast.success("عملیات با موفقیت انجام شد", {
+        position: "top-left",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        // progress: undefined,
+        theme: "light",
+        style: { fontFamily: "inherit" },
+      });
+    } else if (showToast === "Error") {
+      toast.error("مشکلی رخ داده است", {
+        position: "top-left",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        // progress: undefined,
+        theme: "light",
+        style: { fontFamily: "inherit" },
+      });
+    }
   }, [showToast]);
 
   const showEditModalFun = (item) => {
@@ -141,6 +143,7 @@ const Roles = () => {
               setShowToast={setShowToast}
               setShowAddModal={setShowAddModal}
               showAddModal={showAddModal}
+              getRoles={getRoles}
             />
 
             {showEditModal && (

@@ -2,7 +2,7 @@ import { axiosService } from "../../services/axiosService";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-const AddNewRoleModal = ({ setShowAddModal, setShowToast }) => {
+const AddNewRoleModal = ({ setShowAddModal, setShowToast, getRoles }) => {
   const [role, setRole] = useState({
     name: "",
     title: "",
@@ -18,9 +18,14 @@ const AddNewRoleModal = ({ setShowAddModal, setShowToast }) => {
       id: uuidv4(),
     };
     axiosService.post("/AdminAccount/addrole", body).then((res) => {
-      res?.status === "Success"
-        ? setShowToast("Success")
-        : setShowToast("error");
+      if (res?.status === "Success") {
+        setShowToast("Success");
+        setTimeout(() => {
+          getRoles();
+        }, 500);
+      } else {
+        setShowToast("error");
+      }
     });
   };
 
