@@ -57,6 +57,12 @@
       "name": "سیاست‌ها (policy)",
       "url": "/policies",
       "icon": "check-double"
+    },
+    {
+      "id": 6,
+      "name": "کاربران",
+      "url": "/users",
+      "icon": "person"
     }
   ]
 }
