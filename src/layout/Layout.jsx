@@ -11,6 +11,7 @@ import PolicyPage from "../pages/policy/PolicyPage";
 import AddNewPolicyPage from "../pages/policy/addPolicy/AddNewPolicyPage";
 import MobileSidebarMenu from "../components/sidebarMenu/MobileSidebarMenu";
 import UsersPage from "../pages/users/UsersPage";
+import SliderPage from "../pages/slider/SliderPage";
 
 function Layout() {
   return (
@@ -53,6 +54,7 @@ function Layout() {
             element={<AddNewPolicyPage />}
           />
           <Route path="/users" element={<UsersPage />} />
+          <Route path="/slider" element={<SliderPage />} />
         </Routes>
       </div>
     </div>

@@ -63,6 +63,12 @@
       "name": "کاربران",
       "url": "/users",
       "icon": "person"
+    },
+    {
+      "id": 7,
+      "name": "اسلایدر",
+      "url": "/slider",
+      "icon": "images"
     }
   ]
 }
