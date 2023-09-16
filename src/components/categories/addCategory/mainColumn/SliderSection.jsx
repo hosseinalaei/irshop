@@ -1,25 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { axiosService } from "../../../../services/axiosService";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const SliderSection = ({ category, setCategory }) => {
   const [file, setFile] = useState([]);
   const inputRef = React.useRef(null);
   const [img, setImg] = useState();
 
-  console.log(category);
+  // console.log(category);
 
-  useEffect(() => {
-    category?.sliderImage?.length > 0 &&
-      axiosService
-        .post("/Get/GetMedia", {
-          id: category?.id,
-          mediaFieldName: "categorySliderImagename",
-        })
-        .then((res) => {
-          setImg(res?.data);
-        })
-        .catch((err) => console.log(err));
-  }, [category?.sliderImage]);
+  // useEffect(() => {
+  //   category?.sliderImage?.length > 0 &&
+  //     axiosService
+  //       .post("/Get/GetMedia", {
+  //         id: category?.id,
+  //         mediaFieldName: "categorySliderImagename",
+  //       })
+  //       .then((res) => {
+  //         setImg(res?.data);
+  //       })
+  //       .catch((err) => console.log(err));
+  // }, [category?.sliderImage]);
 
   useEffect(() => {
     console.log("file: ", file);
@@ -56,8 +57,16 @@ const SliderSection = ({ category, setCategory }) => {
 
       setFile([...file, ...[droppedFile]]);
       // setProductGallery(file);
-      console.log("jjjjjjjjjjjjjjjj", file, droppedFile);
+      // console.log("jjjjjjjjjjjjjjjj", file, droppedFile);
     }
+  };
+
+  const deleteImage = (index) => {
+    const updatedImages = [...file];
+
+    updatedImages.splice(index, 1);
+
+    setFile(updatedImages);
   };
 
   return (
@@ -67,14 +76,11 @@ const SliderSection = ({ category, setCategory }) => {
           <h2>تصاویر</h2>
         </div>
       </div>
-      <div className="pt-0 card-body">
-        <div className="mb-2 fv-row">
+      <div className="flex justify-between pt-0 card-body">
+        <div className="mb-2 ">
           <p>تصاویر دسته‌بندی را انتخاب کنید</p>
 
-          {/* <img src={`data:image/jpeg;base64,${img}`} alt="" /> */}
-
           <div className="form-container">
-            {/* Provide a drop zone and an alternative button inside it to upload files. */}
             <div
               // onClick={(e) => {
               //   inputRef?.current?.click();
@@ -102,8 +108,8 @@ const SliderSection = ({ category, setCategory }) => {
                 آپلود فایل
               </button>
 
-              {/* Hide the crappy looking default HTML input */}
               <input
+                multiple
                 ref={inputRef}
                 type="file"
                 style={{ display: "none" }}
@@ -112,48 +118,26 @@ const SliderSection = ({ category, setCategory }) => {
                   handleFileChange(e);
                 }}
               />
-              {/* <input
-                ref={inputRef}
-                type="file"
-                multiple
-                style={{ display: "none" }}
-                onChange={(e) => {
-                  setFiles(e, "a");
-                  inputRef.current.value = null;
-                  handleSubmit(e);
-                }}
-              /> */}
             </div>
-            {/* Display the files to be uploaded */}
-            <div>
-              {/* <ul>
-                {fileNames.map((name) => (
-                  <li key={name}>
-                    <span>
-                      {name?.length > 10
-                        ? "..." + name?.substring(0, 10)
-                        : name}
-                    </span>
-
-                    <span onClick={() => removeFile(name)}>
-                      <i className="fa fa-times" />
-                    </span>
-                  </li>
-                ))}
-              </ul> */}
-
-              {/* {files.length > 0 && (
-                <ul>
-
-                  <li className="clear-all">
-                    <button onClick={() => clearAllFiles()}>
-                      پاک کردن همه
-                    </button>
-                  </li>
-                </ul>
-              )} */}
-            </div>
+            <div></div>
           </div>
+        </div>
+        <div className="flex flex-wrap w-3/5">
+          {file?.length > 0 &&
+            Array.from(file).map((item, index) => (
+              <div className="relative" key={index}>
+                <FontAwesomeIcon
+                  icon="times"
+                  color="red"
+                  onClick={() => deleteImage(index)}
+                  className="absolute p-1 text-2xl rounded-full cursor-pointer left-1 -top-2 hover:bg-slate-200"
+                />
+                <img
+                  src={URL.createObjectURL(item)}
+                  className="w-20 h-20 m-2"
+                />
+              </div>
+            ))}
         </div>
       </div>
     </div>

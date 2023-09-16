@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import OriginImage from "./asideColumn/OriginImage";
 import ParentCategory from "./asideColumn/ParentCategory";
 import GeneralSection from "./mainColumn/GeneralSection";
-import { v4 as uuidv4 } from "uuid";
 import { axiosService } from "../../../services/axiosService";
 import SliderSection from "./mainColumn/SliderSection";
 import { NavLink, useLocation } from "react-router-dom";
@@ -48,10 +47,7 @@ const AddCategory = () => {
       title: category?.title,
       urlTitle: category?.urlTitle,
       parentId: category?.parentId,
-<<<<<<< HEAD
       isDelete: false,
-=======
->>>>>>> e5deb067c005a44d4257bd1a10816f3f035f3f80
     };
 
     if (category.title && category.urlTitle && category.originImage) {

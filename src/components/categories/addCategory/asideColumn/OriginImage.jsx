@@ -49,7 +49,9 @@ const OriginImage = ({ category, setCategory }) => {
           <div
             className="mb-3 image-input image-input-empty image-input-outline image-input-placeholder"
             style={{
-              backgroundImage: "url(/blank-image.svg)",
+              backgroundImage: file
+                ? `url(${URL.createObjectURL(file)})`
+                : "url(/blank-image.svg)",
             }}
           >
             <div
@@ -75,13 +77,15 @@ const OriginImage = ({ category, setCategory }) => {
                 }}
               />
             </div>
-            {/* <div className="image-input-wrapper w-150px h-150px"></div> */}
-            <label
+            {/* <div className="image-input-wrapper w-150px h-150px">
+              {file && <img src={URL.createObjectURL(file)} alt="" />}
+            </div> */}
+            {/* <label
               className="shadow btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body"
               data-kt-image-input-action="change"
               data-bs-toggle="tooltip"
               title="Change avatar"
-            ></label>
+            ></label> */}
             <span
               className="shadow btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body"
               data-kt-image-input-action="cancel"

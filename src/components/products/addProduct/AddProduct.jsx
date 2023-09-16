@@ -10,7 +10,7 @@ const AddProduct = () => {
   const location = useLocation();
   const selectedProduct = location?.state;
 
-  console.log("selectedProductselectedProduct", selectedProduct);
+  // console.log("selectedProductselectedProduct", selectedProduct);
 
   const [product, setProduct] = useState({
     name: selectedProduct?.productName || "",
@@ -26,6 +26,14 @@ const AddProduct = () => {
     isDelete: false,
     price: selectedProduct?.price || "",
   });
+
+  const postMedia = (id, image) => {
+    const body = new FormData();
+    body.append("originImage", image);
+    body.append("mediaFieldName", "productImageName");
+    body.append("id", id);
+    axiosService.post("/Get/PostMedia", body, "multipart/form-data");
+  };
 
   const updateProduct = (e) => {
     e.preventDefault();
@@ -149,29 +157,62 @@ const AddProduct = () => {
       axiosService
         .post("/AdminProducts/registerProduct", requestBody)
         .then((res) => {
-          res?.status === "Success"
-            ? toast.success("عملیات با موفقیت انجام شد", {
-                position: "top-left",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                // progress: undefined,
-                theme: "light",
-                style: { fontFamily: "inherit" },
-              })
-            : toast.error("مشکلی رخ داده است", {
-                position: "top-left",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                // progress: undefined,
-                theme: "light",
-                style: { fontFamily: "inherit" },
-              });
+          if (res?.status === "Success") {
+            toast.success("عملیات با موفقیت انجام شد", {
+              position: "top-left",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              // progress: undefined,
+              theme: "light",
+              style: { fontFamily: "inherit" },
+            });
+
+            for (let i = 0; i < product?.gallery.length; i++) {
+              postMedia(res?.data?.id, product?.gallery[i]);
+              // requestBody.append(
+              //   `productOriginImage[${i}].originImage`,
+              //   product?.gallery[i]
+              // );
+            }
+          } else {
+            toast.error("مشکلی رخ داده است", {
+              position: "top-left",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              // progress: undefined,
+              theme: "light",
+              style: { fontFamily: "inherit" },
+            });
+          }
+          // res?.status === "Success"
+          //   ? toast.success("عملیات با موفقیت انجام شد", {
+          //       position: "top-left",
+          //       autoClose: 3000,
+          //       hideProgressBar: false,
+          //       closeOnClick: true,
+          //       pauseOnHover: true,
+          //       draggable: true,
+          //       // progress: undefined,
+          //       theme: "light",
+          //       style: { fontFamily: "inherit" },
+          //     })
+          //   : toast.error("مشکلی رخ داده است", {
+          //       position: "top-left",
+          //       autoClose: 3000,
+          //       hideProgressBar: false,
+          //       closeOnClick: true,
+          //       pauseOnHover: true,
+          //       draggable: true,
+          //       // progress: undefined,
+          //       theme: "light",
+          //       style: { fontFamily: "inherit" },
+          //     });
         });
     }
   };
