@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { axiosService } from "../../../../services/axiosService";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const MediaSection = ({ product, setProduct }) => {
   const [file, setFile] = useState([]);
@@ -59,6 +60,14 @@ const MediaSection = ({ product, setProduct }) => {
     }
   };
 
+  const deleteImage = (index) => {
+    const updatedImages = [...file];
+
+    updatedImages.splice(index, 1);
+
+    setFile(updatedImages);
+  };
+
   return (
     <div className="py-4 card card-flush">
       <div className="card-header">
@@ -66,7 +75,7 @@ const MediaSection = ({ product, setProduct }) => {
           <h2>تصاویر</h2>
         </div>
       </div>
-      <div className="pt-0 card-body">
+      <div className="flex justify-between pt-0 card-body">
         <div className="mb-2 fv-row">
           <p>تصاویر محصول را انتخاب کنید</p>
 
@@ -101,7 +110,6 @@ const MediaSection = ({ product, setProduct }) => {
                 آپلود فایل
               </button>
 
-              {/* Hide the crappy looking default HTML input */}
               <input
                 ref={inputRef}
                 multiple
@@ -112,48 +120,25 @@ const MediaSection = ({ product, setProduct }) => {
                   handleFileChange(e);
                 }}
               />
-              {/* <input
-                ref={inputRef}
-                type="file"
-                multiple
-                style={{ display: "none" }}
-                onChange={(e) => {
-                  setFiles(e, "a");
-                  inputRef.current.value = null;
-                  handleSubmit(e);
-                }}
-              /> */}
-            </div>
-            {/* Display the files to be uploaded */}
-            <div>
-              {/* <ul>
-                {fileNames.map((name) => (
-                  <li key={name}>
-                    <span>
-                      {name?.length > 10
-                        ? "..." + name?.substring(0, 10)
-                        : name}
-                    </span>
-
-                    <span onClick={() => removeFile(name)}>
-                      <i className="fa fa-times" />
-                    </span>
-                  </li>
-                ))}
-              </ul> */}
-
-              {/* {files.length > 0 && (
-                <ul>
-
-                  <li className="clear-all">
-                    <button onClick={() => clearAllFiles()}>
-                      پاک کردن همه
-                    </button>
-                  </li>
-                </ul>
-              )} */}
             </div>
           </div>
+        </div>
+        <div className="flex flex-wrap w-3/5">
+          {file?.length > 0 &&
+            Array.from(file).map((item, index) => (
+              <div className="relative" key={index}>
+                <FontAwesomeIcon
+                  icon="times"
+                  color="red"
+                  onClick={() => deleteImage(index)}
+                  className="absolute p-1 text-2xl rounded-full cursor-pointer left-1 -top-2 hover:bg-slate-200"
+                />
+                <img
+                  src={URL.createObjectURL(item)}
+                  className="w-20 h-20 m-2"
+                />
+              </div>
+            ))}
         </div>
       </div>
     </div>

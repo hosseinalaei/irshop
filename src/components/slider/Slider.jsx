@@ -3,6 +3,7 @@ import UploadImages from "./UploadImages";
 import ShowImages from "./ShowImages";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { axiosService } from "../../services/axiosService";
 
 const Slider = () => {
   const [file, setFile] = useState([]);
@@ -17,9 +18,41 @@ const Slider = () => {
     console.log(index, images);
   };
 
-  const submitSlider = () => {
-    console.log(file);
+  const [slider, setSlider] = useState({
+    title: "",
+    summary: "",
+    description: "",
+    link: "",
+  });
+
+  const postMedia = (id, image, key) => {
+    const body = new FormData();
+    body.append("originImage", image);
+    body.append("mediaFieldName", key);
+    body.append("id", id);
+    axiosService.post("/Get/PostMedia", body, "multipart/form-data");
   };
+
+  const createSlider = () => {
+    console.log(file);
+    const body = {
+      sliderImageName: file[0]?.name,
+      sliderBackImageName: file[0]?.name,
+      sliderAvatarImageName: file[0]?.name,
+      title: "slider1",
+      summary: "this is a slider",
+      description: "test",
+      link: "www.a.com",
+    };
+
+    axiosService.post("/AdminSlider/createSlider", body).then((res) => {
+      if (res?.status === "Success") {
+        console.log(res);
+        postMedia(res?.data?.id, file[0], "sliderImageName");
+      }
+    });
+  };
+
   return (
     <>
       <div className="m-3 page-title d-flex flex-column justify-content-center">
@@ -45,6 +78,58 @@ const Slider = () => {
       </div>
       <div className="card">
         <div className="card-body">
+          <div className="flex justify-between">
+            <div className="mb-10 fv-row">
+              <label className="required form-label">عنوان</label>
+              <input
+                type="text"
+                name="title"
+                className="mb-2 form-control"
+                placeholder="عنوان"
+                value={slider?.title}
+                onChange={(e) =>
+                  setSlider({ ...slider, title: e.target.value })
+                }
+              />
+            </div>
+            <div className="mb-10 fv-row">
+              <label className="required form-label">توضیحات کوتاه</label>
+              <input
+                type="text"
+                name="short-description"
+                className="mb-2 form-control"
+                placeholder="توضیحات کوتاه"
+                value={slider?.summary}
+                onChange={(e) =>
+                  setSlider({ ...slider, summary: e.target.value })
+                }
+              />
+            </div>
+            <div className="mb-10 fv-row">
+              <label className="required form-label">توضیحات</label>
+              <input
+                type="text"
+                name="description"
+                className="mb-2 form-control"
+                placeholder="توضیحات"
+                value={slider?.description}
+                onChange={(e) =>
+                  setSlider({ ...slider, description: e.target.value })
+                }
+              />
+            </div>
+            <div className="mb-10 fv-row">
+              <label className="required form-label">لینک</label>
+              <input
+                type="text"
+                name="link"
+                className="mb-2 form-control"
+                placeholder="لینک"
+                value={slider?.link}
+                onChange={(e) => setSlider({ ...slider, link: e.target.value })}
+              />
+            </div>
+          </div>
           <div>
             <UploadImages file={file} setFile={setFile} />
             <div className="flex mt-3">
@@ -72,7 +157,7 @@ const Slider = () => {
         />
         <button
           className="px-4 py-2 my-3 text-2xl text-white bg-blue-300 rounded-lg hover:bg-blue-400"
-          onClick={submitSlider}
+          onClick={createSlider}
         >
           ثبت
         </button>
