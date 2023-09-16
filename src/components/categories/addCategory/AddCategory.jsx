@@ -48,7 +48,10 @@ const AddCategory = () => {
       title: category?.title,
       urlTitle: category?.urlTitle,
       parentId: category?.parentId,
+<<<<<<< HEAD
       isDelete: false,
+=======
+>>>>>>> e5deb067c005a44d4257bd1a10816f3f035f3f80
     };
 
     if (category.title && category.urlTitle && category.originImage) {
@@ -110,17 +113,23 @@ const AddCategory = () => {
   };
 
   const updateCategory = () => {
-    const requestBody = new FormData();
+    // const requestBody = new FormData();
 
-    category.title && requestBody.append("Title", category.title);
-    category.urlTitle && requestBody.append("UrlTitle", category.urlTitle);
-    category.parentId && requestBody.append("ParentId", category.parentId);
-    requestBody.append("Id", uuidv4());
-    requestBody.append("IsDelete", category.isDelete);
-    category.originImage &&
-      requestBody.append("originImage", category.originImage);
-    category.sliderImage.length > 0 &&
-      requestBody.append("sliderImage", category.sliderImage[0]);
+    // category.title && requestBody.append("Title", category.title);
+    // category.urlTitle && requestBody.append("UrlTitle", category.urlTitle);
+    // category.parentId && requestBody.append("ParentId", category.parentId);
+    // requestBody.append("Id", uuidv4());
+    // requestBody.append("IsDelete", category.isDelete);
+    // category.originImage &&
+    //   requestBody.append("originImage", category.originImage);
+    // category.sliderImage.length > 0 &&
+    //   requestBody.append("sliderImage", category.sliderImage[0]);
+
+    const requestBody = {
+      title: category?.title,
+      urlTitle: category?.urlTitle,
+      parentId: category?.parentId,
+    };
 
     axiosService
       .put("/AdminProducts/updateCategory", requestBody)
