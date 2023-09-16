@@ -97,50 +97,57 @@ const AddProduct = () => {
   const submitProduct = (e) => {
     e.preventDefault();
     if (product?.name && product?.shortDescription) {
-      const requestBody = new FormData();
+      // const requestBody = new FormData();
 
-      product?.name && requestBody?.append("ProductName", product?.name);
+      // product?.name && requestBody?.append("ProductName", product?.name);
 
-      product?.shortDescription &&
-        requestBody?.append("ShortDescription", product?.shortDescription);
+      // product?.shortDescription &&
+      // requestBody?.append("ShortDescription", product?.shortDescription);
 
-      product?.description &&
-        requestBody?.append("description", product?.description);
+      // product?.description &&
+      // requestBody?.append("description", product?.description);
 
-      product?.price && requestBody.append("price", product?.price);
+      // product?.price && requestBody.append("price", product?.price);
 
-      product?.categoryId &&
-        requestBody?.append("ProductCategoryId", product?.categoryId);
+      // product?.categoryId &&
+      // requestBody?.append("ProductCategoryId", product?.categoryId);
 
-      product?.status && requestBody.append("IsExists", product?.status);
+      // product?.status && requestBody.append("IsExists", product?.status);
 
       // product?.originImage &&
       //   requestBody.append("productOriginImage", product?.originImage);
 
-      requestBody.append("id", uuidv4());
+      // requestBody.append("id", uuidv4());
 
-      product?.policy && requestBody.append("policyId", product?.policy);
+      // product?.policy && requestBody.append("policyId", product?.policy);
 
-      for (let i = 0; i < product?.gallery.length; i++) {
-        requestBody.append(
-          `productOriginImage[${i}].originImage`,
-          product?.gallery[i]
-        );
-      }
-      // product?.gallery.length > 0 &&
-      //   requestBody.append("productOriginImage", product?.gallery);
+      // for (let i = 0; i < product?.gallery.length; i++) {
+      //   requestBody.append(
+      //     `productOriginImage[${i}].originImage`,
+      //     product?.gallery[i]
+      //   );
+      // }
 
-      product?.color?.length > 0 &&
-        requestBody.append("ProductColor", JSON.stringify(product?.color));
+      // product?.color?.length > 0 &&
+      //   requestBody.append("ProductColor", JSON.stringify(product?.color));
 
-      product?.special && requestBody.append("IsSpecial", product?.special);
+      // product?.special && requestBody.append("IsSpecial", product?.special);
+
+      const requestBody = {
+        isDelete: false,
+        productName: product?.name,
+        price: product?.price,
+        shortDescription: product?.shortDescription,
+        description: product?.description,
+        isExists: product?.status,
+        isSpecial: product?.special,
+        policyId: product?.policy,
+
+        productColor: product?.color,
+      };
 
       axiosService
-        .post(
-          "/AdminProducts/registerProduct",
-          requestBody,
-          "multipart/form-data"
-        )
+        .post("/AdminProducts/registerProduct", requestBody)
         .then((res) => {
           res?.status === "Success"
             ? toast.success("عملیات با موفقیت انجام شد", {
