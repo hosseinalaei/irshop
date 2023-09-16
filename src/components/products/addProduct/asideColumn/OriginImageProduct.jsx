@@ -50,7 +50,9 @@ const OriginImageProduct = ({ product, setProduct }) => {
           <div
             className="mb-3 image-input image-input-empty image-input-outline image-input-placeholder"
             style={{
-              backgroundImage: "url(/blank-image.svg)",
+              backgroundImage: file
+                ? `url(${URL.createObjectURL(file)})`
+                : "url(/blank-image.svg)",
             }}
           >
             <div
@@ -77,12 +79,12 @@ const OriginImageProduct = ({ product, setProduct }) => {
               />
             </div>
             {/* <div className="image-input-wrapper w-150px h-150px"></div> */}
-            <label
+            {/* <label
               className="shadow btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body"
               data-kt-image-input-action="change"
               data-bs-toggle="tooltip"
               title="Change avatar"
-            ></label>
+            ></label> */}
             <span
               className="shadow btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body"
               data-kt-image-input-action="cancel"

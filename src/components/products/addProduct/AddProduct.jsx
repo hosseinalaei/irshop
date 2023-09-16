@@ -27,10 +27,10 @@ const AddProduct = () => {
     price: selectedProduct?.price || "",
   });
 
-  const postMedia = (id, image) => {
+  const postMedia = (id, image, key) => {
     const body = new FormData();
     body.append("originImage", image);
-    body.append("mediaFieldName", "productImageName");
+    body.append("mediaFieldName", key);
     body.append("id", id);
     axiosService.post("/Get/PostMedia", body, "multipart/form-data");
   };
@@ -104,7 +104,11 @@ const AddProduct = () => {
 
   const submitProduct = (e) => {
     e.preventDefault();
-    if (product?.name && product?.shortDescription) {
+    if (
+      product?.name &&
+      product?.shortDescription &&
+      product?.color?.length > 0
+    ) {
       // const requestBody = new FormData();
 
       // product?.name && requestBody?.append("ProductName", product?.name);
@@ -141,17 +145,46 @@ const AddProduct = () => {
 
       // product?.special && requestBody.append("IsSpecial", product?.special);
 
+      const gallery = [];
+
+      for (let i = 0; i < product?.gallery.length; i++) {
+        gallery.push({
+          productGalleryImageName: product?.gallery[i].name,
+          productVideoName: "",
+        });
+      }
+
       const requestBody = {
-        isDelete: false,
         productName: product?.name,
         price: product?.price,
         shortDescription: product?.shortDescription,
         description: product?.description,
+        productImageName: product?.originImage?.name,
         isExists: product?.status,
         isSpecial: product?.special,
         policyId: product?.policy,
+        productGalleries: gallery,
+        productSelectedCategories: [
+          {
+            productCategoryId: product?.categoryId,
+          },
+        ],
 
         productColor: product?.color,
+
+        productDetail: [
+          {
+            description: "",
+            details: "",
+            differences: "",
+          },
+        ],
+        productSpecification: [
+          {
+            specName: "",
+            specValue: "",
+          },
+        ],
       };
 
       axiosService
@@ -170,8 +203,14 @@ const AddProduct = () => {
               style: { fontFamily: "inherit" },
             });
 
+            postMedia(res?.data?.id, product?.originImage, "productImageName");
+
             for (let i = 0; i < product?.gallery.length; i++) {
-              postMedia(res?.data?.id, product?.gallery[i]);
+              postMedia(
+                res?.data?.id,
+                product?.gallery[i],
+                "productGalleryImageName"
+              );
               // requestBody.append(
               //   `productOriginImage[${i}].originImage`,
               //   product?.gallery[i]

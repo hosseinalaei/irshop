@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import UserRoles from "./UserRoles";
 
-const UsersListItem = ({ user }) => {
+const UsersListItem = ({ user, setShowEditModal, setSelectedUser }) => {
   return (
     <tr key={user?.id}>
       <td>
@@ -42,14 +42,15 @@ const UsersListItem = ({ user }) => {
       <td className="text-end">
         <div className="flex ">
           <div className="px-3">
-            <NavLink
-            //   to={{
-            //     pathname: `/products/edit-product/id=${product?.id}`,
-            //   }}
-            //   state={product}
+            <button
+              onClick={() => (setShowEditModal(true), setSelectedUser(user))}
+              //   to={{
+              //     pathname: `/products/edit-product/id=${product?.id}`,
+              //   }}
+              //   state={product}
             >
               ویرایش
-            </NavLink>
+            </button>
           </div>
           <div className="px-3 ">
             <a href="#" className="">

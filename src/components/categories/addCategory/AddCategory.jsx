@@ -24,11 +24,16 @@ const AddCategory = () => {
 
   const postMedia = (id) => {
     const body = new FormData();
-    body.append("originImage", category?.sliderImage[0]);
+    body.append("originImage", category.originImage);
     body.append("mediaFieldName", "categoryImageName");
     body.append("id", id);
     axiosService.post("/Get/PostMedia", body, "multipart/form-data");
   };
+
+  // console.log(
+  //   "category.originImage?.namecategory.originImage?.namecategory.originImage?.name",
+  //   category.originImage?.name
+  // );
 
   const addCategory = () => {
     // const requestBody = new FormData();
@@ -47,7 +52,11 @@ const AddCategory = () => {
       title: category?.title,
       urlTitle: category?.urlTitle,
       parentId: category?.parentId,
-      isDelete: false,
+      categoryImageName: category.originImage?.name,
+      categorySliderImagename: "",
+      categorySliderTitle: "",
+      categorySliderDescription: "",
+      categorySliderLink: "",
     };
 
     if (category.title && category.urlTitle && category.originImage) {
@@ -80,30 +89,6 @@ const AddCategory = () => {
               style: { fontFamily: "inherit" },
             });
           }
-
-          // res?.status === "Success"
-          //   ? (toast.success("عملیات با موفقیت انجام شد", {
-          //       position: "top-left",
-          //       autoClose: 3000,
-          //       hideProgressBar: false,
-          //       closeOnClick: true,
-          //       pauseOnHover: true,
-          //       draggable: true,
-          //       // progress: undefined,
-          //       theme: "light",
-          //       style: { fontFamily: "inherit" },
-          //     }))
-          //   : toast.error("مشکلی رخ داده است", {
-          //       position: "top-left",
-          //       autoClose: 3000,
-          //       hideProgressBar: false,
-          //       closeOnClick: true,
-          //       pauseOnHover: true,
-          //       draggable: true,
-          //       // progress: undefined,
-          //       theme: "light",
-          //       style: { fontFamily: "inherit" },
-          //     });
         });
     }
   };
