@@ -23,50 +23,88 @@ const AddCategory = () => {
     id: selectedCategory?.id || "",
   });
 
-  const addCategory = () => {
-    const requestBody = new FormData();
+  const postMedia = (id) => {
+    const body = new FormData();
+    body.append("originImage", category?.sliderImage[0]);
+    body.append("mediaFieldName", "categoryImageName");
+    body.append("id", id);
+    axiosService.post("/Get/PostMedia", body, "multipart/form-data");
+  };
 
-    category.title && requestBody.append("Title", category.title);
-    category.urlTitle && requestBody.append("UrlTitle", category.urlTitle);
-    category.parentId && requestBody.append("ParentId", category.parentId);
-    requestBody.append("Id", uuidv4());
-    requestBody.append("IsDelete", category.isDelete);
-    category.originImage &&
-      requestBody.append("originImage", category.originImage);
-    category.sliderImage.length > 0 &&
-      requestBody.append("sliderImage", category.sliderImage[0]);
+  const addCategory = () => {
+    // const requestBody = new FormData();
+
+    // category.title && requestBody.append("Title", category.title);
+    // category.urlTitle && requestBody.append("UrlTitle", category.urlTitle);
+    // category.parentId && requestBody.append("ParentId", category.parentId);
+    // requestBody.append("Id", uuidv4());
+    // requestBody.append("IsDelete", category.isDelete);
+    // category.originImage &&
+    //   requestBody.append("originImage", category.originImage);
+    // category.sliderImage.length > 0 &&
+    //   requestBody.append("sliderImage", category.sliderImage[0]);
+
+    const requestBody = {
+      title: category?.title,
+      urlTitle: category?.urlTitle,
+      parentId: category?.parentId,
+      isDelete: false,
+    };
 
     if (category.title && category.urlTitle && category.originImage) {
       axiosService
-        .post(
-          "/AdminProducts/registerProductCategory",
-          requestBody,
-          "multipart/form-data"
-        )
+        .post("/AdminProducts/registerProductCategory", requestBody)
         .then((res) => {
-          res?.status === "Success"
-            ? toast.success("عملیات با موفقیت انجام شد", {
-                position: "top-left",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                // progress: undefined,
-                theme: "light",
-                style: { fontFamily: "inherit" },
-              })
-            : toast.error("مشکلی رخ داده است", {
-                position: "top-left",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                // progress: undefined,
-                theme: "light",
-                style: { fontFamily: "inherit" },
-              });
+          if (res?.status === "Success") {
+            toast.success("عملیات با موفقیت انجام شد", {
+              position: "top-left",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              // progress: undefined,
+              theme: "light",
+              style: { fontFamily: "inherit" },
+            });
+            postMedia(res?.data?.id);
+          } else if (res?.status === "Error") {
+            toast.error("مشکلی رخ داده است", {
+              position: "top-left",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              // progress: undefined,
+              theme: "light",
+              style: { fontFamily: "inherit" },
+            });
+          }
+
+          // res?.status === "Success"
+          //   ? (toast.success("عملیات با موفقیت انجام شد", {
+          //       position: "top-left",
+          //       autoClose: 3000,
+          //       hideProgressBar: false,
+          //       closeOnClick: true,
+          //       pauseOnHover: true,
+          //       draggable: true,
+          //       // progress: undefined,
+          //       theme: "light",
+          //       style: { fontFamily: "inherit" },
+          //     }))
+          //   : toast.error("مشکلی رخ داده است", {
+          //       position: "top-left",
+          //       autoClose: 3000,
+          //       hideProgressBar: false,
+          //       closeOnClick: true,
+          //       pauseOnHover: true,
+          //       draggable: true,
+          //       // progress: undefined,
+          //       theme: "light",
+          //       style: { fontFamily: "inherit" },
+          //     });
         });
     }
   };
