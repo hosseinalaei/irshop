@@ -25,9 +25,9 @@ const ProductsListItem = ({ product }) => {
   return (
     <tr>
       <td>
-        <div className="form-check form-check-sm form-check-custom form-check-solid">
+        {/* <div className="form-check form-check-sm form-check-custom form-check-solid">
           <input className="form-check-input" type="checkbox" value="1" />
-        </div>
+        </div> */}
       </td>
       <td>
         <div className="d-flex">
