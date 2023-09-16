@@ -48,10 +48,6 @@ const AddCategory = () => {
       title: category?.title,
       urlTitle: category?.urlTitle,
       parentId: category?.parentId,
-<<<<<<< HEAD
-      isDelete: false,
-=======
->>>>>>> e5deb067c005a44d4257bd1a10816f3f035f3f80
     };
 
     if (category.title && category.urlTitle && category.originImage) {
