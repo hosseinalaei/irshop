@@ -48,7 +48,7 @@ const ProductsListItem = ({ product }) => {
           <div className="ms-5">
             {/* <!--begin::Title--> */}
             <a
-              href="../../demo23/dist/apps/ecommerce/catalog/edit-category.html"
+              // href="../../demo23/dist/apps/ecommerce/catalog/edit-category.html"
               className="mb-1 text-gray-800 text-hover-primary fs-5 fw-bold"
               data-kt-ecommerce-category-filter="category_name"
             >

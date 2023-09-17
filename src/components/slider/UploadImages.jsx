@@ -13,7 +13,7 @@ const UploadImages = ({ file, setFile }) => {
     e.preventDefault();
     e.stopPropagation();
     if (e.target.files) {
-      setFile(e.target.files);
+      setFile(e.target.files[0]);
       // setProductGallery(e.target.files);
     }
   };
@@ -30,9 +30,9 @@ const UploadImages = ({ file, setFile }) => {
       const droppedFile = droppedFiles[0];
       // console.log("Dropped file:", droppedFile);
 
-      setFile([...file, ...[droppedFile]]);
+      setFile(droppedFile);
       // setProductGallery(file);
-      console.log("jjjjjjjjjjjjjjjj", file, droppedFile);
+      // console.log("jjjjjjjjjjjjjjjj", file, droppedFile);
     }
   };
 
@@ -40,7 +40,7 @@ const UploadImages = ({ file, setFile }) => {
     e.preventDefault();
     if (e.target.files[0]) {
       // setFile([...file, ...[e.target.files]]);
-      setFile(e.target.files);
+      setFile(e.target.files[0]);
     }
   };
   return (
@@ -61,7 +61,7 @@ const UploadImages = ({ file, setFile }) => {
             handleDrop(e);
           }}
         >
-          <p>فایل را بکشید...</p>
+          {/* <p>فایل را بکشید...</p> */}
 
           <button
             onClick={(e) => {
@@ -77,7 +77,7 @@ const UploadImages = ({ file, setFile }) => {
           {/* Hide the crappy looking default HTML input */}
           <input
             ref={inputRef}
-            multiple
+            // multiple
             type="file"
             style={{ display: "none" }}
             onChange={(e) => {
