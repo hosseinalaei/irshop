@@ -1,8 +1,52 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import UserRoles from "./UserRoles";
+import { axiosService } from "../../services/axiosService";
+import { toast } from "react-toastify";
 
-const UsersListItem = ({ user, setShowEditModal, setSelectedUser }) => {
+const UsersListItem = ({
+  user,
+  setShowEditModal,
+  setSelectedUser,
+  getUsers,
+}) => {
+  const deleteUser = (user) => {
+    const body = {
+      ...user,
+      isDelete: true,
+    };
+
+    axiosService.post("/Account/updateUser", body).then((res) => {
+      if (res?.status === "Success") {
+        toast.success("عملیات با موفقیت انجام شد", {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          // progress: undefined,
+          theme: "light",
+          style: { fontFamily: "inherit" },
+        });
+        setTimeout(() => {
+          getUsers();
+        }, 500);
+      } else if (res?.status === "Error") {
+        toast.error("مشکلی رخ داده است", {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          // progress: undefined,
+          theme: "light",
+          style: { fontFamily: "inherit" },
+        });
+      }
+    });
+  };
   return (
     <tr key={user?.id}>
       <td>
@@ -52,11 +96,9 @@ const UsersListItem = ({ user, setShowEditModal, setSelectedUser }) => {
               ویرایش
             </button>
           </div>
-          <div className="px-3 ">
-            <a href="#" className="">
-              حذف
-            </a>
-          </div>
+          <button className="px-3" onClick={() => deleteUser(user)}>
+            حذف
+          </button>
         </div>
       </td>
     </tr>

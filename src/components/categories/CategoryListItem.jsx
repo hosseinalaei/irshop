@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { axiosService } from "../../services/axiosService";
+import { toast } from "react-toastify";
 
-const CategoryListItem = ({ category }) => {
+const CategoryListItem = ({ category, getCategories }) => {
   const [img, setImg] = useState(null);
 
   const getPic = () => {
@@ -21,6 +22,45 @@ const CategoryListItem = ({ category }) => {
   React.useEffect(() => {
     getPic();
   }, []);
+
+  const deleteCategory = (id) => {
+    const body = {
+      id,
+      title: category?.title,
+      urlTitle: category?.urlTitle,
+      isDelete: true,
+    };
+    axiosService.put("/AdminProducts/updateCategory", body).then((res) => {
+      if (res?.status === "Success") {
+        toast.success("عملیات با موفقیت انجام شد", {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          // progress: undefined,
+          theme: "light",
+          style: { fontFamily: "inherit" },
+        });
+        setTimeout(() => {
+          getCategories();
+        }, 500);
+      } else if (res?.status === "Error") {
+        toast.error("مشکلی رخ داده است", {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          // progress: undefined,
+          theme: "light",
+          style: { fontFamily: "inherit" },
+        });
+      }
+    });
+  };
   return (
     <>
       <tr>
@@ -82,11 +122,12 @@ const CategoryListItem = ({ category }) => {
                 {/* </a> */}
               </NavLink>
             </div>
-            <div className="px-3 ">
-              <a href="#" className="">
-                حذف
-              </a>
-            </div>
+            <button
+              className="px-3 "
+              onClick={() => deleteCategory(category?.id)}
+            >
+              حذف
+            </button>
           </div>
         </td>
       </tr>

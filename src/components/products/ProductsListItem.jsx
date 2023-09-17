@@ -2,8 +2,9 @@ import { NavLink } from "react-router-dom";
 import { axiosService } from "../../services/axiosService";
 // import Link from "next/link";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
-const ProductsListItem = ({ product }) => {
+const ProductsListItem = ({ product, getProducts }) => {
   const [img, setImg] = useState(null);
 
   const getPic = () => {
@@ -22,6 +23,45 @@ const ProductsListItem = ({ product }) => {
   React.useEffect(() => {
     getPic();
   }, []);
+
+  const deleteProduct = (product) => {
+    const body = {
+      ...product,
+      isDelete: true,
+    };
+
+    axiosService.put("/AdminProducts/updateProduct", body).then((res) => {
+      if (res?.status === "Success") {
+        toast.success("عملیات با موفقیت انجام شد", {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          // progress: undefined,
+          theme: "light",
+          style: { fontFamily: "inherit" },
+        });
+        setTimeout(() => {
+          getProducts();
+        }, 500);
+      } else if (res?.status === "Error") {
+        toast.error("مشکلی رخ داده است", {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          // progress: undefined,
+          theme: "light",
+          style: { fontFamily: "inherit" },
+        });
+      }
+    });
+  };
+
   return (
     <tr>
       <td>
@@ -48,7 +88,7 @@ const ProductsListItem = ({ product }) => {
           <div className="ms-5">
             {/* <!--begin::Title--> */}
             <a
-              // href="../../demo23/dist/apps/ecommerce/catalog/edit-category.html"
+              // href="/"
               className="mb-1 text-gray-800 text-hover-primary fs-5 fw-bold"
               data-kt-ecommerce-category-filter="category_name"
             >
@@ -77,16 +117,12 @@ const ProductsListItem = ({ product }) => {
               }}
               state={product}
             >
-              {/* <a href="/products/add-product" className=""> */}
               ویرایش
-              {/* </a> */}
             </NavLink>
           </div>
-          <div className="px-3 ">
-            <a href="#" className="">
-              حذف
-            </a>
-          </div>
+          <button className="px-3" onClick={() => deleteProduct(product)}>
+            حذف
+          </button>
         </div>
       </td>
     </tr>

@@ -5,7 +5,7 @@ import { axiosService } from "../../services/axiosService";
 import Loading from "../common/Loading";
 import Pagination from "../common/Pagination";
 
-const CategoriesList = ({ loading, categories }) => {
+const CategoriesList = ({ loading, categories, getCategories }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
@@ -29,6 +29,7 @@ const CategoriesList = ({ loading, categories }) => {
               <CategoryListItem
                 key={item?.id}
                 category={item}
+                getCategories={getCategories}
                 // title={item?.title}
                 // urlTitle={item?.urlTitle}
               />
