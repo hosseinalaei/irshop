@@ -34,7 +34,7 @@ const SidebarMenu = () => {
           {/* <UserMenu /> */}
         </div>
 
-        <div className="text-xl">
+        <div className="text-xl h-full flex flex-col justify-between">
           <ul className="p-0 flex-col">
             {menu?.map((item) => (
               <div key={item?.id}>
@@ -93,18 +93,18 @@ const SidebarMenu = () => {
                 )}
               </div>
             ))}
-            <div className="flex justify-center w-full self-end justify-self-end">
-              <button
-                className="bg-blue-500 rounded-md py-5  w-5/6 text-white"
-                onClick={() => {
-                  localStorage.removeItem("user-token");
-                  nav("/auth/login");
-                }}
-              >
-                خروج
-              </button>
-            </div>
           </ul>
+          <div className="flex justify-center w-full self-end justify-self-end">
+            <button
+              className="bg-blue-500 rounded-md py-5 my-5 w-5/6 text-white"
+              onClick={() => {
+                localStorage.removeItem("user-token");
+                nav("/auth/login");
+              }}
+            >
+              خروج
+            </button>
+          </div>
         </div>
       </div>
     </>
