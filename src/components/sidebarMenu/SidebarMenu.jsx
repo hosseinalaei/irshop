@@ -34,8 +34,8 @@ const SidebarMenu = () => {
           {/* <UserMenu /> */}
         </div>
 
-        <div className="text-xl">
-          <ul className="p-0 flex-col">
+        <div className="h-full text-xl">
+          <ul className="relative flex-col h-full p-0">
             {menu?.map((item) => (
               <div key={item?.id}>
                 <NavLink
@@ -93,9 +93,9 @@ const SidebarMenu = () => {
                 )}
               </div>
             ))}
-            <div className="flex justify-center w-full self-end justify-self-end">
+            <div className="absolute flex justify-center w-full bottom-4">
               <button
-                className="bg-blue-500 rounded-md py-5  w-5/6 text-white"
+                className="w-5/6 py-2 text-white bg-blue-500 rounded-md"
                 onClick={() => {
                   localStorage.removeItem("user-token");
                   nav("/auth/login");

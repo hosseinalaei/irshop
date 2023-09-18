@@ -22,18 +22,21 @@ const AddCategory = () => {
     id: selectedCategory?.id || "",
   });
 
-  const postMedia = (id) => {
+  // const postMedia = (id) => {
+  //   const body = new FormData();
+  //   body.append("originImage", category.originImage);
+  //   body.append("mediaFieldName", "categoryImageName");
+  //   body.append("id", id);
+  //   axiosService.post("/Get/PostMedia", body, "multipart/form-data");
+  // };
+
+  const postMedia = (id, image, key) => {
     const body = new FormData();
-    body.append("originImage", category.originImage);
-    body.append("mediaFieldName", "categoryImageName");
+    body.append("originImage", image);
+    body.append("mediaFieldName", key);
     body.append("id", id);
     axiosService.post("/Get/PostMedia", body, "multipart/form-data");
   };
-
-  // console.log(
-  //   "category.originImage?.namecategory.originImage?.namecategory.originImage?.name",
-  //   category.originImage?.name
-  // );
 
   const addCategory = () => {
     // const requestBody = new FormData();
@@ -76,7 +79,7 @@ const AddCategory = () => {
               theme: "light",
               style: { fontFamily: "inherit" },
             });
-            postMedia(res?.data?.id);
+            postMedia(res?.data?.id, category.originImage, "categoryImageName");
           } else if (res?.status === "Error") {
             toast.error("مشکلی رخ داده است", {
               position: "top-left",
@@ -112,34 +115,43 @@ const AddCategory = () => {
       urlTitle: category?.urlTitle,
       parentId: category?.parentId,
       id: category?.id,
+
+      categoryImageName: category.originImage?.name,
+      categorySliderImagename: "",
+      categorySliderTitle: "",
+      categorySliderDescription: "",
+      categorySliderLink: "",
     };
 
     axiosService
       .put("/AdminProducts/updateCategory", requestBody)
       .then((res) => {
-        res?.status === "Success"
-          ? toast.success("عملیات با موفقیت انجام شد", {
-              position: "top-left",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              // progress: undefined,
-              theme: "light",
-              style: { fontFamily: "inherit" },
-            })
-          : toast.error("مشکلی رخ داده است", {
-              position: "top-left",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              // progress: undefined,
-              theme: "light",
-              style: { fontFamily: "inherit" },
-            });
+        if (res?.status === "Success") {
+          toast.success("عملیات با موفقیت انجام شد", {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            // progress: undefined,
+            theme: "light",
+            style: { fontFamily: "inherit" },
+          });
+          postMedia(res?.data?.id, category.originImage, "categoryImageName");
+        } else if (res?.status === "Error") {
+          toast.error("مشکلی رخ داده است", {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            // progress: undefined,
+            theme: "light",
+            style: { fontFamily: "inherit" },
+          });
+        }
       });
   };
 
@@ -171,7 +183,11 @@ const AddCategory = () => {
           </div>
           <form className="form d-flex flex-column flex-lg-row">
             <div className="mx-5 d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7">
-              <OriginImage category={category} setCategory={setCategory} />
+              <OriginImage
+                category={category}
+                setCategory={setCategory}
+                selectedCategory={selectedCategory}
+              />
               <ParentCategory category={category} setCategory={setCategory} />
             </div>
             <div className="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
