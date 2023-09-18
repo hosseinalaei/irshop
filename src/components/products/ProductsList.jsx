@@ -5,7 +5,7 @@ import ProductsListItem from "./ProductsListItem";
 import { axiosService } from "../../services/axiosService";
 import Pagination from "../common/Pagination";
 
-const ProductsList = ({ products }) => {
+const ProductsList = ({ products, getProducts }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
@@ -26,7 +26,11 @@ const ProductsList = ({ products }) => {
         <ProductListHead />
         <tbody className="text-gray-600 fw-semibold">
           {currentItems?.map((item, index) => (
-            <ProductsListItem key={index} product={item} />
+            <ProductsListItem
+              key={index}
+              product={item}
+              getProducts={getProducts}
+            />
           ))}
           {/* <ProductsListItem />
           <ProductsListItem />

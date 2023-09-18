@@ -81,6 +81,7 @@ const UsersList = () => {
                     key={user?.id}
                     setShowEditModal={setShowEditModal}
                     setSelectedUser={setSelectedUser}
+                    getUsers={getUsers}
                   />
                 ))}
               </tbody>

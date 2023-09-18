@@ -4,6 +4,7 @@ import CategoriesList from "./CategoriesList";
 import { axiosService } from "../../services/axiosService";
 import Loading from "../common/Loading";
 import { NavLink } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 const Category = () => {
   const [categories, setCategories] = useState([]);
@@ -29,6 +30,7 @@ const Category = () => {
         <Loading />
       ) : (
         <>
+          <ToastContainer />
           <div className="m-3 page-title d-flex flex-column justify-content-center">
             <h1 className="my-0 page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center">
               دسته‌بندی‌ها
@@ -72,7 +74,10 @@ const Category = () => {
                     </a>
                   </div>
                 </div>
-                <CategoriesList categories={categories} />
+                <CategoriesList
+                  categories={categories}
+                  getCategories={getCategories}
+                />
               </div>
             </div>
           </div>

@@ -61,6 +61,44 @@ const Roles = () => {
 
   const [showAddModal, setShowAddModal] = useState(false);
 
+  const deleteRole = (id) => {
+    const body = {
+      id: id,
+      isDelete: true,
+    };
+
+    axiosService.put("/AdminAccount/updateRole", body).then((res) => {
+      if (res?.status === "Success") {
+        toast.success("عملیات با موفقیت انجام شد", {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          // progress: undefined,
+          theme: "light",
+          style: { fontFamily: "inherit" },
+        });
+        setTimeout(() => {
+          getRoles();
+        }, 500);
+      } else if (res?.status === "Error") {
+        toast.error("مشکلی رخ داده است", {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          // progress: undefined,
+          theme: "light",
+          style: { fontFamily: "inherit" },
+        });
+      }
+    });
+  };
+
   return (
     <>
       {loading ? (
@@ -107,18 +145,19 @@ const Roles = () => {
                       </div>
                     </div>
                     <div className="flex-wrap pt-0 card-footer">
-                      {/* <a
-                href="../../demo23/dist/apps/user-management/roles/view.html"
-                className="my-1 btn btn-light btn-active-primary me-2"
-              >
-                View Role
-              </a> */}
                       <button
                         type="button"
                         className="my-1 btn btn-light btn-active-light-primary"
                         onClick={() => showEditModalFun(item)}
                       >
                         ویرایش
+                      </button>
+                      <button
+                        type="button"
+                        className="my-1 btn btn-light btn-active-light-primary"
+                        onClick={() => deleteRole(item?.id)}
+                      >
+                        حذف
                       </button>
                     </div>
                   </div>

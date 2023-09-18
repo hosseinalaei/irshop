@@ -17,6 +17,7 @@ import PolicyPage from "./pages/policy/PolicyPage";
 import AddNewPolicyPage from "./pages/policy/addPolicy/AddNewPolicyPage";
 import UsersPage from "./pages/users/UsersPage";
 import SliderPage from "./pages/slider/SliderPage";
+import CreateSlider from "./components/slider/CreateSlider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -63,6 +64,7 @@ root.render(
             />
             <Route path="/users" element={<UsersPage />} />
             <Route path="/slider" element={<SliderPage />} />
+            <Route path="/create-slider" element={<CreateSlider />} />
           </Route>
         </Route>
       </Routes>

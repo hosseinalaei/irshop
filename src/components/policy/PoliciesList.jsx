@@ -5,6 +5,7 @@ import { axiosService } from "../../services/axiosService";
 import AddNewPolicy from "./AddNewPolicy";
 import { NavLink, useParams } from "react-router-dom";
 import Loading from "../common/Loading";
+import { ToastContainer, toast } from "react-toastify";
 
 const PoliciesList = () => {
   const [policies, setPolicies] = useState([]);
@@ -25,12 +26,52 @@ const PoliciesList = () => {
   useEffect(() => {
     getPolicies();
   }, []);
+
+  const deletePolicy = (id) => {
+    const body = {
+      id: id,
+      isDelete: true,
+    };
+
+    axiosService.put("/AdminProducts/updatePolicy", body).then((res) => {
+      if (res?.status === "Success") {
+        toast.success("عملیات با موفقیت انجام شد", {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          // progress: undefined,
+          theme: "light",
+          style: { fontFamily: "inherit" },
+        });
+        setTimeout(() => {
+          getPolicies();
+        }, 500);
+      } else if (res?.status === "Error") {
+        toast.error("مشکلی رخ داده است", {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          // progress: undefined,
+          theme: "light",
+          style: { fontFamily: "inherit" },
+        });
+      }
+    });
+  };
+
   return (
     <>
       {loading ? (
         <Loading />
       ) : (
         <>
+          <ToastContainer />
           <div className="m-3 page-title d-flex flex-column justify-content-center">
             <h1 className="my-0 page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center">
               لیست سیاست‌ها
@@ -110,23 +151,20 @@ const PoliciesList = () => {
                     </div>
 
                     <div className="flex-wrap pt-0 card-footer">
-                      {/* <a
-              href="../../demo23/dist/apps/user-management/roles/view.html"
-              className="my-1 btn btn-light btn-active-primary me-2"
-            >
-              View Role
-            </a> */}
                       <NavLink
                         to={{
                           pathname: `/policies/edit-policy/id=${item?.id}`,
                         }}
                         state={item}
                         type="button"
-                        className="my-1 btn btn-light btn-active-light-primary"
+                        className="mx-3 my-1 btn btn-light btn-active-light-primary"
                         // onClick={() => showEditModalFun(item)}
                       >
                         ویرایش
                       </NavLink>
+                      <button onClick={() => deletePolicy(item?.id)}>
+                        حذف
+                      </button>
                     </div>
                   </div>
                 </div>
