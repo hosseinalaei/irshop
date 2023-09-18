@@ -53,7 +53,10 @@ const EditUser = ({ setShowEditModal, selectedUser, setShowToast }) => {
       if (editedRole?.userRoles) {
         setEditedRole({
           ...editedRole,
-          userRoles: [...editedRole?.userRoles, { roleId: option }],
+          userRoles: [
+            ...editedRole?.userRoles,
+            { roleId: option, assignDate: new Date() },
+          ],
         });
       }
 

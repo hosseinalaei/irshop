@@ -10,7 +10,7 @@ const AddProduct = () => {
   const location = useLocation();
   const selectedProduct = location?.state;
 
-  // console.log("selectedProductselectedProduct", selectedProduct);
+  console.log("selectedProductselectedProduct", selectedProduct);
 
   const [product, setProduct] = useState({
     name: selectedProduct?.productName || "",
@@ -37,68 +37,55 @@ const AddProduct = () => {
 
   const updateProduct = (e) => {
     e.preventDefault();
-    const requestBody = new FormData();
 
-    product?.name && requestBody?.append("ProductName", product?.name);
+    const requestBody = {
+      id: selectedProduct?.id,
+      isDelete: false,
+      productName: product?.name,
+      shortDescription: product?.shortDescription,
+      description: product?.description,
+      productImageName: product?.originImage,
+      isExists: product?.status,
+      isSpecial: product?.special,
+      policyId: product?.policy,
+      productGalleries: selectedProduct?.productGalleries,
+      productSelectedCategories: selectedProduct?.productSelectedCategories,
 
-    product?.shortDescription &&
-      requestBody?.append("ShortDescription", product?.shortDescription);
-
-    product?.description &&
-      requestBody?.append("description", product?.description);
-
-    product?.price && requestBody.append("price", product?.price);
-
-    product?.categoryId &&
-      requestBody?.append("ProductCategoryId", product?.categoryId);
-
-    product?.status && requestBody.append("IsExists", product?.status);
-
-    product?.originImage &&
-      requestBody.append("productOriginImage", [
-        {
-          originImage: product?.originImage,
-        },
-      ]);
-
-    requestBody.append("id", selectedProduct?.id);
-
-    product?.policy && requestBody.append("policyId", product?.policy);
-
-    product?.gallery.length > 0 &&
-      requestBody.append("ProductGalleries", JSON.stringify(product?.gallery));
-
-    product?.color?.length > 0 &&
-      requestBody.append("ProductColor", JSON.stringify(product?.color));
-
-    product?.special && requestBody.append("IsSpecial", product?.special);
+      productColor: selectedProduct?.productColor,
+      productDetail: selectedProduct?.productDetail,
+      productSpecification: selectedProduct?.productSpecification,
+    };
 
     axiosService
-      .put("/AdminProducts/updateProduct", requestBody, "multipart/form-data")
+      .put("/AdminProducts/updateProduct", requestBody)
       .then((res) => {
-        res?.status === "Success"
-          ? toast.success("عملیات با موفقیت انجام شد", {
-              position: "top-left",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              // progress: undefined,
-              theme: "light",
-              style: { fontFamily: "inherit" },
-            })
-          : toast.error("مشکلی رخ داده است", {
-              position: "top-left",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              // progress: undefined,
-              theme: "light",
-              style: { fontFamily: "inherit" },
-            });
+        if (res?.status === "Success") {
+          toast.success("عملیات با موفقیت انجام شد", {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            // progress: undefined,
+            theme: "light",
+            style: { fontFamily: "inherit" },
+          });
+
+          // postMedia(res?.data?.id, product?.originImage, "productImageName");
+        } else {
+          toast.error("مشکلی رخ داده است", {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            // progress: undefined,
+            theme: "light",
+            style: { fontFamily: "inherit" },
+          });
+        }
       });
   };
 
@@ -109,42 +96,6 @@ const AddProduct = () => {
       product?.shortDescription &&
       product?.color?.length > 0
     ) {
-      // const requestBody = new FormData();
-
-      // product?.name && requestBody?.append("ProductName", product?.name);
-
-      // product?.shortDescription &&
-      // requestBody?.append("ShortDescription", product?.shortDescription);
-
-      // product?.description &&
-      // requestBody?.append("description", product?.description);
-
-      // product?.price && requestBody.append("price", product?.price);
-
-      // product?.categoryId &&
-      // requestBody?.append("ProductCategoryId", product?.categoryId);
-
-      // product?.status && requestBody.append("IsExists", product?.status);
-
-      // product?.originImage &&
-      //   requestBody.append("productOriginImage", product?.originImage);
-
-      // requestBody.append("id", uuidv4());
-
-      // product?.policy && requestBody.append("policyId", product?.policy);
-
-      // for (let i = 0; i < product?.gallery.length; i++) {
-      //   requestBody.append(
-      //     `productOriginImage[${i}].originImage`,
-      //     product?.gallery[i]
-      //   );
-      // }
-
-      // product?.color?.length > 0 &&
-      //   requestBody.append("ProductColor", JSON.stringify(product?.color));
-
-      // product?.special && requestBody.append("IsSpecial", product?.special);
-
       const gallery = [];
 
       for (let i = 0; i < product?.gallery.length; i++) {
@@ -229,29 +180,6 @@ const AddProduct = () => {
               style: { fontFamily: "inherit" },
             });
           }
-          // res?.status === "Success"
-          //   ? toast.success("عملیات با موفقیت انجام شد", {
-          //       position: "top-left",
-          //       autoClose: 3000,
-          //       hideProgressBar: false,
-          //       closeOnClick: true,
-          //       pauseOnHover: true,
-          //       draggable: true,
-          //       // progress: undefined,
-          //       theme: "light",
-          //       style: { fontFamily: "inherit" },
-          //     })
-          //   : toast.error("مشکلی رخ داده است", {
-          //       position: "top-left",
-          //       autoClose: 3000,
-          //       hideProgressBar: false,
-          //       closeOnClick: true,
-          //       pauseOnHover: true,
-          //       draggable: true,
-          //       // progress: undefined,
-          //       theme: "light",
-          //       style: { fontFamily: "inherit" },
-          //     });
         });
     }
   };
@@ -284,13 +212,18 @@ const AddProduct = () => {
         <div className="app-content flex-column-fluid">
           <div className="">
             <form className="form d-flex flex-column flex-lg-row">
-              <AsideColumn setProduct={setProduct} product={product} />
+              <AsideColumn
+                setProduct={setProduct}
+                product={product}
+                selectedProduct={selectedProduct}
+              />
               <MainColumn
                 setProduct={setProduct}
                 product={product}
                 submitProduct={(e) => {
                   selectedProduct ? updateProduct(e) : submitProduct(e);
                 }}
+                selectedProduct={selectedProduct}
               />
             </form>
           </div>

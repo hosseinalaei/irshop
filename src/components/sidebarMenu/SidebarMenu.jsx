@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import data from "./menu.json";
 import Logo from "./Logo";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const SidebarMenu = () => {
   const menu = data?.menu;
   const location = useLocation();
+  const nav = useNavigate();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -34,7 +35,7 @@ const SidebarMenu = () => {
         </div>
 
         <div className="text-xl">
-          <ul className="p-0">
+          <ul className="p-0 flex-col">
             {menu?.map((item) => (
               <div key={item?.id}>
                 <NavLink
@@ -92,6 +93,17 @@ const SidebarMenu = () => {
                 )}
               </div>
             ))}
+            <div className="flex justify-center w-full self-end justify-self-end">
+              <button
+                className="bg-blue-500 rounded-md py-5  w-5/6 text-white"
+                onClick={() => {
+                  localStorage.removeItem("user-token");
+                  nav("/auth/login");
+                }}
+              >
+                خروج
+              </button>
+            </div>
           </ul>
         </div>
       </div>

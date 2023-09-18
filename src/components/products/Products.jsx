@@ -10,7 +10,7 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const getProducts = () => {
     axiosService
-      .get("/Products/getLastProduct")
+      .get("/Products/getAllactiveproducts")
       .then((res) => {
         setProducts(res?.data);
         setLoading(false);

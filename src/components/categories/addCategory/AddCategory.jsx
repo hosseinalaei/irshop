@@ -52,6 +52,7 @@ const AddCategory = () => {
       title: category?.title,
       urlTitle: category?.urlTitle,
       parentId: category?.parentId,
+
       categoryImageName: category.originImage?.name,
       categorySliderImagename: "",
       categorySliderTitle: "",
@@ -110,6 +111,7 @@ const AddCategory = () => {
       title: category?.title,
       urlTitle: category?.urlTitle,
       parentId: category?.parentId,
+      id: category?.id,
     };
 
     axiosService

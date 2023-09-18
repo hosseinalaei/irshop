@@ -1,12 +1,32 @@
 import React, { useEffect, useState } from "react";
+import { axiosService } from "../../../../services/axiosService";
 
-const OriginImageProduct = ({ product, setProduct }) => {
-  const [file, setFile] = useState();
+const OriginImageProduct = ({ product, setProduct, selectedProduct }) => {
+  const [file, setFile] = useState(null);
+  const [pic, setPic] = useState(null);
   const inputRef = React.useRef(null);
+
+  const getPic = () => {
+    const body = {
+      id: selectedProduct?.id,
+      mediaFieldName: "productImageName",
+    };
+    axiosService
+      .post("/Get/GetMedia", body)
+      .then((res) => {
+        console.log("res", res);
+        setPic(res?.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    selectedProduct && getPic();
+  }, [selectedProduct]);
 
   useEffect(() => {
     console.log("file: ", file);
-    setProduct({ ...product, originImage: file });
+    setProduct({ ...product, originImage: file?.name });
   }, [file]);
 
   const handleFileChange = (e) => {
@@ -52,7 +72,9 @@ const OriginImageProduct = ({ product, setProduct }) => {
             style={{
               backgroundImage: file
                 ? `url(${URL.createObjectURL(file)})`
-                : "url(/blank-image.svg)",
+                : pic
+                ? `url(data:image/jpeg;base64,${pic})`
+                : `url(/blank-image.svg)`,
             }}
           >
             <div

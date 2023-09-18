@@ -52,48 +52,48 @@ const Login = () => {
     const body = {
       mobile: values?.phone_number,
     };
-    // !values?.validation_code
-    //   ? axiosService.post("/Account/checkMobile", body).then((res) => {
-    //       console.log(res);
-    //       res?.status === "Success" && setValidationCodeInput(true);
-    //     })
-    //   : axiosService
-    //       .post("/AdminAccount/adminLogin", {
-    //         mobile: values?.phone_number,
-    //         verifyCode: values?.validation_code,
-    //       })
-    //       .then((res) => {
-    //         console.log(res);
+    !values?.validation_code
+      ? axiosService.post("/Account/checkMobile", body).then((res) => {
+          console.log(res);
+          res?.status === "Success" && setValidationCodeInput(true);
+        })
+      : axiosService
+          .post("/AdminAccount/adminLogin", {
+            mobile: values?.phone_number,
+            verifyCode: values?.validation_code,
+          })
+          .then((res) => {
+            console.log(res);
 
-    //         if (res?.status === "NotFound") {
-    //           setError(res?.data?.message);
-    //         }
-    //         if (res?.status === "Success") {
-    //           const token = res?.data?.token;
+            if (res?.status === "NotFound") {
+              setError(res?.data?.message);
+            }
+            if (res?.status === "Success") {
+              const token = res?.data?.token;
 
-    //           if (!token) {
-    //             setError("مشکلی رخ داده است. لطفا دوباره تلاش کنید");
-    //             return;
-    //           }
-    //           localStorage.clear();
-    //           localStorage.setItem("user-token", token);
-    //           setTimeout(() => {
-    //             navigate("/");
-    //           }, 500);
-    //         }
-    //       });
+              if (!token) {
+                setError("مشکلی رخ داده است. لطفا دوباره تلاش کنید");
+                return;
+              }
+              localStorage.clear();
+              localStorage.setItem("user-token", token);
+              setTimeout(() => {
+                navigate("/");
+              }, 500);
+            }
+          });
 
-    const token = "12121212";
+    // const token = "12121212";
 
-    if (!token) {
-      setError("مشکلی رخ داده است. لطفا دوباره تلاش کنید");
-      return;
-    }
-    localStorage.clear();
-    localStorage.setItem("user-token", token);
-    setTimeout(() => {
-      navigate("/");
-    }, 500);
+    // if (!token) {
+    //   setError("مشکلی رخ داده است. لطفا دوباره تلاش کنید");
+    //   return;
+    // }
+    // localStorage.clear();
+    // localStorage.setItem("user-token", token);
+    // setTimeout(() => {
+    //   navigate("/");
+    // }, 500);
   };
 
   return (
