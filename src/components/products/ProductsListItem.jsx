@@ -62,6 +62,8 @@ const ProductsListItem = ({ product, getProducts }) => {
     });
   };
 
+  console.log("jjjjjjjjjjjjjj", product?.productColor[0].price);
+
   return (
     <tr>
       <td>
@@ -105,7 +107,9 @@ const ProductsListItem = ({ product, getProducts }) => {
       </td>
       <td>
         {/* <!--begin::Badges--> */}
-        <div className="badge badge-light-success">{product?.price}</div>
+        <div className=" badge-light-success text-2xl">
+          {product?.productColor[0].price}
+        </div>
         {/* <!--end::Badges--> */}
       </td>
       <td className="text-end">

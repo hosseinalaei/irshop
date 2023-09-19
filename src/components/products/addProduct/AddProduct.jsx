@@ -39,6 +39,14 @@ const AddProduct = () => {
 
   const updateProduct = (e) => {
     e.preventDefault();
+    const gallery = [];
+
+    for (let i = 0; i < product?.gallery.length; i++) {
+      gallery.push({
+        productGalleryImageName: product?.gallery[i].name,
+        productVideoName: "",
+      });
+    }
 
     const requestBody = {
       id: selectedProduct?.id,
@@ -46,16 +54,16 @@ const AddProduct = () => {
       productName: product?.name,
       shortDescription: product?.shortDescription,
       description: product?.description,
-      productImageName: product?.originImage,
+      productImageName: product?.originImage?.name,
       isExists: product?.status,
       isSpecial: product?.special,
       policyId: product?.policy,
-      productGalleries: selectedProduct?.productGalleries,
-      productSelectedCategories: selectedProduct?.productSelectedCategories,
+      productGalleries: gallery,
+      productSelectedCategories: product?.categoryId,
 
-      productColor: selectedProduct?.productColor,
-      productDetail: selectedProduct?.productDetail,
-      productSpecification: selectedProduct?.productSpecification,
+      productColor: product?.color,
+      productDetail: product?.details,
+      productSpecification: product?.specification,
     };
 
     axiosService
@@ -74,8 +82,13 @@ const AddProduct = () => {
             style: { fontFamily: "inherit" },
           });
 
-          product?.originImage !== selectedProduct?.productImageName &&
+          product?.originImage?.name !== selectedProduct?.productImageName &&
             postMedia(res?.data?.id, product?.originImage, "productImageName");
+
+          product?.gallery?.length > 0 &&
+            Array.from(product?.gallery).map((item) =>
+              postMedia(res?.data?.id, item, "productGalleryImageName")
+            );
         } else {
           toast.error("مشکلی رخ داده است", {
             position: "top-left",

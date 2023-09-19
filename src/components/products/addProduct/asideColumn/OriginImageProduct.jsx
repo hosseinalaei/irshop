@@ -26,7 +26,7 @@ const OriginImageProduct = ({ product, setProduct, selectedProduct }) => {
 
   useEffect(() => {
     console.log("file: ", file);
-    setProduct({ ...product, originImage: file?.name });
+    setProduct({ ...product, originImage: file });
   }, [file]);
 
   const handleFileChange = (e) => {

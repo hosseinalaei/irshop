@@ -7,23 +7,25 @@ const MediaSection = ({ product, setProduct, selectedProduct }) => {
   const inputRef = React.useRef(null);
   const [img, setImg] = useState([]);
 
-  const getPic = () => {
+  const getPic = (id) => {
     const body = {
-      id: selectedProduct?.id,
+      id,
       mediaFieldName: "productGalleryImageName",
     };
     axiosService
       .post("/Get/GetMedia", body)
       .then((res) => {
         console.log("res", res);
-        setImg([...img, res?.data]);
+        setImg((prev) => [...prev, res?.data]);
       })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
     selectedProduct?.productGalleries?.length > 0 &&
-      selectedProduct?.productGalleries?.map((item) => getPic());
+      selectedProduct?.productGalleries?.map((item) =>
+        getPic(item?.imageuniqueId)
+      );
   }, [selectedProduct]);
 
   useEffect(() => {
@@ -145,6 +147,26 @@ const MediaSection = ({ product, setProduct, selectedProduct }) => {
                 />
               </div>
             ))}
+        </div>
+        <div className="flex flex-wrap w-3/5">
+          {img?.length > 0 &&
+            Array.from(img).map((item, index) => {
+              console.log("itemmmmmmmmm", item, index);
+              return (
+                <div className="relative" key={index}>
+                  <FontAwesomeIcon
+                    icon="times"
+                    color="red"
+                    onClick={() => deleteImage(index)}
+                    className="absolute p-1 text-2xl rounded-full cursor-pointer left-1 -top-2 hover:bg-slate-200"
+                  />
+                  <img
+                    src={`data:image/jpeg;base64,${item}`}
+                    className="w-20 h-20 m-2"
+                  />
+                </div>
+              );
+            })}
         </div>
       </div>
     </div>
