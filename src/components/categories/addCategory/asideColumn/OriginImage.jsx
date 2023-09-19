@@ -1,13 +1,33 @@
 import React, { useEffect, useState } from "react";
+import { axiosService } from "../../../../services/axiosService";
 
-const OriginImage = ({ category, setCategory }) => {
+const OriginImage = ({ category, setCategory, selectedCategory }) => {
   const [file, setFile] = useState();
   const inputRef = React.useRef(null);
+  const [pic, setPic] = useState(null);
 
   useEffect(() => {
     console.log("file: ", file);
     setCategory({ ...category, originImage: file });
   }, [file]);
+
+  const getPic = () => {
+    const body = {
+      id: selectedCategory?.id,
+      mediaFieldName: "categoryImageName",
+    };
+    axiosService
+      .post("/Get/GetMedia", body)
+      .then((res) => {
+        console.log("res", res);
+        setPic(res?.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    selectedCategory?.categoryImageName && getPic();
+  }, [selectedCategory]);
 
   const handleFileChange = (e) => {
     if (e.target.files) {
@@ -51,6 +71,8 @@ const OriginImage = ({ category, setCategory }) => {
             style={{
               backgroundImage: file
                 ? `url(${URL.createObjectURL(file)})`
+                : pic
+                ? `url(data:image/jpeg;base64,${pic})`
                 : "url(/blank-image.svg)",
             }}
           >

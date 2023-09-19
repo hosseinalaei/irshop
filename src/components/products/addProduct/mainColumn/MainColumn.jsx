@@ -3,6 +3,7 @@ import GeneralSection from "./GeneralSection";
 import MediaSection from "./MediaSection";
 import PricingSection from "./PricingSection";
 import SelectColor from "./SelectColor";
+import Details from "./Details";
 
 const MainColumn = ({
   product,
@@ -26,6 +27,7 @@ const MainColumn = ({
             />
             <PricingSection product={product} setProduct={setProduct} />
             <SelectColor product={product} setProduct={setProduct} />
+            <Details product={product} setProduct={setProduct} />
           </div>
         </div>
       </div>

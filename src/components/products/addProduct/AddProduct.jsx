@@ -25,6 +25,8 @@ const AddProduct = () => {
     special: selectedProduct?.isSpecial || false,
     isDelete: false,
     price: selectedProduct?.price || "",
+    specification: selectedProduct?.productSpecification || [],
+    details: selectedProduct?.productDetail || [],
   });
 
   const postMedia = (id, image, key) => {
@@ -72,7 +74,8 @@ const AddProduct = () => {
             style: { fontFamily: "inherit" },
           });
 
-          // postMedia(res?.data?.id, product?.originImage, "productImageName");
+          product?.originImage !== selectedProduct?.productImageName &&
+            postMedia(res?.data?.id, product?.originImage, "productImageName");
         } else {
           toast.error("مشکلی رخ داده است", {
             position: "top-left",
@@ -123,19 +126,8 @@ const AddProduct = () => {
 
         productColor: product?.color,
 
-        productDetail: [
-          {
-            description: "",
-            details: "",
-            differences: "",
-          },
-        ],
-        productSpecification: [
-          {
-            specName: "",
-            specValue: "",
-          },
-        ],
+        productDetail: product?.details,
+        productSpecification: product?.specification,
       };
 
       axiosService

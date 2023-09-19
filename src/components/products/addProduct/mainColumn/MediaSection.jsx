@@ -2,23 +2,29 @@ import React, { useEffect, useState } from "react";
 import { axiosService } from "../../../../services/axiosService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const MediaSection = ({ product, setProduct }) => {
+const MediaSection = ({ product, setProduct, selectedProduct }) => {
   const [file, setFile] = useState([]);
   const inputRef = React.useRef(null);
-  const [img, setImg] = useState();
+  const [img, setImg] = useState([]);
+
+  const getPic = () => {
+    const body = {
+      id: selectedProduct?.id,
+      mediaFieldName: "productGalleryImageName",
+    };
+    axiosService
+      .post("/Get/GetMedia", body)
+      .then((res) => {
+        console.log("res", res);
+        setImg([...img, res?.data]);
+      })
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
-    product?.gallery?.length > 0 &&
-      axiosService
-        .post("/Get/GetMedia", {
-          id: product?.id,
-          mediaFieldName: "productImageName",
-        })
-        .then((res) => {
-          setImg(res?.data);
-        })
-        .catch((err) => console.log(err));
-  }, [product?.gallery]);
+    selectedProduct?.productGalleries?.length > 0 &&
+      selectedProduct?.productGalleries?.map((item) => getPic());
+  }, [selectedProduct]);
 
   useEffect(() => {
     console.log("file: ", file);

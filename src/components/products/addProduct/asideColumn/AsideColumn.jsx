@@ -4,6 +4,7 @@ import ProductStatus from "./ProductStatus";
 import OriginImageProduct from "./OriginImageProduct";
 import PolicySection from "./PolicySection";
 import SpecialSection from "./SpecialSection";
+import Specification from "./Specification";
 
 const AsideColumn = ({ product, setProduct, selectedProduct }) => {
   return (
@@ -17,6 +18,7 @@ const AsideColumn = ({ product, setProduct, selectedProduct }) => {
       <ProductStatus product={product} setProduct={setProduct} />
       <PolicySection product={product} setProduct={setProduct} />
       <SpecialSection product={product} setProduct={setProduct} />
+      <Specification product={product} setProduct={setProduct} />
     </div>
   );
 };
