@@ -190,7 +190,7 @@ const AddCategory = () => {
             </div>
             <div className="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
               <GeneralSection category={category} setCategory={setCategory} />
-              <SliderSection category={category} setCategory={setCategory} />
+              {/* <SliderSection category={category} setCategory={setCategory} /> */}
             </div>
           </form>
 
