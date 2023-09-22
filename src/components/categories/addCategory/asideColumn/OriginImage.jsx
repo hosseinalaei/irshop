@@ -17,7 +17,7 @@ const OriginImage = ({ category, setCategory, selectedCategory }) => {
       mediaFieldName: "categoryImageName",
     };
     axiosService
-      .post("/Get/GetMedia", body)
+      .post("/Media/GetMedia", body)
       .then((res) => {
         console.log("res", res);
         setPic(res?.data);

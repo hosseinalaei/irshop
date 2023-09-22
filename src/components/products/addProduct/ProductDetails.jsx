@@ -5,7 +5,7 @@ const ProductDetails = ({ product, setProduct }) => {
   const [categories, setCategories] = useState([]);
   const getCategories = () => {
     axiosService
-      .get("/Products/product-active-categories")
+      .get("/Category/product-active-categories")
       .then((res) => setCategories(res?.data));
   };
 

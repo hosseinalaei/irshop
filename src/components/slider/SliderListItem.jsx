@@ -14,7 +14,7 @@ const SliderListItem = ({ slider, getSliders }) => {
     };
 
     return axiosService
-      .post("/Get/GetMedia", body)
+      .post("/Media/GetMedia", body)
       .then((res) => res?.status === "Success" && res);
   };
 

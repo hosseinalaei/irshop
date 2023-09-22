@@ -15,7 +15,7 @@ const CategoriesList = ({ loading, categories, getCategories }) => {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = categories.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = categories?.slice(indexOfFirstItem, indexOfLastItem);
   return (
     <>
       <div className="pt-0 card-body">
@@ -41,7 +41,7 @@ const CategoriesList = ({ loading, categories, getCategories }) => {
         </table>
         <Pagination
           currentPage={currentPage}
-          totalPages={Math.ceil(categories.length / itemsPerPage)}
+          totalPages={Math.ceil(categories?.length / itemsPerPage)}
           onPageChange={handlePageChange}
         />
       </div>

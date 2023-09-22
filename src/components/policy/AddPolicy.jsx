@@ -103,7 +103,7 @@ const AddPolicy = () => {
       isDelete: false,
     };
 
-    axiosService.put("/AdminProducts/updatePolicy", requestBody).then((res) => {
+    axiosService.put("/Policy/updatePolicy", requestBody).then((res) => {
       res?.status === "Success"
         ? toast.success("عملیات با موفقیت انجام شد", {
             position: "top-left",

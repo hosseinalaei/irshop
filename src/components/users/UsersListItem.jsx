@@ -16,7 +16,7 @@ const UsersListItem = ({
       isDelete: true,
     };
 
-    axiosService.post("/Account/updateUser", body).then((res) => {
+    axiosService.post("/User/updateUser", body).then((res) => {
       if (res?.status === "Success") {
         toast.success("عملیات با موفقیت انجام شد", {
           position: "top-left",

@@ -6,7 +6,7 @@ const PolicySection = ({ product, setProduct }) => {
 
   const getPolicy = () => {
     axiosService
-      .get("/AdminProducts/getActivePolicies")
+      .get("/Policy/getActivePolicies")
       .then((res) => setPolicies(res?.data));
   };
 

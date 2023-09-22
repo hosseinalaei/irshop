@@ -13,7 +13,7 @@ const ProductsListItem = ({ product, getProducts }) => {
       mediaFieldName: "productImageName",
     };
     axiosService
-      .post("/Get/GetMedia", body)
+      .post("/Media/GetMedia", body)
       .then((res) => {
         setImg(res?.data);
       })

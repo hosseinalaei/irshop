@@ -15,6 +15,7 @@ const CommentsListHead = () => {
         <th class="text-end min-w-175px">کاربر</th>
         <th class="text-end min-w-175px">کامنت</th>
         <th class="text-end min-w-100px fs-7">تاریخ</th>
+        <th class="text-end min-w-100px fs-7"></th>
       </tr>
     </thead>
   );

@@ -17,7 +17,7 @@ const AddNewRoleModal = ({ setShowAddModal, setShowToast, getRoles }) => {
       isDelete: role?.isDelete,
       id: uuidv4(),
     };
-    axiosService.post("/AdminAccount/addrole", body).then((res) => {
+    axiosService.post("/Role/addrole", body).then((res) => {
       if (res?.status === "Success") {
         setShowToast("Success");
         setTimeout(() => {

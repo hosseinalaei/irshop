@@ -12,7 +12,7 @@ const SliderSection = ({ category, setCategory }) => {
   // useEffect(() => {
   //   category?.sliderImage?.length > 0 &&
   //     axiosService
-  //       .post("/Get/GetMedia", {
+  //       .post("/Media/GetMedia", {
   //         id: category?.id,
   //         mediaFieldName: "categorySliderImagename",
   //       })

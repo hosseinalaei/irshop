@@ -15,7 +15,7 @@ const PoliciesList = () => {
 
   const getPolicies = () => {
     axiosService
-      .get("/AdminProducts/getActivePolicies")
+      .get("/Policy/getActivePolicies")
       .then((res) => {
         setPolicies(res?.data);
         setLoading(false);
@@ -33,7 +33,7 @@ const PoliciesList = () => {
       isDelete: true,
     };
 
-    axiosService.put("/AdminProducts/updatePolicy", body).then((res) => {
+    axiosService.put("/Policy/updatePolicy", body).then((res) => {
       if (res?.status === "Success") {
         toast.success("عملیات با موفقیت انجام شد", {
           position: "top-left",

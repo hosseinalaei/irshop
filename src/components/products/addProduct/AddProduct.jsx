@@ -34,7 +34,7 @@ const AddProduct = () => {
     body.append("originImage", image);
     body.append("mediaFieldName", key);
     body.append("id", id);
-    axiosService.post("/Get/PostMedia", body, "multipart/form-data");
+    axiosService.post("/Media/PostMedia", body, "multipart/form-data");
   };
 
   const updateProduct = (e) => {

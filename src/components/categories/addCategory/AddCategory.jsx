@@ -27,7 +27,7 @@ const AddCategory = () => {
   //   body.append("originImage", category.originImage);
   //   body.append("mediaFieldName", "categoryImageName");
   //   body.append("id", id);
-  //   axiosService.post("/Get/PostMedia", body, "multipart/form-data");
+  //   axiosService.post("/Media/PostMedia", body, "multipart/form-data");
   // };
 
   const postMedia = (id, image, key) => {
@@ -35,7 +35,7 @@ const AddCategory = () => {
     body.append("originImage", image);
     body.append("mediaFieldName", key);
     body.append("id", id);
-    axiosService.post("/Get/PostMedia", body, "multipart/form-data");
+    axiosService.post("/Media/PostMedia", body, "multipart/form-data");
   };
 
   const addCategory = () => {
@@ -65,7 +65,7 @@ const AddCategory = () => {
 
     if (category.title && category.urlTitle && category.originImage) {
       axiosService
-        .post("/AdminProducts/registerProductCategory", requestBody)
+        .post("/Category/registerProductCategory", requestBody)
         .then((res) => {
           if (res?.status === "Success") {
             toast.success("عملیات با موفقیت انجام شد", {
@@ -123,36 +123,34 @@ const AddCategory = () => {
       categorySliderLink: "",
     };
 
-    axiosService
-      .put("/AdminProducts/updateCategory", requestBody)
-      .then((res) => {
-        if (res?.status === "Success") {
-          toast.success("عملیات با موفقیت انجام شد", {
-            position: "top-left",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            // progress: undefined,
-            theme: "light",
-            style: { fontFamily: "inherit" },
-          });
-          postMedia(res?.data?.id, category.originImage, "categoryImageName");
-        } else if (res?.status === "Error") {
-          toast.error("مشکلی رخ داده است", {
-            position: "top-left",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            // progress: undefined,
-            theme: "light",
-            style: { fontFamily: "inherit" },
-          });
-        }
-      });
+    axiosService.put("/Category/updateCategory", requestBody).then((res) => {
+      if (res?.status === "Success") {
+        toast.success("عملیات با موفقیت انجام شد", {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          // progress: undefined,
+          theme: "light",
+          style: { fontFamily: "inherit" },
+        });
+        postMedia(res?.data?.id, category.originImage, "categoryImageName");
+      } else if (res?.status === "Error") {
+        toast.error("مشکلی رخ داده است", {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          // progress: undefined,
+          theme: "light",
+          style: { fontFamily: "inherit" },
+        });
+      }
+    });
   };
 
   return (
