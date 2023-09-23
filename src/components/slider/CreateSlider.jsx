@@ -50,7 +50,7 @@ const CreateSlider = () => {
       link: slider?.link,
     };
 
-    axiosService.post("/AdminSlider/createSlider", body).then((res) => {
+    axiosService.post("/Slider/createSlider", body).then((res) => {
       if (res?.status === "Success") {
         // console.log(res);
         postMedia(

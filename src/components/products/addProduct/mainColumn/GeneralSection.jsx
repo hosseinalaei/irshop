@@ -49,7 +49,7 @@ const GeneralSection = ({ product, setProduct }) => {
           <div>
             <label className="form-label">توضیحات</label>
             <div className="mb-2 min-h-200px">
-              {/* <textarea
+              <textarea
                 className="mb-2 form-control"
                 value={product?.description}
                 onChange={(e) =>
@@ -58,9 +58,9 @@ const GeneralSection = ({ product, setProduct }) => {
                 placeholder="توضیحات"
                 rows={10}
                 name="product_description"
-              /> */}
+              />
 
-              <TextEditor setEditor={setEditor} />
+              {/* <TextEditor setEditor={setEditor} /> */}
             </div>
             <div className="text-muted fs-7">
               توضیحات برای بهتر دیده شدن محصول

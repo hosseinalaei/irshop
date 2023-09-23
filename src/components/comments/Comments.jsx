@@ -18,6 +18,7 @@ const Comments = () => {
 
   useEffect(() => {
     getComments();
+    getUsers();
   }, []);
 
   const deleteComment = (comment) => {
@@ -91,6 +92,14 @@ const Comments = () => {
     });
   };
 
+  const [users, setUsers] = useState([]);
+
+  const getUsers = () => {
+    axiosService?.get("/User/getAllUsers").then((res) => {
+      setUsers(res?.data);
+    });
+  };
+
   return (
     <>
       <ToastContainer />
@@ -102,9 +111,14 @@ const Comments = () => {
           >
             <CommentsListHead />
             <tbody>
-              {comments?.map((comment) => (
-                <tr>
-                  {/* <td>
+              {comments?.map((comment) => {
+                const user = users?.filter(
+                  (item) => item?.id === comment?.userId
+                );
+
+                return (
+                  <tr>
+                    {/* <td>
                     <div class="form-check form-check-sm form-check-custom form-check-solid mt-1">
                       <input
                         class="form-check-input"
@@ -113,7 +127,7 @@ const Comments = () => {
                       />
                     </div>
                   </td> */}
-                  {/* <td data-order="rating-5">
+                    {/* <td data-order="rating-5">
                     <div class="rating">
                       <div class="rating-label checked">
                         <i class="ki-outline ki-star fs-6"></i>
@@ -132,43 +146,46 @@ const Comments = () => {
                       </div>
                     </div>
                   </td> */}
-                  <td>
-                    <a
-                      href="../../demo23/dist/apps/inbox/reply.html"
-                      class="d-flex text-dark text-gray-800 text-hover-primary"
-                    >
-                      <div class="symbol symbol-circle symbol-25px me-3">
+                    <td>
+                      <a
+                        href="../../demo23/dist/apps/inbox/reply.html"
+                        class="d-flex text-dark text-gray-800 text-hover-primary"
+                      >
+                        {/* <div class="symbol symbol-circle symbol-25px me-3">
                         <div class="symbol-label bg-light-danger">
                           <span class="text-danger">M</span>
                         </div>
+                      </div> */}
+                        <span class="fw-bold">
+                          {user[0]?.firstName} {user[0]?.lastName}
+                        </span>
+                      </a>
+                    </td>
+                    <td class="text-gray-600 fw-bold">{comment?.text}</td>
+                    <td class="text-end">
+                      <span class="fw-semibold text-muted">
+                        {convertToPersianDate(comment?.createDate)}
+                      </span>
+                    </td>
+                    <td className="text-end">
+                      <div className="flex ">
+                        <button
+                          className="px-3 "
+                          onClick={() => acceptComment(comment)}
+                        >
+                          تایید
+                        </button>
+                        <button
+                          className="px-3 "
+                          onClick={() => deleteComment(comment)}
+                        >
+                          حذف
+                        </button>
                       </div>
-                      <span class="fw-bold">Melody Macy</span>
-                    </a>
-                  </td>
-                  <td class="text-gray-600 fw-bold">{comment?.text}</td>
-                  <td class="text-end">
-                    <span class="fw-semibold text-muted">
-                      {convertToPersianDate(comment?.createDate)}
-                    </span>
-                  </td>
-                  <td className="text-end">
-                    <div className="flex ">
-                      <button
-                        className="px-3 "
-                        onClick={() => acceptComment(comment)}
-                      >
-                        تایید
-                      </button>
-                      <button
-                        className="px-3 "
-                        onClick={() => deleteComment(comment)}
-                      >
-                        حذف
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

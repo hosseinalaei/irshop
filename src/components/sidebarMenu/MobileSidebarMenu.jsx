@@ -21,6 +21,13 @@ const MobileSidebarMenu = () => {
   };
 
   const isSubMenuOpen = (itemId) => openSubMenus.includes(itemId);
+
+  // {
+  //   "id": 8,
+  //   "name": "سفارش‌ها",
+  //   "url": "/orders",
+  //   "icon": "images"
+  // },
   return (
     <>
       {isOpen && (

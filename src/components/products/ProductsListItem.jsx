@@ -30,7 +30,7 @@ const ProductsListItem = ({ product, getProducts }) => {
       isDelete: true,
     };
 
-    axiosService.put("/AdminProducts/updateProduct", body).then((res) => {
+    axiosService.put("/Products/updateProduct", body).then((res) => {
       if (res?.status === "Success") {
         toast.success("عملیات با موفقیت انجام شد", {
           position: "top-left",
@@ -107,7 +107,7 @@ const ProductsListItem = ({ product, getProducts }) => {
       </td>
       <td>
         {/* <!--begin::Badges--> */}
-        <div className=" badge-light-success text-2xl">
+        <div className="text-2xl  badge-light-success">
           {product?.productColor[0].price}
         </div>
         {/* <!--end::Badges--> */}

@@ -70,12 +70,7 @@
       "url": "/slider",
       "icon": "images"
     },
-    {
-      "id": 8,
-      "name": "سفارش‌ها",
-      "url": "/orders",
-      "icon": "images"
-    },
+
     {
       "id": 9,
       "name": "نظرات",

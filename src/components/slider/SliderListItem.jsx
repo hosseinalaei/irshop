@@ -41,7 +41,7 @@ const SliderListItem = ({ slider, getSliders }) => {
       isDelete: true,
     };
 
-    axiosService.put("/AdminSlider/updateSlider", body).then((res) => {
+    axiosService.put("/Slider/updateSlider", body).then((res) => {
       if (res?.status === "Success") {
         toast.success("عملیات با موفقیت انجام شد", {
           position: "top-left",
