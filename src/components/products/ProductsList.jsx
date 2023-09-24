@@ -15,7 +15,7 @@ const ProductsList = ({ products, getProducts }) => {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = products?.slice(indexOfFirstItem, indexOfLastItem);
   return (
     <div className="pt-0 overflow-scroll card-body">
       {/* <!--begin::Table--> */}
@@ -40,7 +40,7 @@ const ProductsList = ({ products, getProducts }) => {
       </table>
       <Pagination
         currentPage={currentPage}
-        totalPages={Math.ceil(products.length / itemsPerPage)}
+        totalPages={Math.ceil(products?.length / itemsPerPage)}
         onPageChange={handlePageChange}
       />
       {/* <!--end::Table--> */}

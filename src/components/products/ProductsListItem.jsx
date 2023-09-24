@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { axiosService } from "../../services/axiosService";
 // import Link from "next/link";
 import React, { useState } from "react";
@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 
 const ProductsListItem = ({ product, getProducts }) => {
   const [img, setImg] = useState(null);
+  const nav = useNavigate();
 
   const getPic = () => {
     const body = {
@@ -65,7 +66,7 @@ const ProductsListItem = ({ product, getProducts }) => {
   console.log("jjjjjjjjjjjjjj", product?.productColor[0].price);
 
   return (
-    <tr>
+    <tr onClick={() => nav(`/products/edit-product/id=${product?.id}`)}>
       <td>
         {/* <div className="form-check form-check-sm form-check-custom form-check-solid">
           <input className="form-check-input" type="checkbox" value="1" />
@@ -107,7 +108,7 @@ const ProductsListItem = ({ product, getProducts }) => {
       </td>
       <td>
         {/* <!--begin::Badges--> */}
-        <div className="text-2xl  badge-light-success">
+        <div className="text-2xl badge-light-success">
           {product?.productColor[0].price}
         </div>
         {/* <!--end::Badges--> */}

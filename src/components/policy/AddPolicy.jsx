@@ -5,10 +5,12 @@ import { axiosService } from "../../services/axiosService";
 import { v4 as uuidv4 } from "uuid";
 import { NavLink, useLocation, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import Button from "../common/Button";
 
 const AddPolicy = () => {
   const location = useLocation();
   const selectedPolicy = location.state;
+  const [loading, setLoading] = useState(false);
 
   const [policy, setPolicy] = useState({
     title: selectedPolicy?.title,
@@ -30,9 +32,8 @@ const AddPolicy = () => {
     id: selectedPolicy?.id,
   });
 
-  // console.log("llllllllllllll", policy);
-
   const addPolicy = () => {
+    setLoading(true);
     const requestBody = {
       title: policy?.title,
 
@@ -79,10 +80,12 @@ const AddPolicy = () => {
               theme: "light",
               style: { fontFamily: "inherit" },
             })
-      );
+      )
+      .finally(() => setLoading(false));
   };
 
   const updatePolicy = () => {
+    setLoading(true);
     const requestBody = {
       title: policy?.title,
 
@@ -103,31 +106,34 @@ const AddPolicy = () => {
       isDelete: false,
     };
 
-    axiosService.put("/Policy/updatePolicy", requestBody).then((res) => {
-      res?.status === "Success"
-        ? toast.success("عملیات با موفقیت انجام شد", {
-            position: "top-left",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            // progress: undefined,
-            theme: "light",
-            style: { fontFamily: "inherit" },
-          })
-        : toast.error("مشکلی رخ داده است", {
-            position: "top-left",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            // progress: undefined,
-            theme: "light",
-            style: { fontFamily: "inherit" },
-          });
-    });
+    axiosService
+      .put("/Policy/updatePolicy", requestBody)
+      .then((res) => {
+        res?.status === "Success"
+          ? toast.success("عملیات با موفقیت انجام شد", {
+              position: "top-left",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              // progress: undefined,
+              theme: "light",
+              style: { fontFamily: "inherit" },
+            })
+          : toast.error("مشکلی رخ داده است", {
+              position: "top-left",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              // progress: undefined,
+              theme: "light",
+              style: { fontFamily: "inherit" },
+            });
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -204,12 +210,13 @@ const AddPolicy = () => {
               </div>
             </form>
             <div className="mt-5 d-flex justify-content-end">
-              <button
+              <Button
+                className="px-10 text-2xl"
                 onClick={() => (selectedPolicy ? updatePolicy() : addPolicy())}
-                className="px-10 py-2 text-2xl font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600"
+                isLoading={loading}
               >
                 ثبت
-              </button>
+              </Button>
             </div>
           </div>
         </div>

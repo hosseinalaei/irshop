@@ -27,6 +27,9 @@ const MediaSection = ({ product, setProduct, selectedProduct }) => {
         getPic(item?.imageuniqueId)
       );
   }, [selectedProduct]);
+  useEffect(() => {
+    console.log("imgimgimgimg", img);
+  }, [img]);
 
   useEffect(() => {
     console.log("file: ", file);

@@ -3,50 +3,70 @@ import { useNavigate } from "react-router-dom";
 import { Formik, FormikHelpers, Field, Form } from "formik";
 import { axiosService } from "../services/axiosService";
 import { toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "../components/common/Button";
 const Login = () => {
   const navigate = useNavigate();
+  const [loginInfo, setLoginInfo] = useState({
+    mobile: "",
+    verifyCode: "",
+  });
   const [validationCode, setValidationCode] = useState(null);
   const [validationCodeInput, setValidationCodeInput] = useState(false);
   const [error, setError] = useState("");
+  const [buttonText, setButtonText] = useState("ارسال کد");
+  const [loading, setLoading] = useState(false);
 
-  //   const getVerificationCode = (values) => {
-  //     const body = {
-  //         mobile: values?.phone_number,
-  //       };
+  const getVerificationCode = () => {
+    setLoading(true);
+    const body = {
+      mobile: loginInfo?.mobile,
+    };
 
-  //       axiosService.post("/Account/checkMobile", body).then((res) => {
+    axiosService
+      .post("/User/checkMobile", body)
+      .then((res) => {
+        if (res?.status === "Success") {
+          setValidationCodeInput(true);
+          setValidationCode(true);
+        } else {
+          setError("مشکلی رخ داده است");
+        }
+      })
+      .finally(() => setLoading(false));
+  };
 
-  //         res?.status === "Success" && setValidationCodeInput(true);
-  //       })
+  const submitLogin = () => {
+    setLoading(true);
+    const requestBody = {
+      mobile: loginInfo?.mobile,
+      verifyCode: loginInfo?.verifyCode,
+    };
 
-  //   }
+    axiosService
+      .post("/User/adminLogin", requestBody)
+      .then((res) => {
+        console.log(res);
 
-  //   const submitLogin = ({phone_number,validation_code }) => {
-  //     const requestBody = {
-  //         mobile: phone_number,
-  //             verifyCode: validation_code,
-  //     }
+        if (res?.status === "NotFound") {
+          setError(res?.data?.message);
+        }
+        if (res?.status === "Success") {
+          const token = res?.data?.token;
 
-  //     axiosService
-  //           .post("/AdminAccount/adminLogin", requestBody)
-  //           .then((res) => {
-  //             console.log(res);
-
-  //             const token = "121323313131";
-
-  //             if (!token) {
-  //               alert("Unable to login. Please try after some time.");
-  //               return;
-  //             }
-  //             localStorage.clear();
-  //             localStorage.setItem("user-token", token);
-  //             setTimeout(() => {
-  //               navigate("/");
-  //             }, 500);
-
-  //             //   res?.status === "Success" &&
-  //           });
-  //   }
+          if (!token) {
+            setError("مشکلی رخ داده است. لطفا دوباره تلاش کنید");
+            return;
+          }
+          localStorage.clear();
+          localStorage.setItem("user-token", token);
+          setTimeout(() => {
+            navigate("/");
+          }, 500);
+        }
+      })
+      .finally(() => setLoading(false));
+  };
 
   const submitLoginForm = (values) => {
     const body = {
@@ -69,6 +89,7 @@ const Login = () => {
               setError(res?.data?.message);
             }
             if (res?.status === "Success") {
+              setButtonText("ورود");
               const token = res?.data?.token;
 
               if (!token) {
@@ -108,58 +129,64 @@ const Login = () => {
                     {error}
                   </div>
                 )}
-                <Formik
-                  initialValues={{
-                    phone_number: "",
-                    validation_code: "",
-                  }}
-                  onSubmit={(values) => {
-                    submitLoginForm(values);
-                  }}
-                >
-                  <Form className="form w-100">
-                    <div className="text-center mb-11">
-                      <h1 className="mb-3 text-dark fw-bolder">ورود</h1>
-                    </div>
+
+                <form className="form w-100">
+                  <div className="text-center mb-11">
+                    <h1 className="mb-3 text-dark fw-bolder">ورود</h1>
+                  </div>
+                  <div className="mb-8 fv-row">
+                    <label htmlFor="phone_number">شماره همراه</label>
+                    <input
+                      id="phone_number"
+                      name="phone_number"
+                      placeholder=""
+                      className="bg-transparent form-control"
+                      onChange={(e) =>
+                        setLoginInfo({ ...loginInfo, mobile: e?.target?.value })
+                      }
+                    />
+                  </div>
+
+                  {validationCodeInput && (
                     <div className="mb-8 fv-row">
-                      <label htmlFor="phone_number">شماره همراه</label>
-                      <Field
-                        id="phone_number"
-                        name="phone_number"
+                      <label htmlFor="validation_code">کد امنیتی</label>
+                      <input
+                        id="validation_code"
+                        name="validation_code"
                         placeholder=""
                         className="bg-transparent form-control"
+                        onChange={(e) =>
+                          setLoginInfo({
+                            ...loginInfo,
+                            verifyCode: e?.target?.value,
+                          })
+                        }
                       />
                     </div>
+                  )}
 
-                    {validationCodeInput && (
-                      <div className="mb-8 fv-row">
-                        <label htmlFor="validation_code">کد امنیتی</label>
-                        <Field
-                          id="validation_code"
-                          name="validation_code"
-                          placeholder=""
-                          className="bg-transparent form-control"
-                        />
-                      </div>
-                    )}
-
-                    <div className="grid mb-10">
-                      {validationCode ? (
-                        <button type="submit" className=" btn btn-primary">
-                          ورود
-                        </button>
-                      ) : (
-                        <button
+                  <div className="grid mb-10">
+                    {validationCode ? (
+                      <Button
+                        onClick={submitLogin}
+                        isLoading={loading}
+                        type="submit"
+                      >
+                        ورود
+                      </Button>
+                    ) : (
+                      <>
+                        <Button
+                          onClick={getVerificationCode}
+                          isLoading={loading}
                           type="submit"
-                          className="py-5 text-lg font-semibold bg-blue-500 rounded-lg"
-                          style={{ color: "#fff" }}
                         >
                           ارسال کد
-                        </button>
-                      )}
-                    </div>
-                  </Form>
-                </Formik>
+                        </Button>
+                      </>
+                    )}
+                  </div>
+                </form>
               </div>
             </div>
           </div>
@@ -167,9 +194,7 @@ const Login = () => {
             className="flex order-1 flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center order-lg-2"
             style={{ backgroundImage: ' url("/assets/auth-bg.png")' }}
           >
-            {/* <!--begin::Content--> */}
             <div className="px-5 d-flex flex-column flex-center py-7 py-lg-15 px-md-15 w-100">
-              {/* <!--begin::Logo--> */}
               <a href="#" className="mb-0 mb-lg-12">
                 <img
                   alt="Logo"
@@ -177,16 +202,12 @@ const Login = () => {
                   className="h-60px h-lg-75px"
                 />
               </a>
-              {/* <!--end::Logo--> */}
-              {/* <!--begin::Image--> */}
               <img
                 className="mx-auto mb-10 d-none d-lg-block w-275px w-md-50 w-xl-500px mb-lg-20"
                 src="auth-screens.png"
                 alt=""
               />
-              {/* <!--end::Image--> */}
             </div>
-            {/* <!--end::Content--> */}
           </div>
         </div>
       </div>

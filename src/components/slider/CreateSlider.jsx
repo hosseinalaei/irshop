@@ -5,11 +5,13 @@ import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { axiosService } from "../../services/axiosService";
 import { ToastContainer, toast } from "react-toastify";
+import Button from "../common/Button";
 
 const CreateSlider = () => {
   const [file, setFile] = useState([]);
   const [thumbnail, setThumbnail] = useState([]);
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const [sliderAvatarImageName, setSliderAvatarImageName] = useState(null);
   const [sliderBackImageName, setSliderBackImageName] = useState(null);
@@ -39,6 +41,7 @@ const CreateSlider = () => {
   };
 
   const createSlider = () => {
+    setLoading(true);
     console.log(file);
     const body = {
       sliderImageName: file[0]?.name,
@@ -50,41 +53,44 @@ const CreateSlider = () => {
       link: slider?.link,
     };
 
-    axiosService.post("/Slider/createSlider", body).then((res) => {
-      if (res?.status === "Success") {
-        // console.log(res);
-        postMedia(
-          res?.data?.id,
-          sliderAvatarImageName,
-          "sliderAvatarImageName"
-        );
-        postMedia(res?.data?.id, sliderBackImageName, "sliderBackImageName");
-        postMedia(res?.data?.id, sliderImageName, "sliderImageName");
-        toast.success("عملیات با موفقیت انجام شد", {
-          position: "top-left",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          // progress: undefined,
-          theme: "light",
-          style: { fontFamily: "inherit" },
-        });
-      } else if (res?.status === "Error") {
-        toast.error("مشکلی رخ داده است", {
-          position: "top-left",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          // progress: undefined,
-          theme: "light",
-          style: { fontFamily: "inherit" },
-        });
-      }
-    });
+    axiosService
+      .post("/Slider/createSlider", body)
+      .then((res) => {
+        if (res?.status === "Success") {
+          // console.log(res);
+          postMedia(
+            res?.data?.id,
+            sliderAvatarImageName,
+            "sliderAvatarImageName"
+          );
+          postMedia(res?.data?.id, sliderBackImageName, "sliderBackImageName");
+          postMedia(res?.data?.id, sliderImageName, "sliderImageName");
+          toast.success("عملیات با موفقیت انجام شد", {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            // progress: undefined,
+            theme: "light",
+            style: { fontFamily: "inherit" },
+          });
+        } else if (res?.status === "Error") {
+          toast.error("مشکلی رخ داده است", {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            // progress: undefined,
+            theme: "light",
+            style: { fontFamily: "inherit" },
+          });
+        }
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -259,12 +265,15 @@ const CreateSlider = () => {
           setImages={setImages}
           images={images}
         />
-        <button
+        {/* <button
           className="px-4 py-2 my-3 text-2xl text-white bg-blue-300 rounded-lg hover:bg-blue-400"
           onClick={createSlider}
         >
           ثبت
-        </button>
+        </button> */}
+        <Button onClick={createSlider} isLoading={loading}>
+          ثبت
+        </Button>
       </div>
     </>
   );
