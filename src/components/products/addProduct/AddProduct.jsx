@@ -9,6 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 const AddProduct = () => {
   const location = useLocation();
   const selectedProduct = location?.state;
+  const [loading, setLoading] = useState(false);
 
   console.log("selectedProductselectedProduct", selectedProduct);
 
@@ -38,6 +39,7 @@ const AddProduct = () => {
   };
 
   const updateProduct = (e) => {
+    setLoading(true);
     e.preventDefault();
     const gallery = [];
 
@@ -66,44 +68,48 @@ const AddProduct = () => {
       productSpecification: product?.specification,
     };
 
-    axiosService.put("/Products/updateProduct", requestBody).then((res) => {
-      if (res?.status === "Success") {
-        toast.success("عملیات با موفقیت انجام شد", {
-          position: "top-left",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          // progress: undefined,
-          theme: "light",
-          style: { fontFamily: "inherit" },
-        });
+    axiosService
+      .put("/Products/updateProduct", requestBody)
+      .then((res) => {
+        if (res?.status === "Success") {
+          toast.success("عملیات با موفقیت انجام شد", {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            // progress: undefined,
+            theme: "light",
+            style: { fontFamily: "inherit" },
+          });
 
-        product?.originImage?.name !== selectedProduct?.productImageName &&
-          postMedia(res?.data?.id, product?.originImage, "productImageName");
+          product?.originImage?.name !== selectedProduct?.productImageName &&
+            postMedia(res?.data?.id, product?.originImage, "productImageName");
 
-        product?.gallery?.length > 0 &&
-          Array.from(product?.gallery).map((item) =>
-            postMedia(res?.data?.id, item, "productGalleryImageName")
-          );
-      } else {
-        toast.error("مشکلی رخ داده است", {
-          position: "top-left",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          // progress: undefined,
-          theme: "light",
-          style: { fontFamily: "inherit" },
-        });
-      }
-    });
+          product?.gallery?.length > 0 &&
+            Array.from(product?.gallery).map((item) =>
+              postMedia(selectedProduct?.id, item, "productGalleryImageName")
+            );
+        } else {
+          toast.error("مشکلی رخ داده است", {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            // progress: undefined,
+            theme: "light",
+            style: { fontFamily: "inherit" },
+          });
+        }
+      })
+      .finally(() => setLoading(false));
   };
 
   const submitProduct = (e) => {
+    setLoading(true);
     e.preventDefault();
     if (
       product?.name &&
@@ -183,7 +189,8 @@ const AddProduct = () => {
               style: { fontFamily: "inherit" },
             });
           }
-        });
+        })
+        .finally(() => setLoading(false));
     }
   };
 
@@ -227,6 +234,7 @@ const AddProduct = () => {
                   selectedProduct ? updateProduct(e) : submitProduct(e);
                 }}
                 selectedProduct={selectedProduct}
+                loading={loading}
               />
             </form>
           </div>

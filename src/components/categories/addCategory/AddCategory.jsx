@@ -6,11 +6,13 @@ import { axiosService } from "../../../services/axiosService";
 import SliderSection from "./mainColumn/SliderSection";
 import { NavLink, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import Button from "../../common/Button";
 
 const AddCategory = () => {
   const location = useLocation();
 
   const selectedCategory = location?.state;
+  const [loading, setLoading] = useState(false);
 
   const [category, setCategory] = useState({
     title: selectedCategory?.title || "",
@@ -22,14 +24,6 @@ const AddCategory = () => {
     id: selectedCategory?.id || "",
   });
 
-  // const postMedia = (id) => {
-  //   const body = new FormData();
-  //   body.append("originImage", category.originImage);
-  //   body.append("mediaFieldName", "categoryImageName");
-  //   body.append("id", id);
-  //   axiosService.post("/Media/PostMedia", body, "multipart/form-data");
-  // };
-
   const postMedia = (id, image, key) => {
     const body = new FormData();
     body.append("originImage", image);
@@ -39,17 +33,7 @@ const AddCategory = () => {
   };
 
   const addCategory = () => {
-    // const requestBody = new FormData();
-
-    // category.title && requestBody.append("Title", category.title);
-    // category.urlTitle && requestBody.append("UrlTitle", category.urlTitle);
-    // category.parentId && requestBody.append("ParentId", category.parentId);
-    // requestBody.append("Id", uuidv4());
-    // requestBody.append("IsDelete", category.isDelete);
-    // category.originImage &&
-    //   requestBody.append("originImage", category.originImage);
-    // category.sliderImage.length > 0 &&
-    //   requestBody.append("sliderImage", category.sliderImage[0]);
+    setLoading(true);
 
     const requestBody = {
       title: category?.title,
@@ -93,22 +77,13 @@ const AddCategory = () => {
               style: { fontFamily: "inherit" },
             });
           }
-        });
+        })
+        .finally(() => setLoading(false));
     }
   };
 
   const updateCategory = () => {
-    // const requestBody = new FormData();
-
-    // category.title && requestBody.append("Title", category.title);
-    // category.urlTitle && requestBody.append("UrlTitle", category.urlTitle);
-    // category.parentId && requestBody.append("ParentId", category.parentId);
-    // requestBody.append("Id", uuidv4());
-    // requestBody.append("IsDelete", category.isDelete);
-    // category.originImage &&
-    //   requestBody.append("originImage", category.originImage);
-    // category.sliderImage.length > 0 &&
-    //   requestBody.append("sliderImage", category.sliderImage[0]);
+    setLoading(true);
 
     const requestBody = {
       title: category?.title,
@@ -123,34 +98,43 @@ const AddCategory = () => {
       categorySliderLink: "",
     };
 
-    axiosService.put("/Category/updateCategory", requestBody).then((res) => {
-      if (res?.status === "Success") {
-        toast.success("عملیات با موفقیت انجام شد", {
-          position: "top-left",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          // progress: undefined,
-          theme: "light",
-          style: { fontFamily: "inherit" },
-        });
-        postMedia(res?.data?.id, category.originImage, "categoryImageName");
-      } else if (res?.status === "Error") {
-        toast.error("مشکلی رخ داده است", {
-          position: "top-left",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          // progress: undefined,
-          theme: "light",
-          style: { fontFamily: "inherit" },
-        });
-      }
-    });
+    axiosService
+      .put("/Category/updateCategory", requestBody)
+      .then((res) => {
+        if (res?.status === "Success") {
+          toast.success("عملیات با موفقیت انجام شد", {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            // progress: undefined,
+            theme: "light",
+            style: { fontFamily: "inherit" },
+          });
+          postMedia(res?.data?.id, category.originImage, "categoryImageName");
+        } else if (res?.status === "Error") {
+          toast.error("مشکلی رخ داده است", {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            // progress: undefined,
+            theme: "light",
+            style: { fontFamily: "inherit" },
+          });
+        }
+      })
+      .finally(() => setLoading(false));
+  };
+
+  const enableSubmitBtn = () => {
+    return category.title && category.urlTitle && category.originImage
+      ? true
+      : false;
   };
 
   return (
@@ -195,14 +179,18 @@ const AddCategory = () => {
           </form>
 
           <div className="mt-5 d-flex justify-content-end">
-            <button
+            <Button
+              disabled={Boolean(
+                !category.title && !category.urlTitle && !category.originImage
+              )}
+              className="px-10 text-2xl"
               onClick={() =>
                 selectedCategory ? updateCategory() : addCategory()
               }
-              className="px-10 py-2 text-2xl font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600"
+              isLoading={loading}
             >
               ثبت
-            </button>
+            </Button>
           </div>
         </div>
       </div>

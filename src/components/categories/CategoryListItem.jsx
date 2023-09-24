@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { axiosService } from "../../services/axiosService";
 import { toast } from "react-toastify";
+import ConfirmationDialog from "../common/Confirm";
 
 const CategoryListItem = ({ category, getCategories }) => {
   const [img, setImg] = useState(null);
@@ -60,6 +61,12 @@ const CategoryListItem = ({ category, getCategories }) => {
         });
       }
     });
+  };
+
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+
+  const handleCancel = () => {
+    setIsConfirmationOpen(false);
   };
   return (
     <>
@@ -124,10 +131,19 @@ const CategoryListItem = ({ category, getCategories }) => {
             </div>
             <button
               className="px-3 "
-              onClick={() => deleteCategory(category?.id)}
+              onClick={() => setIsConfirmationOpen(true)}
             >
               حذف
             </button>
+            <ConfirmationDialog
+              isOpen={isConfirmationOpen}
+              setIsOpen={setIsConfirmationOpen}
+              message="از حذف دسته‌بندی اطمینان دارید؟"
+              onConfirm={() => deleteCategory(category?.id)}
+              onCancel={handleCancel}
+              confirmText="بله"
+              cancelText="خیر"
+            />
           </div>
         </td>
       </tr>

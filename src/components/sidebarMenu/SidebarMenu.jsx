@@ -28,7 +28,7 @@ const SidebarMenu = () => {
       <div
         className={`flex-col h-full overflow-y-scroll bg-white rounded-2xl hidden md:flex`}
       >
-        <div className="sticky top-0 px-4 py-3 bg-white d-flex flex-stack px-lg-6 py-lg-8">
+        <div className="sticky top-0 z-20 px-4 py-3 bg-white d-flex flex-stack px-lg-6 py-lg-8">
           <Logo />
 
           {/* <UserMenu /> */}
@@ -93,7 +93,7 @@ const SidebarMenu = () => {
                 )}
               </div>
             ))}
-            <div className="absolute flex justify-center w-full bottom-4">
+            <div className="sticky bottom-0 flex justify-center w-full py-5 bg-white">
               <button
                 className="w-5/6 py-2 text-white bg-blue-500 rounded-md"
                 onClick={() => {

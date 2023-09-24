@@ -12,6 +12,13 @@ const InputGroup = ({ values, onChange }) => (
           value={values.colorName}
           onChange={(e) => onChange("colorName", e.target.value)}
         />
+        {/* <input
+          type="color"
+          className="mb-2 form-control"
+          placeholder="نام رنگ"
+          value={values.colorName}
+          onChange={(e) => onChange("colorName", e.target.value)}
+        /> */}
       </div>
 
       <div className="mb-10 ">

@@ -1,11 +1,13 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { axiosService } from "../../services/axiosService";
 // import Link from "next/link";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import ConfirmationDialog from "../common/Confirm";
 
 const ProductsListItem = ({ product, getProducts }) => {
   const [img, setImg] = useState(null);
+  const nav = useNavigate();
 
   const getPic = () => {
     const body = {
@@ -62,7 +64,13 @@ const ProductsListItem = ({ product, getProducts }) => {
     });
   };
 
-  console.log("jjjjjjjjjjjjjj", product?.productColor[0].price);
+  // console.log("jjjjjjjjjjjjjj", product?.productColor[0].price);
+
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+
+  const handleCancel = () => {
+    setIsConfirmationOpen(false);
+  };
 
   return (
     <tr>
@@ -107,12 +115,12 @@ const ProductsListItem = ({ product, getProducts }) => {
       </td>
       <td>
         {/* <!--begin::Badges--> */}
-        <div className="text-2xl  badge-light-success">
+        <div className="text-2xl badge-light-success">
           {product?.productColor[0].price}
         </div>
         {/* <!--end::Badges--> */}
       </td>
-      <td className="text-end">
+      <td className="text-center">
         <div className="flex ">
           <div className="px-3">
             <NavLink
@@ -124,9 +132,18 @@ const ProductsListItem = ({ product, getProducts }) => {
               ویرایش
             </NavLink>
           </div>
-          <button className="px-3" onClick={() => deleteProduct(product)}>
+          <button className="px-3" onClick={() => setIsConfirmationOpen(true)}>
             حذف
           </button>
+          <ConfirmationDialog
+            isOpen={isConfirmationOpen}
+            setIsOpen={setIsConfirmationOpen}
+            message="از حذف محصول اطمینان دارید؟"
+            onConfirm={() => deleteProduct(product)}
+            onCancel={handleCancel}
+            confirmText="بله"
+            cancelText="خیر"
+          />
         </div>
       </td>
     </tr>
