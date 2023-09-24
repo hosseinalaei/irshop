@@ -36,7 +36,7 @@ const InputGroup = ({ values, onChange }) => (
         <input
           type="text"
           className="mb-2 form-control"
-          placeholder="ریال"
+          placeholder="تومان"
           value={values.price}
           onChange={(e) => onChange("price", e.target.value)}
         />

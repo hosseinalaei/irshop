@@ -121,6 +121,7 @@ const AddProduct = () => {
       for (let i = 0; i < product?.gallery.length; i++) {
         gallery.push({
           productGalleryImageName: product?.gallery[i].name,
+          imageuniqueId: uuidv4(),
           productVideoName: "",
         });
       }
@@ -144,7 +145,7 @@ const AddProduct = () => {
         productColor: product?.color,
 
         productDetail: product?.details,
-        productSpecification: product?.specification,
+        productSelectedSpecification: product?.specification,
       };
 
       axiosService

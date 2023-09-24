@@ -20,6 +20,7 @@ import SliderPage from "./pages/slider/SliderPage";
 import CreateSlider from "./components/slider/CreateSlider";
 import Orders from "./components/orders/Orders";
 import CommentsPage from "./pages/comments/CommentsPage";
+import SpecificationPage from "./pages/specification/SpecificationPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -69,6 +70,7 @@ root.render(
             <Route path="/create-slider" element={<CreateSlider />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/comments" element={<CommentsPage />} />
+            <Route path="/specification" element={<SpecificationPage />} />
           </Route>
         </Route>
       </Routes>
