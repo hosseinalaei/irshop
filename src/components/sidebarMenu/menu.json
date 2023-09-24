@@ -70,6 +70,12 @@
       "url": "/slider",
       "icon": "images"
     },
+    {
+      "id": 8,
+      "name": "ویژگی‌ها",
+      "url": "/specification",
+      "icon": "images"
+    },
 
     {
       "id": 9,
