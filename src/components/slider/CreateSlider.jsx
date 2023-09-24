@@ -35,7 +35,7 @@ const CreateSlider = () => {
     body.append("originImage", image);
     body.append("mediaFieldName", key);
     body.append("id", id);
-    axiosService.post("/Get/PostMedia", body, "multipart/form-data");
+    axiosService.post("/Media/PostMedia", body, "multipart/form-data");
   };
 
   const createSlider = () => {
@@ -50,7 +50,7 @@ const CreateSlider = () => {
       link: slider?.link,
     };
 
-    axiosService.post("/AdminSlider/createSlider", body).then((res) => {
+    axiosService.post("/Slider/createSlider", body).then((res) => {
       if (res?.status === "Success") {
         // console.log(res);
         postMedia(

@@ -34,7 +34,7 @@ const AddProduct = () => {
     body.append("originImage", image);
     body.append("mediaFieldName", key);
     body.append("id", id);
-    axiosService.post("/Get/PostMedia", body, "multipart/form-data");
+    axiosService.post("/Media/PostMedia", body, "multipart/form-data");
   };
 
   const updateProduct = (e) => {
@@ -66,43 +66,41 @@ const AddProduct = () => {
       productSpecification: product?.specification,
     };
 
-    axiosService
-      .put("/AdminProducts/updateProduct", requestBody)
-      .then((res) => {
-        if (res?.status === "Success") {
-          toast.success("عملیات با موفقیت انجام شد", {
-            position: "top-left",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            // progress: undefined,
-            theme: "light",
-            style: { fontFamily: "inherit" },
-          });
+    axiosService.put("/Products/updateProduct", requestBody).then((res) => {
+      if (res?.status === "Success") {
+        toast.success("عملیات با موفقیت انجام شد", {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          // progress: undefined,
+          theme: "light",
+          style: { fontFamily: "inherit" },
+        });
 
-          product?.originImage?.name !== selectedProduct?.productImageName &&
-            postMedia(res?.data?.id, product?.originImage, "productImageName");
+        product?.originImage?.name !== selectedProduct?.productImageName &&
+          postMedia(res?.data?.id, product?.originImage, "productImageName");
 
-          product?.gallery?.length > 0 &&
-            Array.from(product?.gallery).map((item) =>
-              postMedia(res?.data?.id, item, "productGalleryImageName")
-            );
-        } else {
-          toast.error("مشکلی رخ داده است", {
-            position: "top-left",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            // progress: undefined,
-            theme: "light",
-            style: { fontFamily: "inherit" },
-          });
-        }
-      });
+        product?.gallery?.length > 0 &&
+          Array.from(product?.gallery).map((item) =>
+            postMedia(res?.data?.id, item, "productGalleryImageName")
+          );
+      } else {
+        toast.error("مشکلی رخ داده است", {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          // progress: undefined,
+          theme: "light",
+          style: { fontFamily: "inherit" },
+        });
+      }
+    });
   };
 
   const submitProduct = (e) => {
@@ -144,7 +142,7 @@ const AddProduct = () => {
       };
 
       axiosService
-        .post("/AdminProducts/registerProduct", requestBody)
+        .post("/Products/registerProduct", requestBody)
         .then((res) => {
           if (res?.status === "Success") {
             toast.success("عملیات با موفقیت انجام شد", {

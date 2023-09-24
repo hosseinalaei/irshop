@@ -69,6 +69,13 @@
       "name": "اسلایدر",
       "url": "/slider",
       "icon": "images"
+    },
+
+    {
+      "id": 9,
+      "name": "نظرات",
+      "url": "/comments",
+      "icon": "message"
     }
   ]
 }

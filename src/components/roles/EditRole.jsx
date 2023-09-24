@@ -19,7 +19,7 @@ const EditRole = ({ setShowEditModal, selectedRole }) => {
       isDelete: editedRole?.isDelete,
       id: editedRole?.id,
     };
-    axiosService.put("/AdminAccount/updateRole", body).then((res) => {
+    axiosService.put("/Role/updateRole", body).then((res) => {
       res?.status === "Success"
         ? toast.success("عملیات با موفقیت انجام شد", {
             position: "top-left",

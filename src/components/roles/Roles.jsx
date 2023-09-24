@@ -49,7 +49,7 @@ const Roles = () => {
 
   const getRoles = () => {
     setLoading(true);
-    axiosService.get("/AdminAccount/getActiveRoles").then((res) => {
+    axiosService.get("/Role/getActiveRoles").then((res) => {
       setRoles(res?.data);
       setLoading(false);
     });
@@ -67,7 +67,7 @@ const Roles = () => {
       isDelete: true,
     };
 
-    axiosService.put("/AdminAccount/updateRole", body).then((res) => {
+    axiosService.put("/Role/updateRole", body).then((res) => {
       if (res?.status === "Success") {
         toast.success("عملیات با موفقیت انجام شد", {
           position: "top-left",

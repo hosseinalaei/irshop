@@ -53,12 +53,12 @@ const Login = () => {
       mobile: values?.phone_number,
     };
     !values?.validation_code
-      ? axiosService.post("/Account/checkMobile", body).then((res) => {
+      ? axiosService.post("/User/checkMobile", body).then((res) => {
           console.log(res);
           res?.status === "Success" && setValidationCodeInput(true);
         })
       : axiosService
-          .post("/AdminAccount/adminLogin", {
+          .post("/User/adminLogin", {
             mobile: values?.phone_number,
             verifyCode: values?.validation_code,
           })

@@ -12,7 +12,7 @@ const OriginImageProduct = ({ product, setProduct, selectedProduct }) => {
       mediaFieldName: "productImageName",
     };
     axiosService
-      .post("/Get/GetMedia", body)
+      .post("/Media/GetMedia", body)
       .then((res) => {
         console.log("res", res);
         setPic(res?.data);

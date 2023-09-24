@@ -13,6 +13,9 @@ import MobileSidebarMenu from "../components/sidebarMenu/MobileSidebarMenu";
 import UsersPage from "../pages/users/UsersPage";
 import SliderPage from "../pages/slider/SliderPage";
 import CreateSlider from "../components/slider/CreateSlider";
+import OrdersList from "../components/orders/OrdersList";
+import Orders from "../components/orders/Orders";
+import CommentsPage from "../pages/comments/CommentsPage";
 
 function Layout() {
   return (
@@ -57,6 +60,8 @@ function Layout() {
           <Route path="/users" element={<UsersPage />} />
           <Route path="/slider" element={<SliderPage />} />
           <Route path="/create-slider" element={<CreateSlider />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/comments" element={<CommentsPage />} />
         </Routes>
       </div>
     </div>

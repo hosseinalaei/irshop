@@ -13,7 +13,7 @@ const MediaSection = ({ product, setProduct, selectedProduct }) => {
       mediaFieldName: "productGalleryImageName",
     };
     axiosService
-      .post("/Get/GetMedia", body)
+      .post("/Media/GetMedia", body)
       .then((res) => {
         console.log("res", res);
         setImg((prev) => [...prev, res?.data]);

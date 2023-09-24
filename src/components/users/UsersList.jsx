@@ -15,7 +15,7 @@ const UsersList = () => {
 
   const getUsers = () => {
     axiosService
-      ?.get("/AdminAccount/getAllUsers")
+      ?.get("/User/getAllUsers")
       .then((res) => {
         setUsers(res?.data);
         setLoading(false);

@@ -13,7 +13,7 @@ const Category = () => {
   const getCategories = () => {
     setLoading(true);
     axiosService
-      .get("/Products/product-active-categories")
+      .get("/Category/product-active-categories")
       .then((res) => {
         setCategories(res?.data);
         setLoading(false);

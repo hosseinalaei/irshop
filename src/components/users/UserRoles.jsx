@@ -9,7 +9,7 @@ const UserRoles = ({ role }) => {
       roleId: role?.roleId,
     };
     axiosService
-      .post("/AdminAccount/getRolebyId", body)
+      .post("/Role/getRolebyId", body)
       .then((res) => setRoleObject(res?.data));
   };
 
