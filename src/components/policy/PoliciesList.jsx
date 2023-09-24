@@ -6,6 +6,7 @@ import AddNewPolicy from "./AddNewPolicy";
 import { NavLink, useParams } from "react-router-dom";
 import Loading from "../common/Loading";
 import { ToastContainer, toast } from "react-toastify";
+import ConfirmationDialog from "../common/Confirm";
 
 const PoliciesList = () => {
   const [policies, setPolicies] = useState([]);
@@ -63,6 +64,12 @@ const PoliciesList = () => {
         });
       }
     });
+  };
+
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+
+  const handleCancel = () => {
+    setIsConfirmationOpen(false);
   };
 
   return (
@@ -162,9 +169,18 @@ const PoliciesList = () => {
                       >
                         ویرایش
                       </NavLink>
-                      <button onClick={() => deletePolicy(item?.id)}>
+                      <button onClick={() => setIsConfirmationOpen(true)}>
                         حذف
                       </button>
+                      <ConfirmationDialog
+                        isOpen={isConfirmationOpen}
+                        setIsOpen={setIsConfirmationOpen}
+                        message="از حذف محصول اطمینان دارید؟"
+                        onConfirm={() => deletePolicy(item?.id)}
+                        onCancel={handleCancel}
+                        confirmText="بله"
+                        cancelText="خیر"
+                      />
                     </div>
                   </div>
                 </div>

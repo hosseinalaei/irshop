@@ -5,6 +5,7 @@ import { axiosService } from "../../services/axiosService";
 import Loading from "../common/Loading";
 import { NavLink } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import ConfirmationDialog from "../common/Confirm";
 
 const Roles = () => {
   // const roles = data?.roles;
@@ -98,6 +99,11 @@ const Roles = () => {
       }
     });
   };
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+
+  const handleCancel = () => {
+    setIsConfirmationOpen(false);
+  };
 
   return (
     <>
@@ -155,10 +161,19 @@ const Roles = () => {
                       <button
                         type="button"
                         className="my-1 btn btn-light btn-active-light-primary"
-                        onClick={() => deleteRole(item?.id)}
+                        onClick={() => setIsConfirmationOpen(true)}
                       >
                         حذف
                       </button>
+                      <ConfirmationDialog
+                        isOpen={isConfirmationOpen}
+                        setIsOpen={setIsConfirmationOpen}
+                        message="از حذف محصول اطمینان دارید؟"
+                        onConfirm={() => deleteRole(item?.id)}
+                        onCancel={handleCancel}
+                        confirmText="بله"
+                        cancelText="خیر"
+                      />
                     </div>
                   </div>
                 </div>

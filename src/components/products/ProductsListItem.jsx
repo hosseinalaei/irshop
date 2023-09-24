@@ -3,6 +3,7 @@ import { axiosService } from "../../services/axiosService";
 // import Link from "next/link";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import ConfirmationDialog from "../common/Confirm";
 
 const ProductsListItem = ({ product, getProducts }) => {
   const [img, setImg] = useState(null);
@@ -63,10 +64,16 @@ const ProductsListItem = ({ product, getProducts }) => {
     });
   };
 
-  console.log("jjjjjjjjjjjjjj", product?.productColor[0].price);
+  // console.log("jjjjjjjjjjjjjj", product?.productColor[0].price);
+
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+
+  const handleCancel = () => {
+    setIsConfirmationOpen(false);
+  };
 
   return (
-    <tr onClick={() => nav(`/products/edit-product/id=${product?.id}`)}>
+    <tr>
       <td>
         {/* <div className="form-check form-check-sm form-check-custom form-check-solid">
           <input className="form-check-input" type="checkbox" value="1" />
@@ -125,9 +132,18 @@ const ProductsListItem = ({ product, getProducts }) => {
               ویرایش
             </NavLink>
           </div>
-          <button className="px-3" onClick={() => deleteProduct(product)}>
+          <button className="px-3" onClick={() => setIsConfirmationOpen(true)}>
             حذف
           </button>
+          <ConfirmationDialog
+            isOpen={isConfirmationOpen}
+            setIsOpen={setIsConfirmationOpen}
+            message="از حذف محصول اطمینان دارید؟"
+            onConfirm={() => deleteProduct(product)}
+            onCancel={handleCancel}
+            confirmText="بله"
+            cancelText="خیر"
+          />
         </div>
       </td>
     </tr>

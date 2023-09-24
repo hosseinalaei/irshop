@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import UserRoles from "./UserRoles";
 import { axiosService } from "../../services/axiosService";
 import { toast } from "react-toastify";
+import ConfirmationDialog from "../common/Confirm";
 
 const UsersListItem = ({
   user,
@@ -47,13 +48,19 @@ const UsersListItem = ({
       }
     });
   };
+
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+
+  const handleCancel = () => {
+    setIsConfirmationOpen(false);
+  };
   return (
     <tr key={user?.id}>
-      <td>
+      {/* <td>
         <div class="form-check form-check-sm form-check-custom form-check-solid">
           <input class="form-check-input" type="checkbox" value="1" />
         </div>
-      </td>
+      </td> */}
       <td class="d-flex align-items-center">
         {/* <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
       <a href="../../demo23/dist/apps/user-management/users/view.html">
@@ -96,9 +103,18 @@ const UsersListItem = ({
               ویرایش
             </button>
           </div>
-          <button className="px-3" onClick={() => deleteUser(user)}>
+          <button className="px-3" onClick={() => setIsConfirmationOpen(true)}>
             حذف
           </button>
+          <ConfirmationDialog
+            isOpen={isConfirmationOpen}
+            setIsOpen={setIsConfirmationOpen}
+            message="از حذف محصول اطمینان دارید؟"
+            onConfirm={() => deleteUser(user)}
+            onCancel={handleCancel}
+            confirmText="بله"
+            cancelText="خیر"
+          />
         </div>
       </td>
     </tr>

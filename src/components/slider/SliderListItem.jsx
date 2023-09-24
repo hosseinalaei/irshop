@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { axiosService } from "../../services/axiosService";
 import { ToastContainer, toast } from "react-toastify";
+import ConfirmationDialog from "../common/Confirm";
 
 const SliderListItem = ({ slider, getSliders }) => {
   const [sliderAvatarImageName, setSliderAvatarImageName] = useState(null);
@@ -41,36 +42,47 @@ const SliderListItem = ({ slider, getSliders }) => {
       isDelete: true,
     };
 
-    axiosService.put("/Slider/updateSlider", body).then((res) => {
-      if (res?.status === "Success") {
-        toast.success("عملیات با موفقیت انجام شد", {
-          position: "top-left",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          // progress: undefined,
-          theme: "light",
-          style: { fontFamily: "inherit" },
-        });
-        setTimeout(() => {
-          getSliders();
-        }, 500);
-      } else if (res?.status === "Error") {
-        toast.error("مشکلی رخ داده است", {
-          position: "top-left",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          // progress: undefined,
-          theme: "light",
-          style: { fontFamily: "inherit" },
-        });
-      }
-    });
+    axiosService
+      .put("/Slider/updateSlider", body)
+      .then((res) => {
+        if (res?.status === "Success") {
+          toast.success("عملیات با موفقیت انجام شد", {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            // progress: undefined,
+            theme: "light",
+            style: { fontFamily: "inherit" },
+          });
+          setTimeout(() => {
+            getSliders();
+          }, 500);
+        } else if (res?.status === "Error") {
+          toast.error("مشکلی رخ داده است", {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            // progress: undefined,
+            theme: "light",
+            style: { fontFamily: "inherit" },
+          });
+        }
+      })
+      .finally(() => {
+        setIsConfirmationOpen(false);
+        getSliders();
+      });
+  };
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+
+  const handleCancel = () => {
+    setIsConfirmationOpen(false);
   };
 
   return (
@@ -135,10 +147,19 @@ const SliderListItem = ({ slider, getSliders }) => {
             <button
               type="button"
               className="my-1 btn btn-light btn-active-light-primary"
-              onClick={() => deleteSlider()}
+              onClick={() => setIsConfirmationOpen(true)}
             >
               حذف
             </button>
+            <ConfirmationDialog
+              isOpen={isConfirmationOpen}
+              setIsOpen={setIsConfirmationOpen}
+              message="از حذف محصول اطمینان دارید؟"
+              onConfirm={() => deleteSlider()}
+              onCancel={handleCancel}
+              confirmText="بله"
+              cancelText="خیر"
+            />
           </div>
         </div>
       </div>

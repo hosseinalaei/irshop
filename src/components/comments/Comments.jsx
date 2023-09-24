@@ -3,6 +3,7 @@ import { axiosService } from "../../services/axiosService";
 import CommentsListHead from "./CommentsListHead";
 import { convertToPersianDate } from "../../utils/dateConverter";
 import { ToastContainer, toast } from "react-toastify";
+import ConfirmationDialog from "../common/Confirm";
 
 const Comments = () => {
   const [comments, setComments] = useState();
@@ -100,6 +101,12 @@ const Comments = () => {
     });
   };
 
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+
+  const handleCancel = () => {
+    setIsConfirmationOpen(false);
+  };
+
   return (
     <>
       <ToastContainer />
@@ -168,7 +175,7 @@ const Comments = () => {
                       </span>
                     </td>
                     <td className="text-end">
-                      <div className="flex ">
+                      <div className="flex">
                         <button
                           className="px-3 "
                           onClick={() => acceptComment(comment)}
@@ -177,10 +184,19 @@ const Comments = () => {
                         </button>
                         <button
                           className="px-3 "
-                          onClick={() => deleteComment(comment)}
+                          onClick={() => setIsConfirmationOpen(true)}
                         >
                           حذف
                         </button>
+                        <ConfirmationDialog
+                          isOpen={isConfirmationOpen}
+                          setIsOpen={setIsConfirmationOpen}
+                          message="از حذف نظر اطمینان دارید؟"
+                          onConfirm={() => deleteComment(comment)}
+                          onCancel={handleCancel}
+                          confirmText="بله"
+                          cancelText="خیر"
+                        />
                       </div>
                     </td>
                   </tr>
