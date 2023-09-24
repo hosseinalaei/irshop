@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { axiosService } from "../../services/axiosService";
-import { NavLink } from "react-router-dom";
 import UsersListHead from "./UsersListHead";
 import UsersListItem from "./UsersListItem";
 import Loading from "../common/Loading";

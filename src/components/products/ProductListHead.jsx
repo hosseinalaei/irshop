@@ -16,7 +16,7 @@ const ProductListHead = () => {
           </div> */}
         </th>
         <th className="min-w-250px">محصول</th>
-        <th className="min-w-150px">قیمت</th>
+        <th className="min-w-150px">قیمت (تومان)</th>
         <th className="text-end min-w-70px"></th>
       </tr>
     </thead>

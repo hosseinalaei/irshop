@@ -120,7 +120,7 @@ const ProductsListItem = ({ product, getProducts }) => {
         </div>
         {/* <!--end::Badges--> */}
       </td>
-      <td className="text-end">
+      <td className="text-center">
         <div className="flex ">
           <div className="px-3">
             <NavLink

@@ -17,7 +17,8 @@ const Login = () => {
   const [buttonText, setButtonText] = useState("ارسال کد");
   const [loading, setLoading] = useState(false);
 
-  const getVerificationCode = () => {
+  const getVerificationCode = (e) => {
+    e.preventDefault();
     setLoading(true);
     const body = {
       mobile: loginInfo?.mobile,
@@ -36,7 +37,8 @@ const Login = () => {
       .finally(() => setLoading(false));
   };
 
-  const submitLogin = () => {
+  const submitLogin = (e) => {
+    e.preventDefault();
     setLoading(true);
     const requestBody = {
       mobile: loginInfo?.mobile,
@@ -168,7 +170,7 @@ const Login = () => {
                   <div className="grid mb-10">
                     {validationCode ? (
                       <Button
-                        onClick={submitLogin}
+                        onClick={(e) => submitLogin(e)}
                         isLoading={loading}
                         type="submit"
                       >
@@ -177,7 +179,7 @@ const Login = () => {
                     ) : (
                       <>
                         <Button
-                          onClick={getVerificationCode}
+                          onClick={(e) => getVerificationCode(e)}
                           isLoading={loading}
                           type="submit"
                         >
