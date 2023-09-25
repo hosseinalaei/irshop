@@ -9,6 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 const AddProduct = () => {
   const location = useLocation();
   const selectedProduct = location?.state;
+  
   const [loading, setLoading] = useState(false);
 
   console.log("selectedProductselectedProduct", selectedProduct);
@@ -29,6 +30,10 @@ const AddProduct = () => {
     specification: selectedProduct?.productSpecification || [],
     details: selectedProduct?.productDetail || [],
   });
+
+  // useEffect(() =>{
+
+  // },[selectedProduct?.id])
 
   const postMedia = (id, image, key) => {
     const body = new FormData();
@@ -84,12 +89,14 @@ const AddProduct = () => {
             style: { fontFamily: "inherit" },
           });
 
-          product?.originImage?.name !== selectedProduct?.productImageName &&
+          // product?.originImage?.name !== selectedProduct?.productImageName &&
             postMedia(res?.data?.id, product?.originImage, "productImageName");
+
+            console.log("product?.galleryproduct?.galleryproduct?.galleryproduct?.gallery",product?.gallery);
 
           product?.gallery?.length > 0 &&
             Array.from(product?.gallery).map((item) =>
-              postMedia(selectedProduct?.id, item, "productGalleryImageName")
+              postMedia(item?.imageuniqueId, item, "productGalleryImageName")
             );
         } else {
           toast.error("مشکلی رخ داده است", {
@@ -121,8 +128,8 @@ const AddProduct = () => {
       for (let i = 0; i < product?.gallery.length; i++) {
         gallery.push({
           productGalleryImageName: product?.gallery[i].name,
-          imageuniqueId: uuidv4(),
-          productVideoName: "",
+          // imageuniqueId: uuidv4(),
+          // productVideoName: "",
         });
       }
 
@@ -168,7 +175,7 @@ const AddProduct = () => {
 
             for (let i = 0; i < product?.gallery.length; i++) {
               postMedia(
-                res?.data?.id,
+                res?.data?.productGalleries[i]?.imageuniqueId,
                 product?.gallery[i],
                 "productGalleryImageName"
               );

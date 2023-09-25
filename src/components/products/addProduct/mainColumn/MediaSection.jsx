@@ -8,6 +8,7 @@ const MediaSection = ({ product, setProduct, selectedProduct }) => {
   const [img, setImg] = useState([]);
 
   const getPic = (id) => {
+    console.log("ffffffffffffffffffffffffffff",id);
     const body = {
       id,
       mediaFieldName: "productGalleryImageName",
@@ -24,7 +25,10 @@ const MediaSection = ({ product, setProduct, selectedProduct }) => {
   useEffect(() => {
     selectedProduct?.productGalleries?.length > 0 &&
       selectedProduct?.productGalleries?.map((item) =>
+       {
+        
         getPic(item?.imageuniqueId)
+       }
       );
   }, [selectedProduct]);
   useEffect(() => {
