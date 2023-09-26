@@ -11,7 +11,7 @@ const Comments = () => {
     // const body = {
     //   id: "a82d0e7b-f577-45ae-aca5-4ff3d036c628",
     // };
-    axiosService.post("/Comment/getAll--comments").then((res) => {
+    axiosService.post("/Comment/getAllcomments").then((res) => {
       console.log(res);
       setComments(res?.data);
     });

@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import ProductsList from "./ProductsList";
 import Loading from "../common/Loading";
 import { axiosService } from "../../services/axiosService";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import Button from "../common/Button";
 
 const Products = () => {
+  const nav = useNavigate();
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
   const getProducts = () => {
@@ -65,12 +67,9 @@ const Products = () => {
               </div> */}
                   </div>
                   <div className="card-toolbar">
-                    <a
-                      href="/products/add-product"
-                      className="text-white btn btn-primary"
-                    >
+                    <Button onClick={() => nav("/products/add-product")}>
                       محصول جدید
-                    </a>
+                    </Button>
                   </div>
                 </div>
                 <ProductsList products={products} getProducts={getProducts} />
