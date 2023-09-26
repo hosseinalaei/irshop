@@ -64,61 +64,41 @@ const ProductsListItem = ({ product, getProducts }) => {
     });
   };
 
-  // console.log("jjjjjjjjjjjjjj", product?.productColor[0].price);
-
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
 
   const handleCancel = () => {
     setIsConfirmationOpen(false);
   };
 
+  const handleClickRow = (product) => {
+    nav(`/products/edit-product/id=${product?.id}`, { state: product });
+  };
+
   return (
-    <tr>
-      <td>
-        {/* <div className="form-check form-check-sm form-check-custom form-check-solid">
-          <input className="form-check-input" type="checkbox" value="1" />
-        </div> */}
-      </td>
-      <td>
-        <div className="d-flex">
-          {/* <!--begin::Thumbnail--> */}
-          <a href="#" className="symbol symbol-50px">
-            {/* <span
-              className="symbol-label"
-              style={{
-                backgroundImage: "url(68.gif)",
-              }}
-            ></span> */}
-            <img
-              src={img ? `data:image/jpeg;base64,${img}` : "/blank-image.svg"}
-              alt=""
-            />
-          </a>
-          {/* <!--end::Thumbnail--> */}
-          <div className="ms-5">
-            {/* <!--begin::Title--> */}
-            <a
-              // href="/"
-              className="mb-1 text-gray-800 text-hover-primary fs-5 fw-bold"
-              data-kt-ecommerce-category-filter="category_name"
-            >
-              {product?.productName}
-            </a>
-            {/* <!--end::Title--> */}
-            {/* <!--begin::Description--> */}
-            <div className="text-muted fs-7 fw-bold">
-              {product?.shortDescription}
-            </div>
-            {/* <!--end::Description--> */}
+    <tr
+      // onClick={() => handleClickRow(product)}
+      className="cursor-pointer hover:bg-slate-100"
+    >
+      <td className="d-flex">
+        <div className="symbol symbol-50px">
+          <img
+            src={img ? `data:image/jpeg;base64,${img}` : "/blank-image.svg"}
+            alt=""
+          />
+        </div>
+        <div className="ms-5">
+          <div className="mb-1 text-gray-800 text-hover-primary fs-5 fw-bold">
+            {product?.productName}
+          </div>
+          <div className="text-muted fs-7 fw-bold">
+            {product?.shortDescription}
           </div>
         </div>
       </td>
       <td>
-        {/* <!--begin::Badges--> */}
         <div className="text-2xl badge-light-success">
           {product?.productColor[0].price}
         </div>
-        {/* <!--end::Badges--> */}
       </td>
       <td className="text-center">
         <div className="flex ">
@@ -132,7 +112,13 @@ const ProductsListItem = ({ product, getProducts }) => {
               ویرایش
             </NavLink>
           </div>
-          <button className="px-3" onClick={() => setIsConfirmationOpen(true)}>
+          <button
+            className="px-3"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsConfirmationOpen(true);
+            }}
+          >
             حذف
           </button>
           <ConfirmationDialog
