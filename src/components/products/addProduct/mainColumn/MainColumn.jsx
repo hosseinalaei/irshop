@@ -12,6 +12,7 @@ const MainColumn = ({
   submitProduct,
   selectedProduct,
   loading,
+  setSelectedProduct,
 }) => {
   return (
     <div className="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
@@ -26,6 +27,7 @@ const MainColumn = ({
               product={product}
               setProduct={setProduct}
               selectedProduct={selectedProduct}
+              setSelectedProduct={setSelectedProduct}
             />
             <PricingSection product={product} setProduct={setProduct} />
             <SelectColor product={product} setProduct={setProduct} />
