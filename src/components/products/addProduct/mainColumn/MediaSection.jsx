@@ -8,7 +8,7 @@ const MediaSection = ({ product, setProduct, selectedProduct }) => {
   const [img, setImg] = useState([]);
 
   const getPic = (id) => {
-    console.log("ffffffffffffffffffffffffffff",id);
+    // console.log("ffffffffffffffffffffffffffff",id);
     const body = {
       id,
       mediaFieldName: "productGalleryImageName",
@@ -16,7 +16,7 @@ const MediaSection = ({ product, setProduct, selectedProduct }) => {
     axiosService
       .post("/Media/GetMedia", body)
       .then((res) => {
-        console.log("res", res);
+        // console.log("res", res);
         setImg((prev) => [...prev, res?.data]);
       })
       .catch((err) => console.log(err));
@@ -24,19 +24,16 @@ const MediaSection = ({ product, setProduct, selectedProduct }) => {
 
   useEffect(() => {
     selectedProduct?.productGalleries?.length > 0 &&
-      selectedProduct?.productGalleries?.map((item) =>
-       {
-        
-        getPic(item?.imageuniqueId)
-       }
-      );
+      selectedProduct?.productGalleries?.map((item) => {
+        getPic(item?.imageuniqueId);
+      });
   }, [selectedProduct]);
-  useEffect(() => {
-    console.log("imgimgimgimg", img);
-  }, [img]);
+  // useEffect(() => {
+  //   console.log("imgimgimgimg", img);
+  // }, [img]);
 
   useEffect(() => {
-    console.log("file: ", file);
+    // console.log("file: ", file);
     // setProductGallery(file);
     setProduct({ ...product, gallery: file });
   }, [file]);
@@ -71,7 +68,7 @@ const MediaSection = ({ product, setProduct, selectedProduct }) => {
 
       setFile([...file, ...[droppedFile]]);
       // setProductGallery(file);
-      console.log("jjjjjjjjjjjjjjjj", file, droppedFile);
+      // console.log("jjjjjjjjjjjjjjjj", file, droppedFile);
     }
   };
 
@@ -105,7 +102,7 @@ const MediaSection = ({ product, setProduct, selectedProduct }) => {
               // }}
               onDragEnter={(e) => {
                 handleDragDropEvent(e);
-                console.log(e);
+                // console.log(e);
               }}
               onDragOver={(e) => handleDragDropEvent(e)}
               onDrop={(e) => {
@@ -158,7 +155,7 @@ const MediaSection = ({ product, setProduct, selectedProduct }) => {
         <div className="flex flex-wrap w-3/5">
           {img?.length > 0 &&
             Array.from(img).map((item, index) => {
-              console.log("itemmmmmmmmm", item, index);
+              // console.log("itemmmmmmmmm", item, index);
               return (
                 <div className="relative" key={index}>
                   <FontAwesomeIcon
