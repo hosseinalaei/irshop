@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 const AddProduct = () => {
   const location = useLocation();
   const selectedProduct = location?.state;
-  
+
   const [loading, setLoading] = useState(false);
 
   console.log("selectedProductselectedProduct", selectedProduct);
@@ -90,9 +90,12 @@ const AddProduct = () => {
           });
 
           // product?.originImage?.name !== selectedProduct?.productImageName &&
-            postMedia(res?.data?.id, product?.originImage, "productImageName");
+          postMedia(res?.data?.id, product?.originImage, "productImageName");
 
-            console.log("product?.galleryproduct?.galleryproduct?.galleryproduct?.gallery",product?.gallery);
+          console.log(
+            "product?.galleryproduct?.galleryproduct?.galleryproduct?.gallery",
+            product?.gallery
+          );
 
           product?.gallery?.length > 0 &&
             Array.from(product?.gallery).map((item) =>
