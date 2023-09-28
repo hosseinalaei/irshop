@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import ConfirmationDialog from "../common/Confirm";
 
-const ProductsListItem = ({ product, getProducts }) => {
+const ProductsListItem = ({ product, getProducts, setProduct }) => {
   const [img, setImg] = useState(null);
   const nav = useNavigate();
 
@@ -24,7 +24,8 @@ const ProductsListItem = ({ product, getProducts }) => {
 
   React.useEffect(() => {
     getPic();
-  }, []);
+  }, [product]);
+  
 
   const deleteProduct = (product) => {
     const body = {
