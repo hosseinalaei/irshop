@@ -8,7 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 const AddProduct = () => {
   const location = useLocation();
-  const selectedProduct = location?.state;
+  const [selectedProduct, setSelectedProduct] = useState(location?.state);
 
   const [loading, setLoading] = useState(false);
 
@@ -251,6 +251,7 @@ const AddProduct = () => {
                   selectedProduct ? updateProduct(e) : submitProduct(e);
                 }}
                 selectedProduct={selectedProduct}
+                setSelectedProduct={setSelectedProduct}
                 loading={loading}
               />
             </form>
