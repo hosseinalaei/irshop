@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 const AddProduct = () => {
   const location = useLocation();
   const selectedProduct = location?.state;
-  
+
   const [loading, setLoading] = useState(false);
 
   console.log("selectedProductselectedProduct", selectedProduct);
@@ -51,6 +51,7 @@ const AddProduct = () => {
     for (let i = 0; i < product?.gallery.length; i++) {
       gallery.push({
         productGalleryImageName: product?.gallery[i].name,
+        imageuniqueId: uuidv4(),
         productVideoName: "",
       });
     }
@@ -90,13 +91,20 @@ const AddProduct = () => {
           });
 
           // product?.originImage?.name !== selectedProduct?.productImageName &&
-            postMedia(res?.data?.id, product?.originImage, "productImageName");
+          postMedia(res?.data?.id, product?.originImage, "productImageName");
 
-            console.log("product?.galleryproduct?.galleryproduct?.galleryproduct?.gallery",product?.gallery);
+          console.log(
+            "product?.galleryproduct?.galleryproduct?.galleryproduct?.gallery",
+            product?.gallery
+          );
 
           product?.gallery?.length > 0 &&
-            Array.from(product?.gallery).map((item) =>
-              postMedia(item?.imageuniqueId, item, "productGalleryImageName")
+            Array.from(product?.gallery).map((item, index) =>
+              postMedia(
+                gallery[index]?.imageuniqueId,
+                item,
+                "productGalleryImageName"
+              )
             );
         } else {
           toast.error("مشکلی رخ داده است", {
