@@ -56,6 +56,12 @@ const AddProduct = () => {
       });
     }
 
+    console.log(
+      "product?.galleryproduct?.galleryproduct?.galleryproduct?.gallery",
+      product?.gallery,
+      gallery
+    );
+
     const requestBody = {
       id: selectedProduct?.id,
       isDelete: false,
@@ -66,7 +72,7 @@ const AddProduct = () => {
       isExists: product?.status,
       isSpecial: product?.special,
       policyId: product?.policy,
-      productGalleries: gallery,
+      productGalleries: gallery.concat(selectedProduct?.productGalleries),
       productSelectedCategories: product?.categoryId,
 
       productColor: product?.color,
@@ -92,11 +98,6 @@ const AddProduct = () => {
 
           // product?.originImage?.name !== selectedProduct?.productImageName &&
           postMedia(res?.data?.id, product?.originImage, "productImageName");
-
-          console.log(
-            "product?.galleryproduct?.galleryproduct?.galleryproduct?.gallery",
-            product?.gallery
-          );
 
           product?.gallery?.length > 0 &&
             Array.from(product?.gallery).map((item, index) =>
