@@ -12,7 +12,8 @@ const CommentsListHead = () => {
             />
           </div>
         </th> */}
-        <th class="text-center min-w-175px">کاربر</th>
+        <th class="text-center">وضعیت انتشار</th>
+        <th class="text-right min-w-175px">کاربر</th>
         <th class="text-center min-w-175px">کامنت</th>
         <th class="text-center min-w-100px fs-7">تاریخ</th>
         <th class="text-center min-w-100px fs-7"></th>
