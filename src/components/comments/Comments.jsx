@@ -116,48 +116,57 @@ const Comments = () => {
             <CommentsListHead />
             <tbody>
               {comments?.map((comment, index) => {
-                const user = users?.filter(
-                  (item) => item?.id === comment?.userId
-                );
+                if (!comment?.isDelete) {
+                  const user = users?.filter(
+                    (item) => item?.id === comment?.userId
+                  );
 
-                return (
-                  <tr key={index}>
-                    <td class="fw-bold text-center">
-                      {user[0]?.firstName} {user[0]?.lastName}
-                    </td>
-                    <td class="text-center text-gray-600 fw-bold">
-                      {comment?.text}
-                    </td>
-                    <td class="text-center fw-semibold text-muted">
-                      {convertToPersianDate(comment?.createDate)}
-                    </td>
-                    <td className="text-center">
-                      <div className="flex">
-                        <button
-                          className="px-3 "
-                          onClick={() => acceptComment(comment)}
-                        >
-                          تایید
-                        </button>
-                        <button
-                          className="px-3 "
-                          onClick={() => setIsConfirmationOpen(true)}
-                        >
-                          حذف
-                        </button>
-                      </div>
-                    </td>
-                    <ConfirmationDialog
-                      isOpen={isConfirmationOpen}
-                      setIsOpen={setIsConfirmationOpen}
-                      message="از حذف نظر اطمینان دارید؟"
-                      onConfirm={() => deleteComment(comment)}
-                      onCancel={handleCancel}
-                      confirmText="بله"
-                      cancelText="خیر"
-                    />
-                  </tr>
-                );
+                  return (
+                    <tr key={index}>
+                      <td class="flex justify-center">
+                        {comment?.isPublish ? (
+                          <div className="w-6 h-6 bg-green-500 rounded-full"></div>
+                        ) : (
+                          <div className="w-6 h-6 bg-red-500 rounded-full"></div>
+                        )}
+                      </td>
+                      <td class="fw-bold text-right">
+                        {user[0]?.firstName} {user[0]?.lastName}
+                      </td>
+                      <td class="text-center text-gray-600 fw-bold">
+                        {comment?.text}
+                      </td>
+                      <td class="text-center fw-semibold text-muted">
+                        {convertToPersianDate(comment?.createDate)}
+                      </td>
+                      <td className="text-center">
+                        <div className="flex">
+                          <button
+                            className="px-3 "
+                            onClick={() => acceptComment(comment)}
+                          >
+                            تایید
+                          </button>
+                          <button
+                            className="px-3 "
+                            onClick={() => setIsConfirmationOpen(true)}
+                          >
+                            حذف
+                          </button>
+                        </div>
+                      </td>
+                      <ConfirmationDialog
+                        isOpen={isConfirmationOpen}
+                        setIsOpen={setIsConfirmationOpen}
+                        message="از حذف نظر اطمینان دارید؟"
+                        onConfirm={() => deleteComment(comment)}
+                        onCancel={handleCancel}
+                        confirmText="بله"
+                        cancelText="خیر"
+                      />
+                    </tr>
+                  );
+                }
               })}
             </tbody>
           </table>
