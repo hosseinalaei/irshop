@@ -142,17 +142,15 @@ const AddProduct = () => {
         isSpecial: product?.special,
         policyId: product?.policy,
         productGalleries: gallery,
-        productSelectedCategories: [
-          {
-            productCategoryId: product?.categoryId,
-          },
-        ],
+        productSelectedCategories: product?.categoryId,
 
         productColor: product?.color,
 
         productDetail: product?.details,
         productSelectedSpecification: product?.specification,
       };
+
+      console.log("requestBodyrequestBodyrequestBody", requestBody);
 
       axiosService
         .post("/Products/registerProduct", requestBody)
@@ -165,7 +163,6 @@ const AddProduct = () => {
               closeOnClick: true,
               pauseOnHover: true,
               draggable: true,
-              // progress: undefined,
               theme: "light",
               style: { fontFamily: "inherit" },
             });
@@ -178,10 +175,6 @@ const AddProduct = () => {
                 product?.gallery[i],
                 "productGalleryImageName"
               );
-              // requestBody.append(
-              //   `productOriginImage[${i}].originImage`,
-              //   product?.gallery[i]
-              // );
             }
           } else {
             toast.error("مشکلی رخ داده است", {

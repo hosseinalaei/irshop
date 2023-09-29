@@ -1,6 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const ProductStatus = ({ product, setProduct }) => {
+  const [isExists, setIsExists] = useState(true);
+
+  useEffect(() => {
+    product?.status !== undefined && setIsExists(product?.status);
+  }, [product?.status]);
+
+  useEffect(() => {
+    setProduct({ ...product, status: isExists });
+  }, [isExists]);
+
+  console.log("product?.statusproduct?.statusproduct?.status", product?.status);
   return (
     <div className="py-4 card card-flush">
       <div className="card-header">
@@ -11,10 +22,9 @@ const ProductStatus = ({ product, setProduct }) => {
       <div className="pt-0 card-body">
         <select
           className="mb-2 form-select"
-          value={product?.status}
-          onChange={(e) => setProduct({ ...product, status: e.target.value })}
+          value={isExists}
+          onChange={(e) => setIsExists(e.target.value)}
         >
-          <option></option>
           <option value={true} selected>
             موجود
           </option>
