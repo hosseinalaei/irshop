@@ -2,13 +2,17 @@ import React, { useEffect, useState } from "react";
 import { axiosService } from "../../../../services/axiosService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const MediaSection = ({ product, setProduct, selectedProduct }) => {
+const MediaSection = ({
+  product,
+  setProduct,
+  selectedProduct,
+  setSelectedProduct,
+}) => {
   const [file, setFile] = useState([]);
   const inputRef = React.useRef(null);
   const [img, setImg] = useState([]);
 
   const getPic = (id) => {
-    // console.log("ffffffffffffffffffffffffffff",id);
     const body = {
       id,
       mediaFieldName: "productGalleryImageName",
@@ -28,13 +32,8 @@ const MediaSection = ({ product, setProduct, selectedProduct }) => {
         getPic(item?.imageuniqueId);
       });
   }, [selectedProduct]);
-  // useEffect(() => {
-  //   console.log("imgimgimgimg", img);
-  // }, [img]);
 
   useEffect(() => {
-    // console.log("file: ", file);
-    // setProductGallery(file);
     setProduct({ ...product, gallery: file });
   }, [file]);
 
@@ -78,6 +77,18 @@ const MediaSection = ({ product, setProduct, selectedProduct }) => {
     updatedImages.splice(index, 1);
 
     setFile(updatedImages);
+  };
+
+  const deleteBackendImage = (index) => {
+    // console.log(index, selectedProduct?.productGalleries);
+    const u = selectedProduct?.productGalleries?.splice(index, 1);
+
+    // console.log(index, selectedProduct?.productGalleries, u);
+    setImg([]);
+    setSelectedProduct({
+      ...selectedProduct,
+      productGalleries: selectedProduct?.productGalleries,
+    });
   };
 
   return (
@@ -161,7 +172,7 @@ const MediaSection = ({ product, setProduct, selectedProduct }) => {
                   <FontAwesomeIcon
                     icon="times"
                     color="red"
-                    onClick={() => deleteImage(index)}
+                    onClick={() => deleteBackendImage(index)}
                     className="absolute p-1 text-2xl rounded-full cursor-pointer left-1 -top-2 hover:bg-slate-200"
                   />
                   <img
