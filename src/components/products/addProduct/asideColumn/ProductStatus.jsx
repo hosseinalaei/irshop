@@ -4,14 +4,18 @@ const ProductStatus = ({ product, setProduct }) => {
   const [isExists, setIsExists] = useState(true);
 
   useEffect(() => {
-    product?.status !== undefined && setIsExists(product?.status);
+    console.log(
+      "product?.statusproduct?.statusproduct?.status",
+      product?.status
+    );
+    typeof product?.status !== "undefined" && setIsExists(product?.status);
   }, [product?.status]);
 
   useEffect(() => {
+    console.log("isExistsisExistsisExistsisExists", isExists);
     setProduct({ ...product, status: isExists });
   }, [isExists]);
 
-  console.log("product?.statusproduct?.statusproduct?.status", product?.status);
   return (
     <div className="py-4 card card-flush">
       <div className="card-header">
