@@ -52,7 +52,7 @@ const Comments = () => {
           });
           setTimeout(() => {
             getComments();
-          }, 500);
+          }, 1000);
         } else if (res?.status === "Error") {
           toast.error("مشکلی رخ داده است", {
             position: "top-left",
@@ -97,7 +97,7 @@ const Comments = () => {
           });
           setTimeout(() => {
             getComments();
-          }, 500);
+          }, 1000);
         } else if (res?.status === "Error") {
           toast.error("مشکلی رخ داده است", {
             position: "top-left",
