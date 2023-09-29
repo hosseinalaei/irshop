@@ -1,72 +1,110 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import Dropdown from "../../../common/DropDown";
 
-const InputGroup = ({ values, onChange }) => (
-  <div className="input-group">
-    <div className="flex justify-between pt-0 card-body">
-      <div className="mb-10 ">
-        <label className="required form-label">نام رنگ</label>
-        <input
-          type="text"
-          className="mb-2 form-control"
-          placeholder="نام رنگ"
-          value={values.colorName}
-          onChange={(e) => onChange("colorName", e.target.value)}
-        />
-        {/* <input
-          type="color"
-          className="mb-2 form-control"
-          placeholder="نام رنگ"
-          value={values.colorName}
-          onChange={(e) => onChange("colorName", e.target.value)}
-        /> */}
-      </div>
+const colorsArray = [
+  { name: "قرمز", code: "#FF0000" },
+  { name: "سبز", code: "#00FF00" },
+  { name: "آبی", code: "#0000FF" },
+  { name: "زرد", code: "#FFFF00" },
+  { name: "بنفش", code: "#800080" },
+  { name: "نارنجی", code: "#FFA500" },
+  { name: "صورتی", code: "#FFC0CB" },
+  { name: "قهوه‌ای", code: "#A52A2A" },
+  { name: "خاکستری", code: "#808080" },
+  { name: "سیاه", code: "#000000" },
+  { name: "سفید", code: "#FFFFFF" },
+  { name: "فیروزه‌ای", code: "#00FFFF" },
+  { name: "بنفش صورتی", code: "#FF00FF" },
+  { name: "تیله", code: "#008080" },
+  { name: "لاوندر", code: "#E6E6FA" },
+];
 
-      <div className="mb-10 ">
-        <label className="required form-label">کد رنگ</label>
-        <input
-          type="text"
-          className="mb-2 form-control"
-          placeholder="کد رنگ"
-          value={values.colorCode}
-          onChange={(e) => onChange("colorCode", e.target.value)}
-        />
-      </div>
-      <div className="mb-10 ">
-        <label className="required form-label">قیمت</label>
-        <input
-          type="text"
-          className="mb-2 form-control"
-          placeholder="تومان"
-          value={values.price}
-          onChange={(e) => onChange("price", e.target.value)}
-        />
+const InputGroup = ({ values, onChange, color }) => {
+  // console.log("cccccccccccccccccccccccccccc", color);
+
+  const value = {
+    ...(color?.colorName && { name: color?.colorName }),
+    ...(color?.colorCode && { code: color?.colorCode }),
+  };
+
+  return (
+    <div className="input-group">
+      <div className="flex justify-between pt-0 card-body">
+        <div className="w-1/2 mb-10 ml-2">
+          <label className="required form-label">رنگ</label>
+          <Dropdown
+            block
+            value={value}
+            onChange={(color) => onChange("color", color)}
+            items={colorsArray}
+            labelKey="name"
+            valueKey="code"
+            label="انتخاب کنید ... "
+          />
+        </div>
+        <div className="w-1/2 mb-10">
+          <label className="required form-label">قیمت</label>
+          <input
+            type="text"
+            className="mb-2 form-control"
+            placeholder="تومان"
+            value={values.price}
+            onChange={(e) => onChange("price", e.target.value)}
+          />
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const SelectColor = ({ product, setProduct }) => {
-  const [inputGroups, setInputGroups] = useState([
-    {
-      colorName: product?.color[0]?.colorName,
-      colorCode: product?.color[0]?.colorCode,
-      price: product?.color[0]?.price,
-    },
-  ]);
+  const [inputGroups, setInputGroups] = useState([]);
+
+  // useEffect(() => {
+  //   !product?.id &&
+  //     setInputGroups({
+  //       color: {
+  //         name: "",
+  //         code: "",
+  //       },
+  //       price: "",
+  //     });
+  // }, [product?.id]);
+  useEffect(() => {
+    setInputGroups(product?.color || []);
+  }, [product?.id, product?.color]);
 
   const handleInputChange = (index) => (fieldName, newValue) => {
+    console.log(index, fieldName, newValue);
     const newInputGroups = [...inputGroups];
     newInputGroups[index][fieldName] = newValue;
     setInputGroups(newInputGroups);
     // setProductColor([...inputGroups]);
-
-    setProduct({ ...product, color: [...inputGroups] });
+    const modifiedColorsArray = inputGroups?.map((item) => {
+      return {
+        colorCode: item?.color?.code || item?.colorCode,
+        colorName: item?.color?.name || item?.colorName,
+        price: item?.price,
+      };
+    });
+    console.log(
+      "modifiedColorsArraymodifiedColorsArraymodifiedColorsArray",
+      modifiedColorsArray,
+      inputGroups
+    );
+    setProduct({ ...product, color: modifiedColorsArray });
   };
 
   const addInputGroup = () => {
     setInputGroups([
       ...inputGroups,
-      { colorName: "", colorCode: "", price: "" },
+      {
+        color: {
+          name: "",
+          code: "",
+        },
+        price: "",
+      },
     ]);
   };
 
@@ -89,6 +127,7 @@ const SelectColor = ({ product, setProduct }) => {
           key={index}
           values={group}
           onChange={handleInputChange(index)}
+          color={group}
           // onRemove={() => removeInputGroup(index)}
         />
       ))}

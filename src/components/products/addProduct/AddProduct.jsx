@@ -12,7 +12,7 @@ const AddProduct = () => {
 
   const [loading, setLoading] = useState(false);
 
-  console.log("selectedProductselectedProduct", selectedProduct);
+  // console.log("selectedProductselectedProduct", selectedProduct);
 
   const [product, setProduct] = useState({
     name: selectedProduct?.productName || "",
@@ -30,10 +30,6 @@ const AddProduct = () => {
     specification: selectedProduct?.productSpecification || [],
     details: selectedProduct?.productDetail || [],
   });
-
-  // useEffect(() =>{
-
-  // },[selectedProduct?.id])
 
   const postMedia = (id, image, key) => {
     const body = new FormData();
@@ -55,12 +51,6 @@ const AddProduct = () => {
         productVideoName: "",
       });
     }
-
-    console.log(
-      "product?.galleryproduct?.galleryproduct?.galleryproduct?.gallery",
-      product?.gallery,
-      gallery
-    );
 
     const requestBody = {
       id: selectedProduct?.id,
