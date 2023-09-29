@@ -25,7 +25,6 @@ const ProductsListItem = ({ product, getProducts, setProduct }) => {
   React.useEffect(() => {
     getPic();
   }, [product]);
-  
 
   const deleteProduct = (product) => {
     const body = {
@@ -33,36 +32,39 @@ const ProductsListItem = ({ product, getProducts, setProduct }) => {
       isDelete: true,
     };
 
-    axiosService.put("/Products/updateProduct", body).then((res) => {
-      if (res?.status === "Success") {
-        toast.success("عملیات با موفقیت انجام شد", {
-          position: "top-left",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          // progress: undefined,
-          theme: "light",
-          style: { fontFamily: "inherit" },
-        });
-        setTimeout(() => {
-          getProducts();
-        }, 500);
-      } else if (res?.status === "Error") {
-        toast.error("مشکلی رخ داده است", {
-          position: "top-left",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          // progress: undefined,
-          theme: "light",
-          style: { fontFamily: "inherit" },
-        });
-      }
-    });
+    axiosService
+      .put("/Products/updateProduct", body)
+      .then((res) => {
+        if (res?.status === "Success") {
+          toast.success("عملیات با موفقیت انجام شد", {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            // progress: undefined,
+            theme: "light",
+            style: { fontFamily: "inherit" },
+          });
+          setTimeout(() => {
+            getProducts();
+          }, 500);
+        } else if (res?.status === "Error") {
+          toast.error("مشکلی رخ داده است", {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            // progress: undefined,
+            theme: "light",
+            style: { fontFamily: "inherit" },
+          });
+        }
+      })
+      .finally(() => setIsConfirmationOpen(false));
   };
 
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);

@@ -29,7 +29,7 @@ const MainColumn = ({
               selectedProduct={selectedProduct}
               setSelectedProduct={setSelectedProduct}
             />
-            <PricingSection product={product} setProduct={setProduct} />
+            {/* <PricingSection product={product} setProduct={setProduct} /> */}
             <SelectColor product={product} setProduct={setProduct} />
             <Details product={product} setProduct={setProduct} />
           </div>

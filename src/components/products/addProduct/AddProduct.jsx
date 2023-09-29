@@ -12,7 +12,7 @@ const AddProduct = () => {
 
   const [loading, setLoading] = useState(false);
 
-  console.log("selectedProductselectedProduct", selectedProduct);
+  // console.log("selectedProductselectedProduct", selectedProduct);
 
   const [product, setProduct] = useState({
     name: selectedProduct?.productName || "",
@@ -30,10 +30,6 @@ const AddProduct = () => {
     specification: selectedProduct?.productSpecification || [],
     details: selectedProduct?.productDetail || [],
   });
-
-  // useEffect(() =>{
-
-  // },[selectedProduct?.id])
 
   const postMedia = (id, image, key) => {
     const body = new FormData();
@@ -55,12 +51,6 @@ const AddProduct = () => {
         productVideoName: "",
       });
     }
-
-    console.log(
-      "product?.galleryproduct?.galleryproduct?.galleryproduct?.gallery",
-      product?.gallery,
-      gallery
-    );
 
     const requestBody = {
       id: selectedProduct?.id,
@@ -152,17 +142,15 @@ const AddProduct = () => {
         isSpecial: product?.special,
         policyId: product?.policy,
         productGalleries: gallery,
-        productSelectedCategories: [
-          {
-            productCategoryId: product?.categoryId,
-          },
-        ],
+        productSelectedCategories: product?.categoryId,
 
         productColor: product?.color,
 
         productDetail: product?.details,
         productSelectedSpecification: product?.specification,
       };
+
+      console.log("requestBodyrequestBodyrequestBody", requestBody);
 
       axiosService
         .post("/Products/registerProduct", requestBody)
@@ -175,7 +163,6 @@ const AddProduct = () => {
               closeOnClick: true,
               pauseOnHover: true,
               draggable: true,
-              // progress: undefined,
               theme: "light",
               style: { fontFamily: "inherit" },
             });
@@ -188,10 +175,6 @@ const AddProduct = () => {
                 product?.gallery[i],
                 "productGalleryImageName"
               );
-              // requestBody.append(
-              //   `productOriginImage[${i}].originImage`,
-              //   product?.gallery[i]
-              // );
             }
           } else {
             toast.error("مشکلی رخ داده است", {
