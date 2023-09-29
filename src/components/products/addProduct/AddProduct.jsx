@@ -12,15 +12,16 @@ const AddProduct = () => {
 
   const [loading, setLoading] = useState(false);
 
-  // console.log("selectedProductselectedProduct", selectedProduct);
-
   const [product, setProduct] = useState({
     name: selectedProduct?.productName || "",
     description: selectedProduct?.description || "",
     shortDescription: selectedProduct?.shortDescription || "",
     policy: selectedProduct?.policyId || "",
     categoryId: selectedProduct?.productSelectedCategories || [],
-    status: selectedProduct?.isExists,
+    status:
+      typeof selectedProduct?.isExists === "undefined"
+        ? true
+        : selectedProduct?.isExists,
     gallery: selectedProduct?.productGalleries || [],
     originImage: selectedProduct?.productImageName || "",
     color: selectedProduct?.productColor || [],
@@ -30,6 +31,7 @@ const AddProduct = () => {
     specification: selectedProduct?.productSpecification || [],
     details: selectedProduct?.productDetail || [],
   });
+  console.log("selectedProductselectedProduct", selectedProduct, product);
 
   const postMedia = (id, image, key) => {
     const body = new FormData();
@@ -117,81 +119,81 @@ const AddProduct = () => {
   const submitProduct = (e) => {
     setLoading(true);
     e.preventDefault();
-    if (
-      product?.name &&
-      product?.shortDescription &&
-      product?.color?.length > 0
-    ) {
-      const gallery = [];
+    // if (
+    //   product?.name &&
+    //   product?.shortDescription &&
+    //   product?.color?.length > 0
+    // ) {
+    const gallery = [];
 
-      for (let i = 0; i < product?.gallery.length; i++) {
-        gallery.push({
-          productGalleryImageName: product?.gallery[i].name,
-          // imageuniqueId: uuidv4(),
-          // productVideoName: "",
-        });
-      }
-
-      const requestBody = {
-        productName: product?.name,
-        price: product?.price,
-        shortDescription: product?.shortDescription,
-        description: product?.description,
-        productImageName: product?.originImage?.name,
-        isExists: product?.status,
-        isSpecial: product?.special,
-        policyId: product?.policy,
-        productGalleries: gallery,
-        productSelectedCategories: product?.categoryId,
-
-        productColor: product?.color,
-
-        productDetail: product?.details,
-        productSelectedSpecification: product?.specification,
-      };
-
-      console.log("requestBodyrequestBodyrequestBody", requestBody);
-
-      axiosService
-        .post("/Products/registerProduct", requestBody)
-        .then((res) => {
-          if (res?.status === "Success") {
-            toast.success("عملیات با موفقیت انجام شد", {
-              position: "top-left",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              theme: "light",
-              style: { fontFamily: "inherit" },
-            });
-
-            postMedia(res?.data?.id, product?.originImage, "productImageName");
-
-            for (let i = 0; i < product?.gallery.length; i++) {
-              postMedia(
-                res?.data?.productGalleries[i]?.imageuniqueId,
-                product?.gallery[i],
-                "productGalleryImageName"
-              );
-            }
-          } else {
-            toast.error("مشکلی رخ داده است", {
-              position: "top-left",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              // progress: undefined,
-              theme: "light",
-              style: { fontFamily: "inherit" },
-            });
-          }
-        })
-        .finally(() => setLoading(false));
+    for (let i = 0; i < product?.gallery.length; i++) {
+      gallery.push({
+        productGalleryImageName: product?.gallery[i].name,
+        // imageuniqueId: uuidv4(),
+        // productVideoName: "",
+      });
     }
+
+    const requestBody = {
+      productName: product?.name,
+      price: product?.price,
+      shortDescription: product?.shortDescription,
+      description: product?.description,
+      productImageName: product?.originImage?.name,
+      isExists: product?.status,
+      isSpecial: product?.special,
+      policyId: product?.policy,
+      productGalleries: gallery,
+      productSelectedCategories: product?.categoryId,
+
+      productColor: product?.color,
+
+      productDetail: product?.details,
+      productSelectedSpecification: product?.specification,
+    };
+
+    console.log("requestBodyrequestBodyrequestBody", requestBody);
+
+    axiosService
+      .post("/Products/registerProduct", requestBody)
+      .then((res) => {
+        if (res?.status === "Success") {
+          toast.success("عملیات با موفقیت انجام شد", {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            theme: "light",
+            style: { fontFamily: "inherit" },
+          });
+
+          postMedia(res?.data?.id, product?.originImage, "productImageName");
+
+          for (let i = 0; i < product?.gallery.length; i++) {
+            postMedia(
+              res?.data?.productGalleries[i]?.imageuniqueId,
+              product?.gallery[i],
+              "productGalleryImageName"
+            );
+          }
+        } else {
+          toast.error("مشکلی رخ داده است", {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            // progress: undefined,
+            theme: "light",
+            style: { fontFamily: "inherit" },
+          });
+        }
+      })
+      .finally(() => setLoading(false));
+    // }
   };
 
   return (
