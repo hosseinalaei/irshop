@@ -115,6 +115,52 @@ const Comments = () => {
       .finally(() => setIsConfirmationOpen(false));
   };
 
+  const deniedComment = (index) => {
+    const comment = comments[index];
+
+    console.log("commentcommentcommentcommentcommentcomment", comment, index);
+
+    const body = {
+      ...comment,
+
+      isPublish: true,
+    };
+
+    axiosService
+      ?.put("/Comment/updateComment", body)
+      .then((res) => {
+        if (res?.status === "Success") {
+          toast.success("عملیات با موفقیت انجام شد", {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            // progress: undefined,
+            theme: "light",
+            style: { fontFamily: "inherit" },
+          });
+          setTimeout(() => {
+            getComments();
+          }, 1000);
+        } else if (res?.status === "Error") {
+          toast.error("مشکلی رخ داده است", {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            // progress: undefined,
+            theme: "light",
+            style: { fontFamily: "inherit" },
+          });
+        }
+      })
+      .finally(() => setIsConfirmationOpen(false));
+  };
+
   const [users, setUsers] = useState([]);
 
   const getUsers = () => {
@@ -163,12 +209,22 @@ const Comments = () => {
                     </td>
                     <td className="text-center">
                       <div className="flex">
-                        <button
-                          className="px-3 "
-                          onClick={() => acceptComment(index)}
-                        >
-                          تایید
-                        </button>
+                        {comment?.isPublish ? (
+                          <button
+                            className="px-3 "
+                            onClick={() => deniedComment(index)}
+                          >
+                            عدم انتشار
+                          </button>
+                        ) : (
+                          <button
+                            className="px-3 "
+                            onClick={() => acceptComment(index)}
+                          >
+                            تایید
+                          </button>
+                        )}
+
                         <button
                           className="px-3 "
                           onClick={() => {
