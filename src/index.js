@@ -25,55 +25,8 @@ import SpecificationPage from "./pages/specification/SpecificationPage";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    {/* <BrowserRouter>
-      <App />
-    </BrowserRouter> */}
     <BrowserRouter basename={"/"}>
-      <Routes>
-        <Route path="/auth" element={<Auth />}>
-          <Route path="login" element={<Login />} />
-        </Route>
-        <Route path="/" element={<App />}>
-          <Route
-            path=""
-            element={
-              <ProtectedRoute>
-                <Layout />
-              </ProtectedRoute>
-            }
-          >
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/roles" element={<RolesPage />} />
-            <Route path="/categories" element={<CategoriesPage />} />
-            <Route
-              path="/categories/add-category"
-              element={<AddCategoryPage />}
-            />
-            <Route
-              path="/categories/edit-category/:id"
-              element={<AddCategoryPage />}
-            />
-            <Route path="/products" element={<ProductsPage />} />
-            <Route path="/products/add-product" element={<AddProductPage />} />
-            <Route
-              path="/products/edit-product/:id"
-              element={<AddProductPage />}
-            />
-            <Route path="/policies" element={<PolicyPage />} />
-            <Route path="/policies/add-policy" element={<AddNewPolicyPage />} />
-            <Route
-              path="/policies/edit-policy/:id"
-              element={<AddNewPolicyPage />}
-            />
-            <Route path="/users" element={<UsersPage />} />
-            <Route path="/slider" element={<SliderPage />} />
-            <Route path="/create-slider" element={<CreateSlider />} />
-            <Route path="/orders" element={<Orders />} />
-            <Route path="/comments" element={<CommentsPage />} />
-            <Route path="/specification" element={<SpecificationPage />} />
-          </Route>
-        </Route>
-      </Routes>
+      <App />
     </BrowserRouter>
   </React.StrictMode>
 );
