@@ -4,8 +4,8 @@ import Logo from "./Logo";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const SidebarMenu = () => {
-  const menu = data?.menu;
+const SidebarMenu = ({menu}) => {
+  
   const location = useLocation();
   const nav = useNavigate();
 

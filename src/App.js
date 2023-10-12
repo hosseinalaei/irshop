@@ -7,6 +7,7 @@ import { Route, Routes } from "react-router-dom";
 import Auth from "./layouts/Auth";
 import Admin from "./layouts/Admin";
 import Login from "./auth/Login";
+import routes from "./routes";
 
 const iconList = Object.keys(Icons)
   .filter((key) => key !== "fas" && key !== "prefix")
@@ -15,6 +16,32 @@ const iconList = Object.keys(Icons)
 library.add(...iconList);
 
 function App() {
+
+  const getAuthRoutes = (routes=[]) => {
+    return routes.map((prop, key) => {
+      if (prop.collapse) {
+        return getAuthRoutes(prop.views);
+      }
+      if (prop.layout === '/auth') {
+        return <Route path={prop.layout + prop.path} key={key} component={prop.component} />;
+      } else {
+        return null;
+      }
+    });
+  };
+  const getAdminRoutes = (routes=[]) => {
+    return routes.map((prop, key) => {
+        console.log(prop);
+      if (prop.collapse) {
+        return getAdminRoutes(prop.views);
+      }
+      if (prop.layout === '/admin') {
+        return <Route path={prop.layout + prop.path} key={key} component={prop.component} />;
+      } else {
+        return null;
+      }
+    });
+  };
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   // const checkUserToken = () => {
   //   const userToken = localStorage.getItem("user-token");
@@ -31,8 +58,12 @@ function App() {
     <div style={{ fontFamily: "yekan" }}>
       <Routes>
         <Route path="/" exact element={<Login />} />
-        <Route children={(props) => <Auth {...props} />} />
-        <Route children={(props) => <Admin {...props} />} />
+        <Route path="/auth" element={<Auth/>}>
+            {getAuthRoutes(routes)}  
+        </Route>
+        <Route path="/admin" element={<Admin routes={routes}/>}>
+          {getAdminRoutes(routes)}
+        </Route>
       </Routes>
     </div>
   );

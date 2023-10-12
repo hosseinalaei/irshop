@@ -12,6 +12,7 @@ import SpecificationPage from './pages/specification/SpecificationPage'
 import CommentsPage from './pages/comments/CommentsPage'
 const routes = [
     {
+        id:1,
         path: '/login',
         layout: '/auth',
         name: 'Login Page',
@@ -20,6 +21,7 @@ const routes = [
         invisible: true,
       },
     {
+        id:2,
         path: '/dashboard',
         layout: '/admin',
         name: 'داشبورد',
@@ -27,6 +29,7 @@ const routes = [
         component: Dashboard,
       },
       {
+        id:3,
         path: '/roles',
         layout: '/admin',
         name: 'نقش‌ها',
@@ -34,6 +37,7 @@ const routes = [
         component: RolesPage,
       },
       {
+        id:4,
         collapse: true,
         // path: '/pamm',
         name: 'دسته‌بندی محصولات',
@@ -41,6 +45,7 @@ const routes = [
         icon: 'table',
         subMenu: [  
           {
+            id:5,
             path: '/categories',
             layout: '/admin',
             name: 'لیست دسته‌بندی‌ها',
@@ -48,6 +53,7 @@ const routes = [
             icon: 'rectangle-list',
           },
           {
+            id:6,
             path: '/categories/add-category',
             layout: '/admin',
             name: 'دسته‌بندی جدید',
@@ -57,6 +63,7 @@ const routes = [
         ],
       },
       {
+        id:7,
         collapse: true,
         // path: '/pamm',
         name: 'محصولات',
@@ -64,6 +71,7 @@ const routes = [
         icon: 'cubes',
         subMenu: [  
           {
+            id:8,
             path: '/products',
             layout: '/admin',
             name: 'لیست محصولات',
@@ -71,6 +79,7 @@ const routes = [
             icon: 'rectangle-list',
           },
           {
+            id:9,
             path: '/products/add-product',
             layout: '/admin',
             name: 'محصول جدید',
@@ -80,6 +89,7 @@ const routes = [
         ],
       },
       {
+        id:10,
         path: '/policies',
         layout: '/admin',
         name: 'سیاست‌ها (policy)',
@@ -87,6 +97,7 @@ const routes = [
         component: PolicyPage,
       },
       {
+        id:11,
         path: '/users',
         layout: '/admin',
         name: 'کاربران',
@@ -94,6 +105,7 @@ const routes = [
         component: UsersPage,
       },
       {
+        id:12,
         path: '/slider',
         layout: '/admin',
         name: 'اسلایدر',
@@ -101,6 +113,7 @@ const routes = [
         component: SliderPage,
       },
       {
+        id:13,
         path: '/specification',
         layout: '/admin',
         name: 'ویژگی‌ها',
@@ -108,6 +121,7 @@ const routes = [
         component: SpecificationPage,
       },
       {
+        id:14,
         path: '/comments',
         layout: '/admin',
         name: 'نظرات',
