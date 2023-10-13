@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import data from "./menu.json";
 import Logo from "./Logo";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,9 +7,6 @@ const SidebarMenu = ({menu}) => {
   
   const location = useLocation();
   const nav = useNavigate();
-
-  const [isOpen, setIsOpen] = useState(false);
-
   const [openSubMenus, setOpenSubMenus] = useState([]);
 
   const toggleSubMenu = (e, itemId) => {
