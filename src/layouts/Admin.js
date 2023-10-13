@@ -11,7 +11,7 @@ const Admin = ({routes}) => {
   return (
     <div className="flex w-full h-screen bg-cyan-600">
       <div className="lg:hidden">
-        <MobileSidebarMenu />
+        <MobileSidebarMenu menu={routes}/>
       </div>
       <div className="w-[20vw] h-screen py-10 mr-10 hidden lg:block">
         <SidebarMenu menu={routes}/>
