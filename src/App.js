@@ -32,8 +32,8 @@ function App() {
   };
   const getAdminRoutes = (routes=[]) => {
     return routes.map((prop, key) => {
-      if (prop.collapse) {
-        return getAdminRoutes(prop.views);
+      if (prop.subMenu) {
+        return getAdminRoutes(prop.subMenu);
       }
       if (prop.layout === '/admin') {
         return <Route path={prop.layout + prop.path} key={key} element={prop.component} />;

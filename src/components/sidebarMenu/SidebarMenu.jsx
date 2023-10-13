@@ -13,7 +13,8 @@ const SidebarMenu = ({menu}) => {
 
   const [openSubMenus, setOpenSubMenus] = useState([]);
 
-  const toggleSubMenu = (itemId) => {
+  const toggleSubMenu = (e, itemId) => {
+    e.preventDefault();
     if (openSubMenus.includes(itemId)) {
       setOpenSubMenus(openSubMenus.filter((id) => id !== itemId));
     } else {
@@ -41,7 +42,7 @@ const SidebarMenu = ({menu}) => {
                 <NavLink
                   key={item?.id}
                   to={item?.subMenu ? '' : item?.layout+item.path}
-                  onClick={(e) => {item?.subMenu && toggleSubMenu(item?.id)}}
+                  onClick={(e) => {item?.subMenu && toggleSubMenu(e, item?.id)}}
                   className={`flex items-center justify-between w-full px-10 py-2 rounded-lg cursor-pointer text-slate-500 hover:bg-gray-100 ${
                     location?.pathname === item?.layout+item.path && "bg-gray-200"
                   }`}
@@ -74,7 +75,7 @@ const SidebarMenu = ({menu}) => {
                     } transition-all ease-linear duration-300`}
                   >
                     {item?.subMenu?.map((subMenu, index) => (
-                      <NavLink key={index} to={subMenu?.url}>
+                      <NavLink key={index} to={subMenu.layout+ subMenu.path}>
                         <div
                           className={`text-slate-500 py-2  w-full px-16 whitespace-nowrap cursor-pointer rounded-lg hover:bg-gray-100 ${
                             location?.pathname === subMenu?.url && "bg-gray-200"
