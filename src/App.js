@@ -23,7 +23,8 @@ function App() {
         return getAuthRoutes(prop.views);
       }
       if (prop.layout === '/auth') {
-        return <Route path={prop.layout + prop.path} key={key} component={prop.component} />;
+        console.log(prop.layout + prop.path, prop.component);
+        return <Route path={prop.layout + prop.path} key={key} element={prop.component} />;
       } else {
         return null;
       }
@@ -31,12 +32,11 @@ function App() {
   };
   const getAdminRoutes = (routes=[]) => {
     return routes.map((prop, key) => {
-        console.log(prop);
       if (prop.collapse) {
         return getAdminRoutes(prop.views);
       }
       if (prop.layout === '/admin') {
-        return <Route path={prop.layout + prop.path} key={key} component={prop.component} />;
+        return <Route path={prop.layout + prop.path} key={key} element={prop.component} />;
       } else {
         return null;
       }

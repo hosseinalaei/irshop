@@ -1,4 +1,4 @@
-import Login from './pages/Login'
+import Login from './auth/Login'
 import Dashboard from './pages/Dashboard'
 import RolesPage from './pages/roles/RolesPage'
 import CategoriesPage from './pages/categories/CategoriesPage'
@@ -17,7 +17,7 @@ const routes = [
         layout: '/auth',
         name: 'Login Page',
         mini: 'LP',
-        component: Login,
+        component: <Login />,
         invisible: true,
       },
     {
@@ -26,7 +26,7 @@ const routes = [
         layout: '/admin',
         name: 'داشبورد',
         icon: 'house',
-        component: Dashboard,
+        component: <Dashboard />,
       },
       {
         id:3,
@@ -34,7 +34,7 @@ const routes = [
         layout: '/admin',
         name: 'نقش‌ها',
         icon: 'pen-ruler',
-        component: RolesPage,
+        component: <RolesPage />,
       },
       {
         id:4,
@@ -49,7 +49,7 @@ const routes = [
             path: '/categories',
             layout: '/admin',
             name: 'لیست دسته‌بندی‌ها',
-            component: CategoriesPage,
+            component: <CategoriesPage />,
             icon: 'rectangle-list',
           },
           {
@@ -57,7 +57,7 @@ const routes = [
             path: '/categories/add-category',
             layout: '/admin',
             name: 'دسته‌بندی جدید',
-            component: AddCategory,
+            component: <AddCategory />,
             icon: 'square-plus',
           },
         ],
@@ -75,7 +75,7 @@ const routes = [
             path: '/products',
             layout: '/admin',
             name: 'لیست محصولات',
-            component: ProductsPage,
+            component: <ProductsPage />,
             icon: 'rectangle-list',
           },
           {
@@ -83,7 +83,7 @@ const routes = [
             path: '/products/add-product',
             layout: '/admin',
             name: 'محصول جدید',
-            component: AddProductPage,
+            component: <AddProductPage />,
             icon: 'square-plus',
           },
         ],
@@ -94,15 +94,15 @@ const routes = [
         layout: '/admin',
         name: 'سیاست‌ها (policy)',
         icon: 'check-double',
-        component: PolicyPage,
+        component: <PolicyPage />,
       },
       {
         id:11,
         path: '/users',
         layout: '/admin',
         name: 'کاربران',
-        icon: 'preson',
-        component: UsersPage,
+        icon: 'person',
+        component: <UsersPage />,
       },
       {
         id:12,
@@ -110,7 +110,7 @@ const routes = [
         layout: '/admin',
         name: 'اسلایدر',
         icon: 'images',
-        component: SliderPage,
+        component: <SliderPage />,
       },
       {
         id:13,
@@ -118,7 +118,7 @@ const routes = [
         layout: '/admin',
         name: 'ویژگی‌ها',
         icon: 'images',
-        component: SpecificationPage,
+        component: <SpecificationPage />,
       },
       {
         id:14,
@@ -126,7 +126,7 @@ const routes = [
         layout: '/admin',
         name: 'نظرات',
         icon: 'message',
-        component: CommentsPage,
+        component: <CommentsPage />,
       },
 ]
 

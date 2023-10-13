@@ -22,7 +22,7 @@ const SidebarMenu = ({menu}) => {
   };
 
   const isSubMenuOpen = (itemId) => openSubMenus.includes(itemId);
-
+  const renderMenu = menu.filter(el => el.invisible !== true)
   return (
     <>
       <div
@@ -36,14 +36,14 @@ const SidebarMenu = ({menu}) => {
 
         <div className="h-full text-xl">
           <ul className="relative flex-col h-full p-0">
-            {menu?.map((item) => (
+            {renderMenu?.map((item) => (
               <div key={item?.id}>
                 <NavLink
                   key={item?.id}
-                  to={item?.subMenu ? item?.url : item?.url}
-                  onClick={() => item?.subMenu && toggleSubMenu(item?.id)}
+                  to={item?.subMenu ? '' : item?.layout+item.path}
+                  onClick={(e) => {item?.subMenu && toggleSubMenu(item?.id)}}
                   className={`flex items-center justify-between w-full px-10 py-2 rounded-lg cursor-pointer text-slate-500 hover:bg-gray-100 ${
-                    location?.pathname === item?.url && "bg-gray-200"
+                    location?.pathname === item?.layout+item.path && "bg-gray-200"
                   }`}
                 >
                   <div className="flex">
