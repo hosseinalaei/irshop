@@ -71,29 +71,16 @@ const CategoryListItem = ({ category, getCategories }) => {
   return (
     <>
       <tr>
-        <td>
-          {/* <div className="form-check form-check-sm form-check-custom form-check-solid">
-            <input className="form-check-input" type="checkbox" value="1" />
-          </div> */}
-        </td>
+        <td></td>
         <td>
           <div className="d-flex">
-            {/* <!--begin::Thumbnail--> */}
             <a href="#" className="symbol symbol-50px">
-              {/* <span
-                className="symbol-label"
-                style={{
-                  backgroundImage: "url(68.gif)",
-                }}
-              ></span> */}
               <img
                 src={img ? `data:image/jpeg;base64,${img}` : "/blank-image.svg"}
                 alt=""
               />
             </a>
-            {/* <!--end::Thumbnail--> */}
             <div className="ms-5">
-              {/* <!--begin::Title--> */}
               <a
                 href="#"
                 className="mb-1 text-gray-800 text-hover-primary fs-5 fw-bold"
@@ -101,36 +88,27 @@ const CategoryListItem = ({ category, getCategories }) => {
               >
                 {category?.title}
               </a>
-              {/* <!--end::Title--> */}
-              {/* <!--begin::Description--> */}
               <div className="text-muted fs-7 fw-bold">
                 {category?.urlTitle}
               </div>
-              {/* <!--end::Description--> */}
             </div>
           </div>
         </td>
-        {/* <td>
-          
-          <div className="badge badge-light-success">Automated</div>
-          
-        </td> */}
+
         <td className="text-end">
           <div className="flex ">
-            <div className="px-3">
-              <NavLink
-                to={{
-                  pathname: `/categories/edit-category/id=${category?.id}`,
-                }}
-                state={category}
-              >
-                {/* <a href="/products/add-product" className=""> */}
-                ویرایش
-                {/* </a> */}
-              </NavLink>
-            </div>
+            <NavLink
+              className="px-2 py-1 mx-2 text-blue-600 border-2 border-blue-600 rounded-lg hover:bg-blue-600 hover:text-white"
+              to={{
+                pathname: `/categories/edit-category/id=${category?.id}`,
+              }}
+              state={category}
+            >
+              ویرایش
+            </NavLink>
+
             <button
-              className="px-3 "
+              className="px-2 py-1 text-blue-600 border-2 border-blue-600 rounded-lg hover:bg-blue-600 hover:text-white"
               onClick={() => setIsConfirmationOpen(true)}
             >
               حذف
