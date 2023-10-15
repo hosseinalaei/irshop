@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { axiosService } from "../../services/axiosService";
-import { ToastContainer, toast } from "react-toastify";
+// import { ToastContainer, toast } from "react-toastify";
 
 const EditUser = ({ setShowEditModal, selectedUser, setShowToast }) => {
   const [editedRole, setEditedRole] = useState({

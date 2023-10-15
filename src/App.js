@@ -1,10 +1,13 @@
-import Layout from "./layout/Layout";
+import React from "react";
 import "./assets/fonts/fonts-yekan/style.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import "react-toastify/dist/ReactToastify.css";
 import * as Icons from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+import Auth from "./layouts/Auth";
+import Admin from "./layouts/Admin";
+import Login from "./auth/Login";
+import routes from "./routes";
 
 const iconList = Object.keys(Icons)
   .filter((key) => key !== "fas" && key !== "prefix")
@@ -13,22 +16,55 @@ const iconList = Object.keys(Icons)
 library.add(...iconList);
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const checkUserToken = () => {
-    const userToken = localStorage.getItem("user-token");
-    if (!userToken || userToken === "undefined") {
-      setIsLoggedIn(false);
-    }
-    setIsLoggedIn(true);
+
+  const getAuthRoutes = (routes=[]) => {
+    return routes.map((prop, key) => {
+      if (prop.collapse) {
+        return getAuthRoutes(prop.views);
+      }
+      if (prop.layout === '/auth') {
+        console.log(prop.layout + prop.path, prop.component);
+        return <Route path={prop.layout + prop.path} key={key} element={prop.component} />;
+      } else {
+        return null;
+      }
+    });
   };
-  useEffect(() => {
-    checkUserToken();
-  }, [isLoggedIn]);
+  const getAdminRoutes = (routes=[]) => {
+    return routes.map((prop, key) => {
+      if (prop.subMenu) {
+        return getAdminRoutes(prop.subMenu);
+      }
+      if (prop.layout === '/admin') {
+        return <Route path={prop.layout + prop.path} key={key} element={prop.component} />;
+      } else {
+        return null;
+      }
+    });
+  };
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const checkUserToken = () => {
+  //   const userToken = localStorage.getItem("user-token");
+  //   if (!userToken || userToken === "undefined") {
+  //     setIsLoggedIn(false);
+  //   }
+  //   setIsLoggedIn(true);
+  // };
+  // useEffect(() => {
+  //   checkUserToken();
+  // }, [isLoggedIn]);
 
   return (
     <div style={{ fontFamily: "yekan" }}>
-      {/* <Layout /> */}
-      <Outlet />
+      <Routes>
+        <Route path="/" exact element={<Login />} />
+        <Route path="/auth" element={<Auth/>}>
+            {getAuthRoutes(routes)}  
+        </Route>
+        <Route path="/admin" element={<Admin routes={routes}/>}>
+          {getAdminRoutes(routes)}
+        </Route>
+      </Routes>
     </div>
   );
 }

@@ -58,7 +58,7 @@ const AddNewRoleModal = ({ setShowAddModal, setShowToast, getRoles }) => {
                       <span className="required">نام</span>
                     </label>
                     <input
-                      className="form-control form-control-solid"
+                      className="form-control"
                       placeholder="نام نقش را وارد کنید"
                       name="role_name"
                       value={role?.name}
@@ -72,7 +72,7 @@ const AddNewRoleModal = ({ setShowAddModal, setShowToast, getRoles }) => {
                       <span className="required">عنوان</span>
                     </label>
                     <input
-                      className="form-control form-control-solid"
+                      className="form-control"
                       placeholder="عنوان نقش را وارد کنید"
                       name="role_title"
                       value={role?.title}
@@ -86,7 +86,7 @@ const AddNewRoleModal = ({ setShowAddModal, setShowToast, getRoles }) => {
                       <span className="required">سطح دسترسی</span>
                     </label>
                     <input
-                      className="form-control form-control-solid"
+                      className="form-control"
                       placeholder="سطح دسترسی را وارد کنید"
                       name="role_accessibility"
                       onChange={(e) =>
@@ -117,7 +117,7 @@ const AddNewRoleModal = ({ setShowAddModal, setShowToast, getRoles }) => {
                 <div className="text-left">
                   <button
                     type="reset"
-                    className="btn btn-light me-3"
+                    className="px-10 py-3 bg-slate-200 me-3 rounded-md  hover:bg-slate-300"
                     onClick={() => setShowAddModal(false)}
                   >
                     انصراف
@@ -129,7 +129,7 @@ const AddNewRoleModal = ({ setShowAddModal, setShowToast, getRoles }) => {
                       addRole();
                       setShowAddModal(false);
                     }}
-                    className="px-10 py-2 text-2xl font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600"
+                    className="px-10 py-2 text-2xl text-white bg-blue-500 rounded-md hover:bg-blue-600"
                   >
                     ثبت
                   </button>
