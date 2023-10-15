@@ -10,14 +10,16 @@ const ProductsListItem = ({ product, getProducts, setProduct }) => {
   const nav = useNavigate();
 
   const getPic = () => {
-    const body = {
-      id: product?.id,
-      mediaFieldName: "productImageName",
-    };
+    const body = [
+      {
+        id: product?.id,
+        mediaFieldName: "productImageName",
+      },
+    ];
     axiosService
       .post("/Media/GetMedia", body)
       .then((res) => {
-        setImg(res?.data);
+        setImg(res?.data[0]);
       })
       .catch((err) => console.log(err));
   };
@@ -85,7 +87,11 @@ const ProductsListItem = ({ product, getProducts, setProduct }) => {
       <td className="d-flex">
         <div className="symbol symbol-50px">
           <img
-            src={img ? `data:image/jpeg;base64,${img}` : "/blank-image.svg"}
+            src={
+              img
+                ? `data:image/jpeg;base64,${img.mediaFieldName}`
+                : "/blank-image.svg"
+            }
             alt=""
           />
         </div>
