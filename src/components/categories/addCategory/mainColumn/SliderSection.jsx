@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const SliderSection = ({ category, setCategory }) => {
   const [file, setFile] = useState([]);
   const inputRef = React.useRef(null);
-  const [img, setImg] = useState();
+  // const [img, setImg] = useState();
 
   // console.log(category);
 

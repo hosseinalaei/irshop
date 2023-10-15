@@ -3,7 +3,7 @@ import OriginImage from "./asideColumn/OriginImage";
 import ParentCategory from "./asideColumn/ParentCategory";
 import GeneralSection from "./mainColumn/GeneralSection";
 import { axiosService } from "../../../services/axiosService";
-import SliderSection from "./mainColumn/SliderSection";
+// import SliderSection from "./mainColumn/SliderSection";
 import { NavLink, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import Button from "../../common/Button";
