@@ -1,8 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ProductListHead from "./ProductListHead";
 import ProductsListItem from "./ProductsListItem";
-import { axiosService } from "../../services/axiosService";
+// import { axiosService } from "../../services/axiosService";
 import Pagination from "../common/Pagination";
 
 const ProductsList = ({ products, getProducts }) => {
