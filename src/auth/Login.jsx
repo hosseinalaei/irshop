@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 // import { Formik, FormikHelpers, Field, Form } from "formik";
 import { axiosService } from "../services/axiosService";
 // import { toast } from "react-toastify";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "../components/common/Button";
+import AuthContext from "../contexts/AuthContext";
 const Login = () => {
   const navigate = useNavigate();
   const [loginInfo, setLoginInfo] = useState({
@@ -16,6 +17,8 @@ const Login = () => {
   const [error, setError] = useState("");
   const [buttonText, setButtonText] = useState("ارسال کد");
   const [loading, setLoading] = useState(false);
+
+  const { setAccessToken } = useContext(AuthContext);
 
   const getVerificationCode = (e) => {
     e.preventDefault();
@@ -62,6 +65,7 @@ const Login = () => {
           }
           localStorage.clear();
           localStorage.setItem("user-token", token);
+          setAccessToken(token);
           setTimeout(() => {
             navigate("/admin/dashboard");
           }, 500);

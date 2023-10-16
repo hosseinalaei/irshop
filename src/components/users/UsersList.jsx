@@ -5,6 +5,7 @@ import UsersListItem from "./UsersListItem";
 import Loading from "../common/Loading";
 import EditUser from "./EditUser";
 import { ToastContainer, toast } from "react-toastify";
+import useAxios from "../../hooks/useAxios";
 
 const UsersList = () => {
   const [loading, setLoading] = useState(true);
@@ -12,9 +13,14 @@ const UsersList = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showToast, setShowToast] = useState("");
 
+  const httpRequest = useAxios();
+
   const getUsers = () => {
-    axiosService
-      ?.get("/User/getAllUsers")
+    // axiosService.get("/User/getAllUsers")
+   httpRequest({
+    url: '/User/getAllUsers',
+    method: 'GET',
+   })
       .then((res) => {
         setUsers(res?.data);
         setLoading(false);

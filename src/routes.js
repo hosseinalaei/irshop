@@ -10,6 +10,8 @@ import UsersPage from './pages/users/UsersPage'
 import SliderPage from './pages/slider/SliderPage'
 import SpecificationPage from './pages/specification/SpecificationPage'
 import CommentsPage from './pages/comments/CommentsPage'
+import AddCategoryPage from './pages/categories/addCategory/AddCategory'
+import AddNewPolicyPage from './pages/policy/addPolicy/AddNewPolicyPage'
 const routes = [
     {
         id:1,
@@ -136,6 +138,24 @@ const routes = [
         name: 'نظرات',
         icon: 'message',
         component: <AddProductPage />,
+      },
+      {
+        invisible:true,
+        id:16,
+        path: '/categories/edit-category/:id',
+        layout: '/admin',
+        name: 'نظرات',
+        icon: 'message',
+        component: <AddCategoryPage />
+      },
+      {
+        invisible:true,
+        id:17,
+        path: '/policies/add-policy',
+        layout: '/admin',
+        name: 'نظرات',
+        icon: 'message',
+        component: <AddNewPolicyPage />
       },
 ]
 

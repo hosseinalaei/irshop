@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { axiosService } from "../../services/axiosService";
 import { v4 as uuidv4 } from "uuid";
+import useAxios from "../../hooks/useAxios";
 
 const AddSpec = ({ setShowAddModal, setShowToast, getSpecs }) => {
   const [spec, setSpec] = useState({
@@ -9,6 +10,8 @@ const AddSpec = ({ setShowAddModal, setShowToast, getSpecs }) => {
     specValue: "",
     isDelete: false,
   });
+
+  const httpRequest = useAxios();
   const addSpec = () => {
     const body = {
       specName: spec?.specName,
@@ -17,8 +20,12 @@ const AddSpec = ({ setShowAddModal, setShowToast, getSpecs }) => {
       isDelete: spec?.isDelete,
       id: uuidv4(),
     };
-    axiosService
-      .post("/Specification/registerSpecification", body)
+    // axiosService .post("/Specification/registerSpecification", body)
+    httpRequest({
+      url:'/Specification/registerSpecification',
+      method:'POST',
+      data: body,
+    })
       .then((res) => {
         if (res?.status === "Success") {
           setShowToast("Success");

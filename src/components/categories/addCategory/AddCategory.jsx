@@ -7,13 +7,14 @@ import { axiosService } from "../../../services/axiosService";
 import { NavLink, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import Button from "../../common/Button";
+import useAxios from "../../../hooks/useAxios";
+import { data } from "autoprefixer";
 
 const AddCategory = () => {
   const location = useLocation();
 
   const selectedCategory = location?.state;
   const [loading, setLoading] = useState(false);
-
   const [category, setCategory] = useState({
     title: selectedCategory?.title || "",
     urlTitle: selectedCategory?.urlTitle || "",
@@ -23,13 +24,20 @@ const AddCategory = () => {
     sliderImage: selectedCategory?.categorySliderImagename || [],
     id: selectedCategory?.id || "",
   });
+  const httpRequest = useAxios();
 
   const postMedia = (id, image, key) => {
     const body = new FormData();
     body.append("originImage", image);
     body.append("mediaFieldName", key);
     body.append("id", id);
-    axiosService.post("/Media/PostMedia", body, "multipart/form-data");
+    // axiosService.post("/Media/PostMedia", body, "multipart/form-data");
+    httpRequest({
+      method: 'POST',
+      url: "/Media/PostMedia",
+      body,
+      timeout: 10000,
+    })
   };
 
   const addCategory = () => {
@@ -48,8 +56,13 @@ const AddCategory = () => {
     };
 
     if (category.title && category.urlTitle && category.originImage) {
-      axiosService
-        .post("/Category/registerProductCategory", requestBody)
+      // axiosService
+      //   .post("/Category/registerProductCategory", requestBody)
+      httpRequest({
+        url: '/Category/registerProductCategory',
+        method: 'POST',
+        data: requestBody,
+      })
         .then((res) => {
           if (res?.status === "Success") {
             toast.success("عملیات با موفقیت انجام شد", {
@@ -98,8 +111,13 @@ const AddCategory = () => {
       categorySliderLink: "",
     };
 
-    axiosService
-      .put("/Category/updateCategory", requestBody)
+    // axiosService
+    //   .put("/Category/updateCategory", requestBody)
+    httpRequest({
+      url: '/Category/updateCategory',
+      method: 'PUT',
+      data: requestBody
+    })
       .then((res) => {
         if (res?.status === "Success") {
           toast.success("عملیات با موفقیت انجام شد", {
@@ -128,7 +146,7 @@ const AddCategory = () => {
           });
         }
       })
-      .finally(() => setLoading(false));
+      .finally(() => {setLoading(false)});
   };
 
   // const enableSubmitBtn = () => {

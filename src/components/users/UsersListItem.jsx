@@ -3,6 +3,7 @@ import UserRoles from "./UserRoles";
 import { axiosService } from "../../services/axiosService";
 import { toast } from "react-toastify";
 import ConfirmationDialog from "../common/Confirm";
+import useAxios from "../../hooks/useAxios";
 
 const UsersListItem = ({
   user,
@@ -10,13 +11,23 @@ const UsersListItem = ({
   setSelectedUser,
   getUsers,
 }) => {
+
+
+  const httpRequest = useAxios();
+
   const deleteUser = (user) => {
     const body = {
       ...user,
       isDelete: true,
     };
 
-    axiosService.post("/User/updateUser", body).then((res) => {
+    // axiosService.post("/User/updateUser", body)
+    httpRequest({
+      url: '/User/updateUser',
+      method: 'POST',
+      data: body,
+    })
+    .then((res) => {
       if (res?.status === "Success") {
         toast.success("عملیات با موفقیت انجام شد", {
           position: "top-left",

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { axiosService } from "../../services/axiosService";
+import useAxios from "../../hooks/useAxios";
 // import { ToastContainer, toast } from "react-toastify";
 
 const EditUser = ({ setShowEditModal, selectedUser, setShowToast }) => {
@@ -15,12 +16,19 @@ const EditUser = ({ setShowEditModal, selectedUser, setShowToast }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [rolesName, setRolesName] = useState([]);
 
+  const httpRequest = useAxios();
+
   //   console.log("selectedUserselectedUserselectedUser", selectedUser);
 
   //   console.log("editedRoleeditedRoleeditedRoleeditedRole", editedRole);
 
   const getRoles = () => {
-    axiosService.get("/Role/getActiveRoles").then((res) => {
+    // axiosService.get("/Role/getActiveRoles")
+    httpRequest({
+      url: '/Role/getActiveRoles',
+      method:'GET'
+    })
+    .then((res) => {
       setRoles(res?.data);
     });
   };
@@ -75,7 +83,13 @@ const EditUser = ({ setShowEditModal, selectedUser, setShowToast }) => {
       userRoles: editedRole?.userRoles,
     };
 
-    axiosService.post("/User/updateUser", body).then((res) => {
+    // axiosService.post("/User/updateUser", body)
+    httpRequest({
+      url: '/User/updateUser',
+      method: 'POST',
+      data: body,
+    })
+    .then((res) => {
       if (res?.status === "Success") {
         setShowToast("Success");
       } else {

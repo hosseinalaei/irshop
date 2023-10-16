@@ -4,10 +4,13 @@ import { axiosService } from "../../services/axiosService";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import ConfirmationDialog from "../common/Confirm";
+import useAxios from "../../hooks/useAxios";
+import { methods } from "underscore";
 
 const ProductsListItem = ({ product, getProducts, setProduct }) => {
   const [img, setImg] = useState(null);
   const nav = useNavigate();
+  const httpRequest = useAxios();
 
   const getPic = () => {
     const body = [
@@ -16,8 +19,12 @@ const ProductsListItem = ({ product, getProducts, setProduct }) => {
         mediaFieldName: "productImageName",
       },
     ];
-    axiosService
-      .post("/Media/GetMedia", body)
+    // axiosService.post("/Media/GetMedia", body)
+    httpRequest({
+      url: '/Media/GetMedia',
+      method: 'POST',
+      data: body
+    })
       .then((res) => {
         setImg(res?.data[0]);
       })
@@ -34,9 +41,13 @@ const ProductsListItem = ({ product, getProducts, setProduct }) => {
       isDelete: true,
     };
 
-    axiosService
-      .put("/Products/updateProduct", body)
-      .then((res) => {
+    // axiosService.put("/Products/updateProduct", body)
+    httpRequest({
+      url: '/Products/updateProduct',
+      method: 'PUT',
+      data: body,
+    })  
+    .then((res) => {
         if (res?.status === "Success") {
           toast.success("عملیات با موفقیت انجام شد", {
             position: "top-left",
