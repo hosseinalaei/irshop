@@ -178,7 +178,15 @@ const AddCategory = () => {
             </div>
           </form>
 
-          <div className="mt-5 d-flex justify-content-end">
+          <div className="items-center mt-5 d-flex justify-content-end">
+            <NavLink
+              className="mx-5 text-xl font-semibold text-black"
+              to={{
+                pathname: `/categories`,
+              }}
+            >
+              بازگشت
+            </NavLink>
             <Button
               disabled={Boolean(
                 !category.title && !category.urlTitle && !category.originImage

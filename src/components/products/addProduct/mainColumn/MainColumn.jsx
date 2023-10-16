@@ -5,6 +5,7 @@ import PricingSection from "./PricingSection";
 import SelectColor from "./SelectColor";
 import Details from "./Details";
 import Button from "../../../common/Button";
+import { NavLink } from "react-router-dom";
 
 const MainColumn = ({
   product,
@@ -36,13 +37,15 @@ const MainColumn = ({
         </div>
       </div>
 
-      <div className="d-flex justify-content-end">
-        {/* <button
-          onClick={(e) => submitProduct(e)}
-          className="px-10 py-2 text-2xl font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600"
+      <div className="items-center d-flex justify-content-end">
+        <NavLink
+          className="mx-5 text-xl font-semibold text-black"
+          to={{
+            pathname: `/products`,
+          }}
         >
-          ثبت
-        </button> */}
+          بازگشت
+        </NavLink>
         <Button
           className="px-10 text-2xl"
           onClick={(e) => submitProduct(e)}
