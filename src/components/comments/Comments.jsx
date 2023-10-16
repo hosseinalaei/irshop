@@ -4,16 +4,22 @@ import CommentsListHead from "./CommentsListHead";
 import { convertToPersianDate } from "../../utils/dateConverter";
 import { ToastContainer, toast } from "react-toastify";
 import ConfirmationDialog from "../common/Confirm";
+import useAxios from "../../hooks/useAxios";
 
 const Comments = () => {
   const [comments, setComments] = useState();
   const [clickedComment, setClickedComment] = useState(null);
+  const httpRequest = useAxios();
   const getComments = () => {
     // const body = {
     //   id: "a82d0e7b-f577-45ae-aca5-4ff3d036c628",
     // };
-    axiosService.post("/Comment/getAllcomments").then((res) => {
-      console.log(res);
+    // axiosService.post("/Comment/getAllcomments")
+    httpRequest({
+      url:'Comment/getAllcomments',
+      method: 'POST'
+    })
+    .then((res) => {
 
       const filteredComment = res?.data?.filter((item) => !item?.isDelete);
 
@@ -35,8 +41,12 @@ const Comments = () => {
       isDelete: true,
     };
 
-    axiosService
-      ?.put("/Comment/updateComment", body)
+    // axiosService.put("/Comment/updateComment", body)
+    httpRequest({
+      url:'/Comment/updateComment',
+      method: 'PUT',
+      data:body,
+    })
       .then((res) => {
         if (res?.status === "Success") {
           toast.success("عملیات با موفقیت انجام شد", {
@@ -80,8 +90,12 @@ const Comments = () => {
       isPublish: true,
     };
 
-    axiosService
-      ?.put("/Comment/updateComment", body)
+    // axiosService.put("/Comment/updateComment", body)
+    httpRequest({
+      url: '/Comment/updateComment',
+      method: 'PUT',
+      data: body,
+    })
       .then((res) => {
         if (res?.status === "Success") {
           toast.success("عملیات با موفقیت انجام شد", {
@@ -126,8 +140,12 @@ const Comments = () => {
       isPublish: true,
     };
 
-    axiosService
-      ?.put("/Comment/updateComment", body)
+    // axiosService.put("/Comment/updateComment", body)
+    httpRequest({
+      url:'/Comment/updateComment',
+      method:'PUT',
+      data: body,
+    })
       .then((res) => {
         if (res?.status === "Success") {
           toast.success("عملیات با موفقیت انجام شد", {
@@ -164,7 +182,8 @@ const Comments = () => {
   const [users, setUsers] = useState([]);
 
   const getUsers = () => {
-    axiosService?.get("/User/getAllUsers").then((res) => {
+    axiosService?.get("/User/getAllUsers")
+    .then((res) => {
       setUsers(res?.data);
     });
   };

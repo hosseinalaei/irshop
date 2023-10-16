@@ -1,6 +1,7 @@
 import { axiosService } from "../../services/axiosService";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import useAxios from "../../hooks/useAxios";
 
 const AddNewRoleModal = ({ setShowAddModal, setShowToast, getRoles }) => {
   const [role, setRole] = useState({
@@ -9,6 +10,9 @@ const AddNewRoleModal = ({ setShowAddModal, setShowToast, getRoles }) => {
     accessLevel: "",
     isDelete: false,
   });
+
+  const httpRequest = useAxios();
+
   const addRole = () => {
     const body = {
       name: role?.name,
@@ -17,7 +21,13 @@ const AddNewRoleModal = ({ setShowAddModal, setShowToast, getRoles }) => {
       isDelete: role?.isDelete,
       id: uuidv4(),
     };
-    axiosService.post("/Role/addrole", body).then((res) => {
+    // axiosService.post("/Role/addrole", body)
+    httpRequest({
+      url: '/Role/addrole',
+      method: 'POST',
+      data: body,
+    })
+    .then((res) => {
       if (res?.status === "Success") {
         setShowToast("Success");
         setTimeout(() => {

@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { axiosService } from "../../services/axiosService";
 import { ToastContainer, toast } from "react-toastify";
 import Button from "../common/Button";
+import useAxios from "../../hooks/useAxios";
 
 const CreateSlider = () => {
   const [file, setFile] = useState([]);
@@ -16,6 +17,8 @@ const CreateSlider = () => {
   const [sliderAvatarImageName, setSliderAvatarImageName] = useState(null);
   const [sliderBackImageName, setSliderBackImageName] = useState(null);
   const [sliderImageName, setSliderImageName] = useState(null);
+
+  const httpRequest = useAxios();
 
   const deleteImage = (index) => {
     const updatedImages = images?.splice(index, 1);
@@ -37,7 +40,12 @@ const CreateSlider = () => {
     body.append("originImage", image);
     body.append("mediaFieldName", key);
     body.append("id", id);
-    axiosService.post("/Media/PostMedia", body, "multipart/form-data");
+    // axiosService.post("/Media/PostMedia", body, "multipart/form-data");
+    httpRequest({
+      url:'/Media/PostMedia',
+      method:'POST',
+      data: body
+    })
   };
 
   const createSlider = () => {
@@ -53,8 +61,12 @@ const CreateSlider = () => {
       link: slider?.link,
     };
 
-    axiosService
-      .post("/Slider/createSlider", body)
+    // axiosService.post("/Slider/createSlider", body)
+    httpRequest({
+      url: '/Slider/createSlider',
+      method:'POST',
+      data: body,
+    })
       .then((res) => {
         if (res?.status === "Success") {
           // console.log(res);

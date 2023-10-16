@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { axiosService } from "../../services/axiosService";
 import { ToastContainer, toast } from "react-toastify";
+import useAxios from "../../hooks/useAxios";
 
 const EditSpec = ({ setShowEditModal, selectedSpec, getSpecs }) => {
   const [editSpec, setEditSpec] = useState({
@@ -11,6 +12,8 @@ const EditSpec = ({ setShowEditModal, selectedSpec, getSpecs }) => {
     id: selectedSpec?.id,
   });
 
+  const httpRequest = useAxios();
+
   const EditSpec = () => {
     const body = {
       specName: editSpec?.specName,
@@ -19,7 +22,13 @@ const EditSpec = ({ setShowEditModal, selectedSpec, getSpecs }) => {
       isDelete: editSpec?.isDelete,
       id: editSpec?.id,
     };
-    axiosService.put("/Specification/updateSpecification", body).then((res) => {
+    // axiosService.put("/Specification/updateSpecification", body)
+    httpRequest({
+      url: '/Specification/updateSpecification',
+      method:'PUT',
+      data: body,
+    })
+    .then((res) => {
       if (res?.status === "Success") {
         toast.success("عملیات با موفقیت انجام شد", {
           position: "top-left",

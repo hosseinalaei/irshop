@@ -3,12 +3,17 @@ import { axiosService } from "../../services/axiosService";
 import SliderListItem from "./SliderListItem";
 import { NavLink } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import useAxios from "../../hooks/useAxios";
 
 const SlidersList = () => {
   const [sliders, setSliders] = useState([]);
+  const httpRequest = useAxios();
   const getSliders = () => {
-    axiosService
-      .get("/Slider/GetActiveSliders")
+    // axiosService.get("/Slider/GetActiveSliders")
+      httpRequest({
+        url:'/Slider/GetActiveSliders',
+        method: 'GET'
+      })
       .then((res) => res.status === "Success" && setSliders(res.data));
   };
 

@@ -2,21 +2,28 @@ import React, { useEffect, useState } from "react";
 import { axiosService } from "../../services/axiosService";
 import { ToastContainer, toast } from "react-toastify";
 import ConfirmationDialog from "../common/Confirm";
+import useAxios from "../../hooks/useAxios";
 
 const SliderListItem = ({ slider, getSliders }) => {
   const [sliderAvatarImageName, setSliderAvatarImageName] = useState(null);
   const [sliderBackImageName, setSliderBackImageName] = useState(null);
   const [sliderImageName, setSliderImageName] = useState(null);
 
+  const httpRequest = useAxios();
   const getMedia = (mediaFieldName) => {
     const body = {
       id: slider?.id,
       mediaFieldName: mediaFieldName,
     };
 
-    return axiosService
-      .post("/Media/GetMedia", body)
-      .then((res) => res?.status === "Success" && res);
+    return (
+    // axiosService.post("/Media/GetMedia", body)
+    httpRequest({
+      url:'/Media/GetMedia',
+      method:'POST',
+      data: body,
+    })
+      .then((res) => res?.status === "Success" && res))
   };
 
   useEffect(() => {
@@ -42,8 +49,12 @@ const SliderListItem = ({ slider, getSliders }) => {
       isDelete: true,
     };
 
-    axiosService
-      .put("/Slider/updateSlider", body)
+    // axiosService.put("/Slider/updateSlider", body)
+    httpRequest({
+      url: '/Slider/updateSlider',
+      method:'PUT',
+      data: body,
+    })
       .then((res) => {
         if (res?.status === "Success") {
           toast.success("عملیات با موفقیت انجام شد", {

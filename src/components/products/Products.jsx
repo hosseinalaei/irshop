@@ -5,14 +5,19 @@ import { axiosService } from "../../services/axiosService";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Button from "../common/Button";
+import useAxios from "../../hooks/useAxios";
 
 const Products = () => {
   const nav = useNavigate();
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
+  const httpRequest = useAxios();
   const getProducts = () => {
-    axiosService
-      .get("/Products/getAllactiveproducts")
+    // axiosService.get("/Products/getAllactiveproducts")
+    httpRequest({
+      url:'/Products/getAllactiveproducts',
+      method: 'GET'
+    })
       .then((res) => {
         setProducts(res?.data);
         setLoading(false);

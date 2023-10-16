@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AddNewRole from "./AddNewRole";
 import EditRole from "./EditRole";
 import { axiosService } from "../../services/axiosService";
@@ -6,14 +6,20 @@ import Loading from "../common/Loading";
 import { NavLink } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import ConfirmationDialog from "../common/Confirm";
+import axios from "axios";
+import useAxios from "../../hooks/useAxios";
+import AuthContext from "../../contexts/AuthContext";
 
 const Roles = () => {
   // const roles = data?.roles;
+
   const [roles, setRoles] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedRole, setSelectedRole] = useState({});
   const [loading, setLoading] = useState(true);
   const [showToast, setShowToast] = useState("");
+  const httpRequest =  useAxios();
+  const {setAccessToken} = useContext(AuthContext);
 
   useEffect(() => {
     if (showToast === "Success") {
@@ -47,16 +53,43 @@ const Roles = () => {
     setShowEditModal(true);
     setSelectedRole(item);
   };
+  const accessToken = localStorage.getItem('user-token');
 
   const getRoles = () => {
-    setLoading(true);
-    axiosService.get("/Role/getActiveRoles").then((res) => {
-      setRoles(res?.data);
-      setLoading(false);
-    });
+    
+  httpRequest({
+    url: '/Role/getActiveRoles',
+    method: 'GET',
+  }).then(res =>{
+    setRoles(res.data);
+    setLoading(false);
+  })
+
+
+
+
+  // axios({
+  //   baseURL:'https://138.201.167.230:5050',
+  //   url: '/Role/getActiveRoles',
+  //   method: 'GET',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     'Access-Control-Allow-Origin': '*',
+  //     Accept: 'application/json',
+  //     Authorization: `Bearer ${accessToken}`
+  //   }})
+    // setLoading(true);
+    // axiosService.get("/Role/getActiveRoles").then((res) => {
+    //   setRoles(res?.data);
+    //   setLoading(false);
+    // });
   };
 
+ 
+
   useEffect(() => {
+    const token = localStorage.getItem('user-token');
+    setAccessToken(token);
     getRoles();
   }, []);
 
@@ -68,7 +101,13 @@ const Roles = () => {
       isDelete: true,
     };
 
-    axiosService.put("/Role/updateRole", body).then((res) => {
+    // axiosService.put("/Role/updateRole", body)
+    httpRequest({
+      url: '/Role/updateRole',
+      method:'PUT',
+      data: body
+    })
+    .then((res) => {
       if (res?.status === "Success") {
         toast.success("عملیات با موفقیت انجام شد", {
           position: "top-left",

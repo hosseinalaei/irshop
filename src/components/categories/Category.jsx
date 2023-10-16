@@ -5,17 +5,23 @@ import { axiosService } from "../../services/axiosService";
 import Loading from "../common/Loading";
 import { NavLink } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import useAxios from "../../hooks/useAxios";
 
 const Category = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const httpRequest = useAxios();
 
   const getCategories = () => {
-    setLoading(true);
-    axiosService
-      .get("/Category/product-active-categories")
+    // setLoading(true);
+    // axiosService
+    //   .get("/Category/product-active-categories")
+    httpRequest({
+      url: '/Category/product-active-categories',
+      method: 'GET',
+    })
       .then((res) => {
-        setCategories(res?.data);
+        setCategories(res.data);
         setLoading(false);
       })
       .finally(() => setLoading(false));

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { axiosService } from "../../services/axiosService";
 import { ToastContainer, toast } from "react-toastify";
+import useAxios from "../../hooks/useAxios";
 
 const EditRole = ({ setShowEditModal, selectedRole }) => {
   const [editedRole, setEditedRole] = useState({
@@ -11,6 +12,8 @@ const EditRole = ({ setShowEditModal, selectedRole }) => {
     id: selectedRole?.id,
   });
 
+  const httpRequest = useAxios();
+
   const updateRole = () => {
     const body = {
       name: editedRole?.name,
@@ -19,7 +22,13 @@ const EditRole = ({ setShowEditModal, selectedRole }) => {
       isDelete: editedRole?.isDelete,
       id: editedRole?.id,
     };
-    axiosService.put("/Role/updateRole", body).then((res) => {
+    // axiosService.put("/Role/updateRole", body)
+    httpRequest({
+      url:'/Role/updateRole',
+      method: 'PUT',
+      data: body,
+    })
+    .then((res) => {
       res?.status === "Success"
         ? toast.success("عملیات با موفقیت انجام شد", {
             position: "top-left",

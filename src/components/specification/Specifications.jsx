@@ -7,6 +7,7 @@ import { NavLink } from "react-router-dom";
 import Loading from "../common/Loading";
 import AddCard from "./AddCard";
 import EditSpec from "./EditSpec";
+import useAxios from "../../hooks/useAxios";
 
 const Specifications = ({ product, setProduct }) => {
   const [specs, setSpecs] = useState([]);
@@ -14,6 +15,7 @@ const Specifications = ({ product, setProduct }) => {
   const [selectedSpec, setSelectedRole] = useState({});
   const [loading, setLoading] = useState(true);
   const [showToast, setShowToast] = useState("");
+  const httpRequest = useAxios();
 
   useEffect(() => {
     if (showToast === "Success") {
@@ -50,7 +52,12 @@ const Specifications = ({ product, setProduct }) => {
 
   const getSpecs = () => {
     setLoading(true);
-    axiosService.get("/Specification/getAllSpecs").then((res) => {
+    // axiosService.get("/Specification/getAllSpecs")
+    httpRequest({
+      url: '/Specification/getAllSpecs',
+      method:'GET'
+    })
+    .then((res) => {
       setSpecs(res?.data);
       setLoading(false);
     });
@@ -74,7 +81,13 @@ const Specifications = ({ product, setProduct }) => {
       isDelete: true,
     };
 
-    axiosService.put("/Specification/updateSpecification", body).then((res) => {
+    // axiosService.put("/Specification/updateSpecification", body)
+    httpRequest({
+      url: '/Specification/updateSpecification',
+      method: 'PUT',
+      data: body,
+    })
+    .then((res) => {
       if (res?.status === "Success") {
         toast.success("عملیات با موفقیت انجام شد", {
           position: "top-left",

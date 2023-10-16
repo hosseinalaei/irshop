@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import { NavLink, useLocation, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import Button from "../common/Button";
+import useAxios from "../../hooks/useAxios";
 
 const AddPolicy = () => {
   const location = useLocation();
@@ -32,6 +33,9 @@ const AddPolicy = () => {
     id: selectedPolicy?.id,
   });
 
+
+  const httpRequest = useAxios();
+
   const addPolicy = () => {
     setLoading(true);
     const requestBody = {
@@ -54,8 +58,12 @@ const AddPolicy = () => {
       isDelete: false,
     };
 
-    axiosService
-      .post("/AdminProducts/registerPolicy", requestBody)
+    // axiosService .post("/AdminProducts/registerPolicy", requestBody)
+    httpRequest({
+      url:'/AdminProducts/registerPolicy',
+      method: 'POST',
+      data: requestBody
+    })
       .then((res) =>
         res?.status === "Success"
           ? toast.success("عملیات با موفقیت انجام شد", {
@@ -106,8 +114,12 @@ const AddPolicy = () => {
       isDelete: false,
     };
 
-    axiosService
-      .put("/Policy/updatePolicy", requestBody)
+    // axiosService .put("/Policy/updatePolicy", requestBody)
+    httpRequest({
+      url:'/Policy/updatePolicy',
+      method:'PUT',
+      data: requestBody
+    })
       .then((res) => {
         res?.status === "Success"
           ? toast.success("عملیات با موفقیت انجام شد", {

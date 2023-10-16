@@ -2,13 +2,17 @@ import React, { useEffect, useState } from "react";
 import OrdersListHead from "./OrdersListHead";
 import OrdersList from "./OrdersList";
 import { axiosService } from "../../services/axiosService";
+import useAxios from "../../hooks/useAxios";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
-
+  const httpRequest = useAxios();
   const getOrders = () => {
-    axiosService
-      ?.get("/Order/getAllOpenOrders")
+    // axiosService.get("/Order/getAllOpenOrders")
+    httpRequest({
+      url: '/Order/getAllOpenOrders',
+      method: 'GET'
+    })
       .then((res) => setOrders(res?.data));
   };
 

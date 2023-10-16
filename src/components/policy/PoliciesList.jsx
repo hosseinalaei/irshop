@@ -7,6 +7,7 @@ import { NavLink, useParams } from "react-router-dom";
 import Loading from "../common/Loading";
 import { ToastContainer, toast } from "react-toastify";
 import ConfirmationDialog from "../common/Confirm";
+import useAxios from "../../hooks/useAxios";
 
 const PoliciesList = () => {
   const [policies, setPolicies] = useState([]);
@@ -14,9 +15,14 @@ const PoliciesList = () => {
   const [selectedPolicy, setSelectedPolicy] = useState({});
   const [loading, setLoading] = useState(true);
 
+  const httpRequest = useAxios();
+
   const getPolicies = () => {
-    axiosService
-      .get("/Policy/getActivePolicies")
+    // axiosService.get("/Policy/getActivePolicies")
+    httpRequest({
+      url: '/Policy/getActivePolicies',
+      method: 'POST'
+    })
       .then((res) => {
         setPolicies(res?.data);
         setLoading(false);
@@ -34,7 +40,13 @@ const PoliciesList = () => {
       isDelete: true,
     };
 
-    axiosService.put("/Policy/updatePolicy", body).then((res) => {
+    // axiosService.put("/Policy/updatePolicy", body)
+    httpRequest({
+      url: '/Policy/updatePolicy',
+      method: 'PUT',
+      data:body,
+    })
+    .then((res) => {
       if (res?.status === "Success") {
         toast.success("عملیات با موفقیت انجام شد", {
           position: "top-left",
