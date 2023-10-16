@@ -19,7 +19,7 @@ function App() {
 
   const getAuthRoutes = (routes=[]) => {
     return routes.map((prop, key) => {
-      if (prop.collapse) {
+      if (prop.subMenu) {
         return getAuthRoutes(prop.views);
       }
       if (prop.layout === '/auth') {

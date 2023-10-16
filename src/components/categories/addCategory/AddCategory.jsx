@@ -131,11 +131,11 @@ const AddCategory = () => {
       .finally(() => setLoading(false));
   };
 
-  const enableSubmitBtn = () => {
-    return category.title && category.urlTitle && category.originImage
-      ? true
-      : false;
-  };
+  // const enableSubmitBtn = () => {
+  //   return category.title && category.urlTitle && category.originImage
+  //     ? true
+  //     : false;
+  // };
 
   return (
     <>

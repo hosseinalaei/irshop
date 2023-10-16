@@ -113,9 +113,7 @@ const ProductsListItem = ({ product, getProducts, setProduct }) => {
         <div className="flex ">
           <NavLink
             className="px-2 py-1 mx-2 text-blue-600 border-2 border-blue-600 rounded-lg hover:bg-blue-600 hover:text-white"
-            to={{
-              pathname: `/products/edit-product/id=${product?.id}`,
-            }}
+            to={ `/admin/products/edit-product/${product?.id}`}
             state={product}
           >
             ویرایش
