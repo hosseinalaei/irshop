@@ -128,6 +128,17 @@ const routes = [
         icon: 'message',
         component: <CommentsPage />,
       },
+      {
+        invisible:true,
+        id:15,
+        path: '/products/edit-product/:id',
+        layout: '/admin',
+        name: 'نظرات',
+        icon: 'message',
+        component: <AddProductPage />,
+      },
 ]
+
+
 
 export default routes;
