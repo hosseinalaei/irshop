@@ -21,7 +21,7 @@ const PoliciesList = () => {
     // axiosService.get("/Policy/getActivePolicies")
     httpRequest({
       url: '/Policy/getActivePolicies',
-      method: 'POST'
+      method: 'GET'
     })
       .then((res) => {
         setPolicies(res?.data);
