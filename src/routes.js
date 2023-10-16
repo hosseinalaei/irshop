@@ -151,7 +151,16 @@ const routes = [
       {
         invisible:true,
         id:17,
-        path: '/policies/add-policy',
+        path: '/policies/add-policy/',
+        layout: '/admin',
+        name: 'نظرات',
+        icon: 'message',
+        component: <AddNewPolicyPage />
+      },
+      {
+        invisible:true,
+        id:18,
+        path: '/policies/edit-policy/:id',
         layout: '/admin',
         name: 'نظرات',
         icon: 'message',

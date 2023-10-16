@@ -182,7 +182,11 @@ const Comments = () => {
   const [users, setUsers] = useState([]);
 
   const getUsers = () => {
-    axiosService?.get("/User/getAllUsers")
+    // axiosService?.get("/User/getAllUsers")
+    httpRequest({
+      url: '/User/getAllUsers',
+      method:'GET'
+    })
     .then((res) => {
       setUsers(res?.data);
     });

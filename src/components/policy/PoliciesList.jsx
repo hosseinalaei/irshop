@@ -21,7 +21,7 @@ const PoliciesList = () => {
     // axiosService.get("/Policy/getActivePolicies")
     httpRequest({
       url: '/Policy/getActivePolicies',
-      method: 'POST'
+      method: 'GET'
     })
       .then((res) => {
         setPolicies(res?.data);
@@ -172,7 +172,7 @@ const PoliciesList = () => {
                     <div className="flex-wrap pt-0 card-footer">
                       <NavLink
                         to={{
-                          pathname: `/policies/edit-policy/id=${item?.id}`,
+                          pathname: `/admin/policies/edit-policy/${item?.id}`,
                         }}
                         state={item}
                         type="button"
