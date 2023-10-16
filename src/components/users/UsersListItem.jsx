@@ -93,7 +93,7 @@ const UsersListItem = ({
         <div className="flex ">
           <div className="px-3">
             <button
-              onClick={() => (setShowEditModal(true), setSelectedUser(user))}
+              onClick={() => {setShowEditModal(true); setSelectedUser(user)}}
               //   to={{
               //     pathname: `/products/edit-product/id=${product?.id}`,
               //   }}

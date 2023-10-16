@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Formik, FormikHelpers, Field, Form } from "formik";
+// import { Formik, FormikHelpers, Field, Form } from "formik";
 import { axiosService } from "../services/axiosService";
-import { toast } from "react-toastify";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { toast } from "react-toastify";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "../components/common/Button";
 const Login = () => {
   const navigate = useNavigate();
@@ -70,54 +70,54 @@ const Login = () => {
       .finally(() => setLoading(false));
   };
 
-  const submitLoginForm = (values) => {
-    const body = {
-      mobile: values?.phone_number,
-    };
-    !values?.validation_code
-      ? axiosService.post("/User/checkMobile", body).then((res) => {
-          console.log(res);
-          res?.status === "Success" && setValidationCodeInput(true);
-        })
-      : axiosService
-          .post("/User/adminLogin", {
-            mobile: values?.phone_number,
-            verifyCode: values?.validation_code,
-          })
-          .then((res) => {
-            console.log(res);
+  // const submitLoginForm = (values) => {
+  //   const body = {
+  //     mobile: values?.phone_number,
+  //   };
+  //   !values?.validation_code
+  //     ? axiosService.post("/User/checkMobile", body).then((res) => {
+  //         console.log(res);
+  //         res?.status === "Success" && setValidationCodeInput(true);
+  //       })
+  //     : axiosService
+  //         .post("/User/adminLogin", {
+  //           mobile: values?.phone_number,
+  //           verifyCode: values?.validation_code,
+  //         })
+  //         .then((res) => {
+  //           console.log(res);
 
-            if (res?.status === "NotFound") {
-              setError(res?.data?.message);
-            }
-            if (res?.status === "Success") {
-              setButtonText("ورود");
-              const token = res?.data?.token;
+  //           if (res?.status === "NotFound") {
+  //             setError(res?.data?.message);
+  //           }
+  //           if (res?.status === "Success") {
+  //             setButtonText("ورود");
+  //             const token = res?.data?.token;
 
-              if (!token) {
-                setError("مشکلی رخ داده است. لطفا دوباره تلاش کنید");
-                return;
-              }
-              localStorage.clear();
-              localStorage.setItem("user-token", token);
-              setTimeout(() => {
-                navigate("/");
-              }, 500);
-            }
-          });
+  //             if (!token) {
+  //               setError("مشکلی رخ داده است. لطفا دوباره تلاش کنید");
+  //               return;
+  //             }
+  //             localStorage.clear();
+  //             localStorage.setItem("user-token", token);
+  //             setTimeout(() => {
+  //               navigate("/");
+  //             }, 500);
+  //           }
+  //         });
 
-    // const token = "12121212";
+  //   // const token = "12121212";
 
-    // if (!token) {
-    //   setError("مشکلی رخ داده است. لطفا دوباره تلاش کنید");
-    //   return;
-    // }
-    // localStorage.clear();
-    // localStorage.setItem("user-token", token);
-    // setTimeout(() => {
-    //   navigate("/");
-    // }, 500);
-  };
+  //   // if (!token) {
+  //   //   setError("مشکلی رخ داده است. لطفا دوباره تلاش کنید");
+  //   //   return;
+  //   // }
+  //   // localStorage.clear();
+  //   // localStorage.setItem("user-token", token);
+  //   // setTimeout(() => {
+  //   //   navigate("/");
+  //   // }, 500);
+  // };
 
   return (
     <>

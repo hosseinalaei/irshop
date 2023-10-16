@@ -24,9 +24,9 @@ export function convertToPersianDate(gregorianDate) {
   } else if (isSameDay(persianDate, previous)) {
     return `دیروز ${hour}:${minutes}`;
   } else {
-    const year = persianDate.getFullYear();
-    const month = persianDate.getMonth() + 1; // Months are zero-based
-    const day = persianDate.getDate();
+    // const year = persianDate.getFullYear();
+    // const month = persianDate.getMonth() + 1; // Months are zero-based
+    // const day = persianDate.getDate();
     return `${new Intl.DateTimeFormat("fa-IR").format(
       persianDate
     )} - ${hour}:${minutes}`;
@@ -43,9 +43,9 @@ function isSameDay(date1, date2) {
 }
 
 // Example function to convert Gregorian date to Persian date
-function convertGregorianToPersian(gregorianDate) {
-  // You'll need to implement a Persian date conversion function or use a library for this purpose.
-  // One popular library is "jalali-moment" for Persian date manipulation in JavaScript.
-  // Here's a sample usage: https://github.com/fingerpich/jalali-moment
-  // You can use it to convert gregorianDate to a Persian date.
-}
+// function convertGregorianToPersian(gregorianDate) {
+//   // You'll need to implement a Persian date conversion function or use a library for this purpose.
+//   // One popular library is "jalali-moment" for Persian date manipulation in JavaScript.
+//   // Here's a sample usage: https://github.com/fingerpich/jalali-moment
+//   // You can use it to convert gregorianDate to a Persian date.
+// }
