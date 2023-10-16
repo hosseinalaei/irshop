@@ -33,11 +33,11 @@ const AddCategory = () => {
     body.append("id", id);
     // axiosService.post("/Media/PostMedia", body, "multipart/form-data");
     httpRequest({
-      method: 'POST',
+      method: "POST",
       url: "/Media/PostMedia",
       body,
       timeout: 10000,
-    })
+    });
   };
 
   const addCategory = () => {
@@ -59,8 +59,8 @@ const AddCategory = () => {
       // axiosService
       //   .post("/Category/registerProductCategory", requestBody)
       httpRequest({
-        url: '/Category/registerProductCategory',
-        method: 'POST',
+        url: "/Category/registerProductCategory",
+        method: "POST",
         data: requestBody,
       })
         .then((res) => {
@@ -114,9 +114,9 @@ const AddCategory = () => {
     // axiosService
     //   .put("/Category/updateCategory", requestBody)
     httpRequest({
-      url: '/Category/updateCategory',
-      method: 'PUT',
-      data: requestBody
+      url: "/Category/updateCategory",
+      method: "PUT",
+      data: requestBody,
     })
       .then((res) => {
         if (res?.status === "Success") {
@@ -146,7 +146,9 @@ const AddCategory = () => {
           });
         }
       })
-      .finally(() => {setLoading(false)});
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   // const enableSubmitBtn = () => {

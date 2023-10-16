@@ -1,20 +1,17 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
+import React from "react";
+import { Outlet } from "react-router-dom";
 
-import MobileSidebarMenu from '../components/sidebarMenu/MobileSidebarMenu';
-import SidebarMenu from '../components/sidebarMenu/SidebarMenu';
+import MobileSidebarMenu from "../components/sidebarMenu/MobileSidebarMenu";
+import SidebarMenu from "../components/sidebarMenu/SidebarMenu";
 
-const Admin = ({routes}) => {
-
-
-
+const Admin = ({ routes }) => {
   return (
-    <div className="flex w-full h-screen bg-cyan-600">
+    <div className="flex w-full h-screen bg-blue-200">
       <div className="lg:hidden">
-        <MobileSidebarMenu menu={routes}/>
+        <MobileSidebarMenu menu={routes} />
       </div>
       <div className="w-[20vw] h-screen py-10 mr-10 hidden lg:block">
-        <SidebarMenu menu={routes}/>
+        <SidebarMenu menu={routes} />
       </div>
 
       <div className="w-full lg:w-[80vw] h-screen px-5 py-10 overflow-auto ">
@@ -22,6 +19,6 @@ const Admin = ({routes}) => {
       </div>
     </div>
   );
-}
- 
+};
+
 export default Admin;
