@@ -10,7 +10,7 @@ const AddNewPolicy = () => {
           <div className="card-body d-flex flex-center">
             <NavLink
               type="button"
-              to={"admin/policies/add-policy"}
+              to={"/admin/policies/add-policy"}
               className="btn btn-clear d-flex flex-column flex-center"
               data-bs-toggle="modal"
               data-bs-target="#kt_modal_add_role"
