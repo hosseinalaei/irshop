@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = React.useState(false);
   const [accessToken, setAccessToken] = React.useState('');
   const [userInfo, setUserInfo] = React.useState(null);
-  const [responseMsg, setResponseMsg] = React.useState('');
+  // const [responseMsg, setResponseMsg] = React.useState('');
   const [validationCodeInput, setValidationCodeInput] = useState(false);
   const [validationCode, setValidationCode] = useState(null);
   const [error, setError] = useState("");
@@ -123,7 +123,6 @@ export const AuthProvider = ({ children }) => {
         validationCode,
         validationCodeInput,
         userInfo,
-        responseMsg,
         accessToken,
         setAccessToken,
         loading,

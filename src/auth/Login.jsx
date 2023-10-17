@@ -1,9 +1,4 @@
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-// import { Formik, FormikHelpers, Field, Form } from "formik";
-import { axiosService } from "../services/axiosService";
-// import { toast } from "react-toastify";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "../components/common/Button";
 import AuthContext from "../contexts/AuthContext";
 const Login = () => {
