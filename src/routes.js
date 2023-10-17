@@ -12,6 +12,7 @@ import SpecificationPage from './pages/specification/SpecificationPage'
 import CommentsPage from './pages/comments/CommentsPage'
 import AddCategoryPage from './pages/categories/addCategory/AddCategory'
 import AddNewPolicyPage from './pages/policy/addPolicy/AddNewPolicyPage'
+import CreateSlider from './components/slider/CreateSlider'
 const routes = [
     {
         id:1,
@@ -165,6 +166,15 @@ const routes = [
         name: 'نظرات',
         icon: 'message',
         component: <AddNewPolicyPage />
+      },
+      {
+        invisible:true,
+        id:19,
+        path: '/create-slider/',
+        layout: '/admin',
+        name: 'نظرات',
+        icon: 'message',
+        component: <CreateSlider />
       },
 ]
 
