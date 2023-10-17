@@ -19,7 +19,7 @@ import SpecificationPage from "../pages/specification/SpecificationPage";
 
 function Layout() {
   return (
-    <div className="flex w-full h-screen bg-cyan-600">
+    <div className="flex w-full h-screen bg-blue-200">
       <div className="lg:hidden">
         <MobileSidebarMenu />
       </div>

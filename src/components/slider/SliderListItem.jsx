@@ -11,30 +11,32 @@ const SliderListItem = ({ slider, getSliders }) => {
 
   const httpRequest = useAxios();
   const getMedia = (mediaFieldName) => {
-    const body = {
-      id: slider?.id,
-      mediaFieldName: mediaFieldName,
-    };
+    const body = [
+      {
+        id: slider?.id,
+        mediaFieldName: mediaFieldName,
+      },
+    ];
 
     return (
-    // axiosService.post("/Media/GetMedia", body)
-    httpRequest({
-      url:'/Media/GetMedia',
-      method:'POST',
-      data: body,
-    })
-      .then((res) => res?.status === "Success" && res))
+      // axiosService.post("/Media/GetMedia", body)
+      httpRequest({
+        url: "/Media/GetMedia",
+        method: "POST",
+        data: body,
+      }).then((res) => res?.status === "Success" && res)
+    );
   };
 
   useEffect(() => {
     if (slider) {
       const fetchMedia = async () => {
         const sliderAvatarImageName = await getMedia("sliderAvatarImageName");
-        setSliderAvatarImageName(sliderAvatarImageName?.data);
+        setSliderAvatarImageName(sliderAvatarImageName?.data[0]);
         const sliderBackImageName = await getMedia("sliderBackImageName");
-        setSliderBackImageName(sliderBackImageName?.data);
+        setSliderBackImageName(sliderBackImageName?.data[0]);
         const sliderImageName = await getMedia("sliderImageName");
-        setSliderImageName(sliderImageName?.data);
+        setSliderImageName(sliderImageName?.data[0]);
       };
       fetchMedia();
     }
@@ -51,8 +53,8 @@ const SliderListItem = ({ slider, getSliders }) => {
 
     // axiosService.put("/Slider/updateSlider", body)
     httpRequest({
-      url: '/Slider/updateSlider',
-      method:'PUT',
+      url: "/Slider/updateSlider",
+      method: "PUT",
       data: body,
     })
       .then((res) => {
@@ -122,7 +124,7 @@ const SliderListItem = ({ slider, getSliders }) => {
                   className="w-24 h-24 "
                   src={
                     sliderAvatarImageName
-                      ? `data:image/jpeg;base64,${sliderAvatarImageName}`
+                      ? `data:image/jpeg;base64,${sliderAvatarImageName?.mediaFieldName}`
                       : "/blank-image.svg"
                   }
                   alt=""
@@ -134,7 +136,7 @@ const SliderListItem = ({ slider, getSliders }) => {
                   className="w-24 h-24 mx-3"
                   src={
                     sliderBackImageName
-                      ? `data:image/jpeg;base64,${sliderBackImageName}`
+                      ? `data:image/jpeg;base64,${sliderBackImageName?.mediaFieldName}`
                       : "/blank-image.svg"
                   }
                   alt=""
@@ -146,7 +148,7 @@ const SliderListItem = ({ slider, getSliders }) => {
                   className="w-24 h-24 "
                   src={
                     sliderImageName
-                      ? `data:image/jpeg;base64,${sliderImageName}`
+                      ? `data:image/jpeg;base64,${sliderImageName?.mediaFieldName}`
                       : "/blank-image.svg"
                   }
                   alt=""

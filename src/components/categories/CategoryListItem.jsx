@@ -11,14 +11,16 @@ const CategoryListItem = ({ category, getCategories }) => {
   const httpRequest = useAxios();
 
   const getPic = () => {
-    const body = {
-      id: category?.id,
-      mediaFieldName: "categoryImageName",
-    };
+    const body = [
+      {
+        id: category?.id,
+        mediaFieldName: "categoryImageName",
+      },
+    ];
     axiosService
       .post("/Media/GetMedia", body)
       .then((res) => {
-        setImg(res?.data);
+        setImg(res?.data[0]);
       })
       .catch((err) => console.log(err));
   };
@@ -36,11 +38,10 @@ const CategoryListItem = ({ category, getCategories }) => {
     };
     // axiosService.put("/Category/updateCategory", body)
     httpRequest({
-      url:'/Category/updateCategory',
-      method: 'PUT',
-      data:body,
-    })
-    .then((res) => {
+      url: "/Category/updateCategory",
+      method: "PUT",
+      data: body,
+    }).then((res) => {
       if (res?.status === "Success") {
         toast.success("عملیات با موفقیت انجام شد", {
           position: "top-left",
@@ -85,7 +86,11 @@ const CategoryListItem = ({ category, getCategories }) => {
           <div className="d-flex">
             <a href="#" className="symbol symbol-50px">
               <img
-                src={img ? `data:image/jpeg;base64,${img}` : "/blank-image.svg"}
+                src={
+                  img
+                    ? `data:image/jpeg;base64,${img.mediaFieldName}`
+                    : "/blank-image.svg"
+                }
                 alt=""
               />
             </a>
@@ -108,7 +113,7 @@ const CategoryListItem = ({ category, getCategories }) => {
           <div className="flex ">
             <NavLink
               className="px-2 py-1 mx-2 text-blue-600 border-2 border-blue-600 rounded-lg hover:bg-blue-600 hover:text-white"
-              to={ `/admin/categories/edit-category/${category?.id}`}
+              to={`/admin/categories/edit-category/${category?.id}`}
               state={category}
             >
               ویرایش

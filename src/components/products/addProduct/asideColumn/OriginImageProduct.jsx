@@ -7,15 +7,17 @@ const OriginImageProduct = ({ product, setProduct, selectedProduct }) => {
   const inputRef = React.useRef(null);
 
   const getPic = () => {
-    const body = {
-      id: selectedProduct?.id,
-      mediaFieldName: "productImageName",
-    };
+    const body = [
+      {
+        id: selectedProduct?.id,
+        mediaFieldName: "productImageName",
+      },
+    ];
     axiosService
       .post("/Media/GetMedia", body)
       .then((res) => {
         console.log("res", res);
-        setPic(res?.data);
+        setPic(res?.data[0]);
       })
       .catch((err) => console.log(err));
   };
@@ -73,7 +75,7 @@ const OriginImageProduct = ({ product, setProduct, selectedProduct }) => {
               backgroundImage: file
                 ? `url(${URL.createObjectURL(file)})`
                 : pic
-                ? `url(data:image/jpeg;base64,${pic})`
+                ? `url(data:image/jpeg;base64,${pic?.mediaFieldName})`
                 : `url(/blank-image.svg)`,
             }}
           >

@@ -13,15 +13,17 @@ const MediaSection = ({
   const [img, setImg] = useState([]);
 
   const getPic = (id) => {
-    const body = {
-      id,
-      mediaFieldName: "productGalleryImageName",
-    };
+    const body = [
+      {
+        id,
+        mediaFieldName: "productGalleryImageName",
+      },
+    ];
     axiosService
       .post("/Media/GetMedia", body)
       .then((res) => {
         // console.log("res", res);
-        setImg((prev) => [...prev, res?.data]);
+        setImg((prev) => [...prev, res?.data[0]]);
       })
       .catch((err) => console.log(err));
   };
@@ -176,7 +178,7 @@ const MediaSection = ({
                     className="absolute p-1 text-2xl rounded-full cursor-pointer left-1 -top-2 hover:bg-slate-200"
                   />
                   <img
-                    src={`data:image/jpeg;base64,${item}`}
+                    src={`data:image/jpeg;base64,${item?.mediaFieldName}`}
                     className="w-20 h-20 m-2"
                   />
                 </div>

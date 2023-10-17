@@ -10,11 +10,10 @@ const SlidersList = () => {
   const httpRequest = useAxios();
   const getSliders = () => {
     // axiosService.get("/Slider/GetActiveSliders")
-      httpRequest({
-        url:'/Slider/GetActiveSliders',
-        method: 'GET'
-      })
-      .then((res) => res.status === "Success" && setSliders(res.data));
+    httpRequest({
+      url: "/Slider/GetActiveSliders",
+      method: "GET",
+    }).then((res) => res.status === "Success" && setSliders(res.data));
   };
 
   useEffect(() => {

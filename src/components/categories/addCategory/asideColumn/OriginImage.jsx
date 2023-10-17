@@ -12,15 +12,17 @@ const OriginImage = ({ category, setCategory, selectedCategory }) => {
   }, [file]);
 
   const getPic = () => {
-    const body = {
-      id: selectedCategory?.id,
-      mediaFieldName: "categoryImageName",
-    };
+    const body = [
+      {
+        id: selectedCategory?.id,
+        mediaFieldName: "categoryImageName",
+      },
+    ];
     axiosService
       .post("/Media/GetMedia", body)
       .then((res) => {
         console.log("res", res);
-        setPic(res?.data);
+        setPic(res?.data[0]);
       })
       .catch((err) => console.log(err));
   };
@@ -72,7 +74,7 @@ const OriginImage = ({ category, setCategory, selectedCategory }) => {
               backgroundImage: file
                 ? `url(${URL.createObjectURL(file)})`
                 : pic
-                ? `url(data:image/jpeg;base64,${pic})`
+                ? `url(data:image/jpeg;base64,${pic?.mediaFieldName})`
                 : "url(/blank-image.svg)",
             }}
           >
