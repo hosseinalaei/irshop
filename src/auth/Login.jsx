@@ -7,121 +7,18 @@ import { axiosService } from "../services/axiosService";
 import Button from "../components/common/Button";
 import AuthContext from "../contexts/AuthContext";
 const Login = () => {
-  const navigate = useNavigate();
-  const [loginInfo, setLoginInfo] = useState({
-    mobile: "",
-    verifyCode: "",
-  });
-  const [validationCode, setValidationCode] = useState(null);
-  const [validationCodeInput, setValidationCodeInput] = useState(false);
-  const [error, setError] = useState("");
-  const [buttonText, setButtonText] = useState("ارسال کد");
-  const [loading, setLoading] = useState(false);
+ 
+  const {
+    loginInfo,
+    setLoginInfo,
+    validationCode,
+    validationCodeInput,
+    getVerificationCode,
+    loginUser,
+    error,
+    loading,
+  } = useContext(AuthContext);
 
-  const { setAccessToken } = useContext(AuthContext);
-
-  const getVerificationCode = (e) => {
-    e.preventDefault();
-    setLoading(true);
-    const body = {
-      mobile: loginInfo?.mobile,
-    };
-
-    axiosService
-      .post("/User/checkMobile", body)
-      .then((res) => {
-        if (res?.status === "Success") {
-          setValidationCodeInput(true);
-          setValidationCode(true);
-        } else {
-          setError("مشکلی رخ داده است");
-        }
-      })
-      .finally(() => setLoading(false));
-  };
-
-  const submitLogin = (e) => {
-    e.preventDefault();
-    setLoading(true);
-    const requestBody = {
-      mobile: loginInfo?.mobile,
-      verifyCode: loginInfo?.verifyCode,
-    };
-
-    axiosService
-      .post("/User/adminLogin", requestBody)
-      .then((res) => {
-        console.log(res);
-
-        if (res?.status === "NotFound") {
-          setError(res?.data?.message);
-        }
-        if (res?.status === "Success") {
-          const token = res?.data?.token;
-
-          if (!token) {
-            setError("مشکلی رخ داده است. لطفا دوباره تلاش کنید");
-            return;
-          }
-          localStorage.clear();
-          localStorage.setItem("user-token", token);
-          setAccessToken(token);
-          setTimeout(() => {
-            navigate("/admin/dashboard");
-          }, 500);
-        }
-      })
-      .finally(() => setLoading(false));
-  };
-
-  // const submitLoginForm = (values) => {
-  //   const body = {
-  //     mobile: values?.phone_number,
-  //   };
-  //   !values?.validation_code
-  //     ? axiosService.post("/User/checkMobile", body).then((res) => {
-  //         console.log(res);
-  //         res?.status === "Success" && setValidationCodeInput(true);
-  //       })
-  //     : axiosService
-  //         .post("/User/adminLogin", {
-  //           mobile: values?.phone_number,
-  //           verifyCode: values?.validation_code,
-  //         })
-  //         .then((res) => {
-  //           console.log(res);
-
-  //           if (res?.status === "NotFound") {
-  //             setError(res?.data?.message);
-  //           }
-  //           if (res?.status === "Success") {
-  //             setButtonText("ورود");
-  //             const token = res?.data?.token;
-
-  //             if (!token) {
-  //               setError("مشکلی رخ داده است. لطفا دوباره تلاش کنید");
-  //               return;
-  //             }
-  //             localStorage.clear();
-  //             localStorage.setItem("user-token", token);
-  //             setTimeout(() => {
-  //               navigate("/");
-  //             }, 500);
-  //           }
-  //         });
-
-  //   // const token = "12121212";
-
-  //   // if (!token) {
-  //   //   setError("مشکلی رخ داده است. لطفا دوباره تلاش کنید");
-  //   //   return;
-  //   // }
-  //   // localStorage.clear();
-  //   // localStorage.setItem("user-token", token);
-  //   // setTimeout(() => {
-  //   //   navigate("/");
-  //   // }, 500);
-  // };
 
   return (
     <>
@@ -174,7 +71,12 @@ const Login = () => {
                   <div className="grid mb-10">
                     {validationCode ? (
                       <Button
-                        onClick={(e) => submitLogin(e)}
+                        onClick={(e) =>
+                          loginUser(e, {
+                            mobile: loginInfo?.mobile,
+                            verifyCode: loginInfo?.verifyCode,
+                          })
+                        }
                         isLoading={loading}
                         type="submit"
                       >
@@ -183,7 +85,11 @@ const Login = () => {
                     ) : (
                       <>
                         <Button
-                          onClick={(e) => getVerificationCode(e)}
+                          onClick={(e) =>
+                            getVerificationCode(e, {
+                              mobile: loginInfo?.mobile,
+                            })
+                          }
                           isLoading={loading}
                           type="submit"
                         >
