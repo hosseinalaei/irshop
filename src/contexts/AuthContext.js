@@ -1,13 +1,13 @@
-import React from 'react';
-import { createContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React from "react";
+import { createContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = React.useState(false);
-  const [accessToken, setAccessToken] = React.useState('');
+  const [accessToken, setAccessToken] = React.useState("");
   const [userInfo, setUserInfo] = React.useState(null);
   // const [responseMsg, setResponseMsg] = React.useState('');
   const [validationCodeInput, setValidationCodeInput] = useState(false);
@@ -20,21 +20,21 @@ export const AuthProvider = ({ children }) => {
   });
   // define login method
 
-
-  const getVerificationCode = (e, body) =>{
+  const getVerificationCode = (e, body) => {
     e.preventDefault();
-      setLoading(true);
-      axios({
-        baseURL:'https://138.201.167.230:5050',
-        url: '/User/checkMobile',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          Accept: 'application/json',
-        },
-        data: body,
-      }).then((res) => {
+    setLoading(true);
+    axios({
+      baseURL: "https://138.201.167.230:5050",
+      url: "/User/checkMobile",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        Accept: "application/json",
+      },
+      data: body,
+    })
+      .then((res) => {
         console.log(res);
         if (res?.data.status === "Success") {
           setValidationCodeInput(true);
@@ -44,23 +44,22 @@ export const AuthProvider = ({ children }) => {
         }
       })
       .finally(() => setLoading(false));
-  }
-
+  };
 
   const loginUser = async (e, body) => {
     e.preventDefault();
-      setLoading(true);
-      axios({
-        baseURL:'https://138.201.167.230:5050',
-        url: '/User/adminLogin',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          Accept: 'application/json',
-        },
-        data: body,
-      })
+    setLoading(true);
+    axios({
+      baseURL: "https://138.201.167.230:5050",
+      url: "/User/adminLogin",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        Accept: "application/json",
+      },
+      data: body,
+    })
       .then((res) => {
         console.log(res.data.data);
         if (res.data.status === "NotFound") {
@@ -77,22 +76,22 @@ export const AuthProvider = ({ children }) => {
           localStorage.clear();
           localStorage.setItem("user-token", token);
           setAccessToken(token);
-          setValidationCodeInput(false)
-          setValidationCode(null)
-          setLoginInfo({
-            mobile: "",
-            verifyCode: "",
-          })
+          setLoading(true);
           setTimeout(() => {
+            setValidationCodeInput(false);
+            setValidationCode(null);
+            setLoginInfo({
+              mobile: "",
+              verifyCode: "",
+            });
+            setLoading(false);
             navigate("/admin/dashboard");
           }, 500);
         }
       })
       .finally(() => setLoading(false));
-    
   };
- 
-  
+
   // define logout method
   // const logoutUser = () => {
   //   axios({
@@ -128,8 +127,9 @@ export const AuthProvider = ({ children }) => {
         loading,
         loginInfo,
         setLoginInfo,
-        error
-      }}>
+        error,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
