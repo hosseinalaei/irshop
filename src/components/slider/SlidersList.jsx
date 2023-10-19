@@ -29,7 +29,7 @@ const SlidersList = () => {
           sliders?.map((item, index) => (
             <SliderListItem slider={item} getSliders={getSliders} />
           ))}
-        <NavLink to="/create-slider" className="h-full col-md-4">
+        <NavLink to="/admin/create-slider" className="h-full col-md-4">
           <div>
             <div className="card h-md-100">
               <div className="card-body d-flex flex-center">
