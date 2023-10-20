@@ -15,8 +15,8 @@ const Products = () => {
   const getProducts = () => {
     // axiosService.get("/Products/getAllactiveproducts")
     httpRequest({
-      url:'/Products/getAllactiveproducts',
-      method: 'GET'
+      url: "/Products/getAllactiveproducts",
+      method: "GET",
     })
       .then((res) => {
         setProducts(res?.data);
@@ -72,7 +72,7 @@ const Products = () => {
               </div> */}
                   </div>
                   <div className="card-toolbar">
-                    <Button onClick={() => nav("/products/add-product")}>
+                    <Button onClick={() => nav("/admin/products/add-product")}>
                       محصول جدید
                     </Button>
                   </div>

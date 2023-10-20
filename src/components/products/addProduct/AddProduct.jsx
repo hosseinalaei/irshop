@@ -5,6 +5,7 @@ import AsideColumn from "./asideColumn/AsideColumn";
 import { v4 as uuidv4 } from "uuid";
 import { NavLink, useLocation, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import useAxios from "../../../hooks/useAxios";
 
 const AddProduct = () => {
   const location = useLocation();
@@ -33,12 +34,24 @@ const AddProduct = () => {
   });
   console.log("selectedProductselectedProduct", selectedProduct, product);
 
+  const httpRequest = useAxios();
+
   const postMedia = (id, image, key) => {
     const body = new FormData();
     body.append("originImage", image);
     body.append("mediaFieldName", key);
     body.append("id", id);
-    axiosService.post("/Media/PostMedia", body, "multipart/form-data");
+
+    // axiosService.post("/Media/PostMedia", body, "multipart/form-data");
+
+    httpRequest({
+      url: "/Media/PostMedia",
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      method: "POST",
+      data: body,
+    });
   };
 
   const updateProduct = (e) => {
@@ -72,8 +85,13 @@ const AddProduct = () => {
       productSpecification: product?.specification,
     };
 
-    axiosService
-      .put("/Products/updateProduct", requestBody)
+    // axiosService
+    //   .put("/Products/updateProduct", requestBody)
+    httpRequest({
+      url: "/Products/updateProduct",
+      method: "PUT",
+      data: requestBody,
+    })
       .then((res) => {
         if (res?.status === "Success") {
           toast.success("عملیات با موفقیت انجام شد", {
@@ -154,8 +172,13 @@ const AddProduct = () => {
 
     console.log("requestBodyrequestBodyrequestBody", requestBody);
 
-    axiosService
-      .post("/Products/registerProduct", requestBody)
+    // axiosService
+    //   .post("/Products/registerProduct", requestBody)
+    httpRequest({
+      url: "/Products/registerProduct",
+      method: "POST",
+      data: requestBody,
+    })
       .then((res) => {
         if (res?.status === "Success") {
           toast.success("عملیات با موفقیت انجام شد", {

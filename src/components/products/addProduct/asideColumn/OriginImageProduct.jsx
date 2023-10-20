@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { axiosService } from "../../../../services/axiosService";
+import useAxios from "../../../../hooks/useAxios";
 
 const OriginImageProduct = ({ product, setProduct, selectedProduct }) => {
   const [file, setFile] = useState(null);
   const [pic, setPic] = useState(null);
   const inputRef = React.useRef(null);
+  const httpRequest = useAxios();
 
   const getPic = () => {
     const body = [
@@ -13,8 +15,13 @@ const OriginImageProduct = ({ product, setProduct, selectedProduct }) => {
         mediaFieldName: "productImageName",
       },
     ];
-    axiosService
-      .post("/Media/GetMedia", body)
+    // axiosService
+    //   .post("/Media/GetMedia", body)
+    httpRequest({
+      url: "/Media/GetMedia",
+      method: "POST",
+      data: body,
+    })
       .then((res) => {
         console.log("res", res);
         setPic(res?.data[0]);

@@ -4,10 +4,6 @@ import { axiosService } from "../../services/axiosService";
 const OrdersList = ({ order }) => {
   console.log("oooooooooooooooooooo", order);
 
-  const getUsers = () => {
-    axiosService?.get("");
-  };
-
   return (
     <>
       <tr>

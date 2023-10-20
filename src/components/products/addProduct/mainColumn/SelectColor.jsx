@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Dropdown from "../../../common/DropDown";
+import Button from "../../../common/Button";
 
 const colorsArray = [
   { name: "قرمز", code: "#FF0000" },
@@ -132,7 +133,8 @@ const SelectColor = ({ product, setProduct }) => {
         />
       ))}
 
-      <button
+      <div className="flex justify-end w-full px-10">
+        {/* <button
         onClick={(e) => {
           e.preventDefault();
           addInputGroup();
@@ -140,7 +142,17 @@ const SelectColor = ({ product, setProduct }) => {
         className="px-4 py-2 text-white bg-blue-300 rounded-lg hover:bg-blue-400"
       >
         افزودن
-      </button>
+      </button> */}
+        <Button
+          onClick={(e) => {
+            e.preventDefault();
+            addInputGroup();
+          }}
+          className="w-full"
+        >
+          افزودن
+        </Button>
+      </div>
     </div>
   );
 };

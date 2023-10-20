@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { axiosService } from "../../../../services/axiosService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "../../../common/Button";
+import useAxios from "../../../../hooks/useAxios";
 
 const MediaSection = ({
   product,
@@ -11,6 +13,7 @@ const MediaSection = ({
   const [file, setFile] = useState([]);
   const inputRef = React.useRef(null);
   const [img, setImg] = useState([]);
+  const httpRequest = useAxios();
 
   const getPic = (id) => {
     const body = [
@@ -19,8 +22,13 @@ const MediaSection = ({
         mediaFieldName: "productGalleryImageName",
       },
     ];
-    axiosService
-      .post("/Media/GetMedia", body)
+    // axiosService
+    //   .post("/Media/GetMedia", body)
+    httpRequest({
+      url: "/Media/GetMedia",
+      method: "POST",
+      data: body,
+    })
       .then((res) => {
         // console.log("res", res);
         setImg((prev) => [...prev, res?.data[0]]);
@@ -124,7 +132,7 @@ const MediaSection = ({
             >
               <p>فایل را بکشید...</p>
 
-              <button
+              {/* <button
                 onClick={(e) => {
                   e.preventDefault();
 
@@ -133,7 +141,18 @@ const MediaSection = ({
                 className="px-4 py-2 text-white bg-blue-300 rounded-lg hover:bg-blue-400"
               >
                 آپلود فایل
-              </button>
+              </button> */}
+
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+
+                  inputRef.current?.click();
+                }}
+                className="w-full"
+              >
+                آپلود فایل
+              </Button>
 
               <input
                 ref={inputRef}

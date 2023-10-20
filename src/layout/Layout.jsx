@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import Dashboard from "../pages/Dashboard";
+// import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import SidebarMenu from "../components/sidebarMenu/SidebarMenu";
 import ProductsPage from "../pages/products/Products";
@@ -16,6 +16,7 @@ import CreateSlider from "../components/slider/CreateSlider";
 import Orders from "../components/orders/Orders";
 import CommentsPage from "../pages/comments/CommentsPage";
 import SpecificationPage from "../pages/specification/SpecificationPage";
+import DashboardPage from "../pages/Dashboard";
 
 function Layout() {
   return (
@@ -29,7 +30,7 @@ function Layout() {
 
       <div className="w-full lg:w-[80vw] h-screen px-5 py-10 overflow-auto ">
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<DashboardPage />} />
           <Route path="/login" element={<Login />} />
           <Route>
             <Route path="/products" element={<ProductsPage />} />
