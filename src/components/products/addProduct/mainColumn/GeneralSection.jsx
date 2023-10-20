@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import TextEditor from "../../../common/TextEditor";
+import CustomEditor from "../../../common/Editor";
 
 const GeneralSection = ({ product, setProduct }) => {
   const [editor, setEditor] = useState(null);
@@ -49,7 +50,13 @@ const GeneralSection = ({ product, setProduct }) => {
           <div>
             <label className="form-label">توضیحات</label>
             <div className="mb-2 min-h-200px">
-              <textarea
+              <CustomEditor
+                value={product?.description}
+                onChange={(value) => {
+                  setProduct({ ...product, description: value });
+                }}
+              />
+              {/* <textarea
                 className="mb-2 form-control"
                 value={product?.description}
                 onChange={(e) =>
@@ -58,9 +65,7 @@ const GeneralSection = ({ product, setProduct }) => {
                 placeholder="توضیحات"
                 rows={10}
                 name="product_description"
-              />
-
-              {/* <TextEditor setEditor={setEditor} /> */}
+              /> */}
             </div>
             <div className="text-muted fs-7">
               توضیحات برای بهتر دیده شدن محصول

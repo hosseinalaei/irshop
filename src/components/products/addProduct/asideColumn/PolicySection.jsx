@@ -1,13 +1,22 @@
+import useAxios from "../../../../hooks/useAxios";
 import { axiosService } from "../../../../services/axiosService";
 import React, { useEffect, useState } from "react";
 
 const PolicySection = ({ product, setProduct }) => {
   const [policies, setPolicies] = useState([]);
+  const httpRequest = useAxios();
 
   const getPolicy = () => {
-    axiosService
-      .get("/Policy/getActivePolicies")
-      .then((res) => setPolicies(res?.data));
+    // axiosService
+    //   .get("/Policy/getActivePolicies")
+    //   .then((res) => setPolicies(res?.data));
+
+    httpRequest({
+      url: "/Policy/getActivePolicies",
+      method: "GET",
+    }).then((res) => {
+      setPolicies(res?.data);
+    });
   };
 
   useEffect(() => {

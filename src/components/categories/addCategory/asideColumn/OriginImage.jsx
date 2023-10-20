@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { axiosService } from "../../../../services/axiosService";
+import useAxios from "../../../../hooks/useAxios";
 
 const OriginImage = ({ category, setCategory, selectedCategory }) => {
   const [file, setFile] = useState();
@@ -11,6 +12,8 @@ const OriginImage = ({ category, setCategory, selectedCategory }) => {
     setCategory({ ...category, originImage: file });
   }, [file]);
 
+  const httpRequest = useAxios();
+
   const getPic = () => {
     const body = [
       {
@@ -18,8 +21,14 @@ const OriginImage = ({ category, setCategory, selectedCategory }) => {
         mediaFieldName: "categoryImageName",
       },
     ];
-    axiosService
-      .post("/Media/GetMedia", body)
+    // axiosService
+    //   .post("/Media/GetMedia", body)
+
+    httpRequest({
+      url: "/Media/GetMedia",
+      method: "POST",
+      data: body,
+    })
       .then((res) => {
         console.log("res", res);
         setPic(res?.data[0]);

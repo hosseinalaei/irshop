@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { axiosService } from "../../../../services/axiosService";
+import useAxios from "../../../../hooks/useAxios";
 
 const ParentCategory = ({ category, setCategory }) => {
   const [categories, setCategories] = useState([]);
+  const httpRequest = useAxios();
   const getCategories = () => {
-    axiosService
-      .get("/Category/product-active-categories")
-      .then((res) => setCategories(res?.data));
+    // axiosService
+    //   .get("/Category/product-active-categories")
+    httpRequest({
+      url: "/Category/product-active-categories",
+      method: "GET",
+    }).then((res) => setCategories(res?.data));
   };
 
   useEffect(() => {

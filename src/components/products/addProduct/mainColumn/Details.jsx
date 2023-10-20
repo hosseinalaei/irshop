@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import Button from "../../../common/Button";
 
 const InputGroup = ({ values, onChange }) => (
   <div className="input-group">
-    <div className="flex justify-between pt-0 card-body">
-      <div className="mb-10 ">
+    <div className="grid w-full grid-cols-12 px-5 gap-x-5">
+      <div className="col-span-4">
         <label className="required form-label">جزئیات</label>
         <input
           type="text"
@@ -14,7 +15,7 @@ const InputGroup = ({ values, onChange }) => (
         />
       </div>
 
-      <div className="mb-10 ">
+      <div className="col-span-4">
         <label className="required form-label">توضیحات</label>
         <input
           type="text"
@@ -24,7 +25,7 @@ const InputGroup = ({ values, onChange }) => (
           onChange={(e) => onChange("description", e.target.value)}
         />
       </div>
-      <div className="mb-10 ">
+      <div className="col-span-4">
         <label className="required form-label">تفاوت‌ها</label>
         <input
           type="text"
@@ -86,15 +87,26 @@ const Details = ({ product, setProduct }) => {
         />
       ))}
 
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          addInputGroup();
-        }}
-        className="px-4 py-2 text-white bg-blue-300 rounded-lg hover:bg-blue-400"
-      >
-        افزودن
-      </button>
+      <div className="flex justify-end w-full px-5">
+        {/* <button
+          onClick={(e) => {
+            e.preventDefault();
+            addInputGroup();
+          }}
+          className="px-4 py-2 text-white bg-blue-300 rounded-lg hover:bg-blue-400"
+        >
+          افزودن
+        </button> */}
+        <Button
+          onClick={(e) => {
+            e.preventDefault();
+            addInputGroup();
+          }}
+          className="w-full"
+        >
+          افزودن
+        </Button>
+      </div>
     </div>
   );
 };

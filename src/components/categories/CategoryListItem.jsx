@@ -17,8 +17,15 @@ const CategoryListItem = ({ category, getCategories }) => {
         mediaFieldName: "categoryImageName",
       },
     ];
-    axiosService
-      .post("/Media/GetMedia", body)
+
+    // axiosService
+    //   .post("/Media/GetMedia", body)
+
+    httpRequest({
+      url: "/Media/GetMedia",
+      method: "POST",
+      data: body,
+    })
       .then((res) => {
         setImg(res?.data[0]);
       })
