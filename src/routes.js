@@ -14,6 +14,7 @@ import AddCategoryPage from "./pages/categories/addCategory/AddCategory";
 import AddNewPolicyPage from "./pages/policy/addPolicy/AddNewPolicyPage";
 import CreateSlider from "./components/slider/CreateSlider";
 import DashboardPage from "./pages/Dashboard";
+import AddSpecification from "./components/specification/AddSpecification";
 const routes = [
   {
     id: 1,
@@ -176,6 +177,15 @@ const routes = [
     name: "نظرات",
     icon: "message",
     component: <CreateSlider />,
+  },
+  {
+    invisible: true,
+    id: 20,
+    path: "/add-specification/",
+    layout: "/admin",
+    name: "ویژگی جدید",
+    icon: "message",
+    component: <AddSpecification />,
   },
 ];
 

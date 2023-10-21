@@ -13,7 +13,7 @@ const Specifications = ({ product, setProduct }) => {
   const [specs, setSpecs] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedSpec, setSelectedRole] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [showToast, setShowToast] = useState("");
   const httpRequest = useAxios();
 
@@ -54,10 +54,9 @@ const Specifications = ({ product, setProduct }) => {
     setLoading(true);
     // axiosService.get("/Specification/getAllSpecs")
     httpRequest({
-      url: '/Specification/getAllSpecs',
-      method:'GET'
-    })
-    .then((res) => {
+      url: "/Specification/getAllSpecs",
+      method: "GET",
+    }).then((res) => {
       setSpecs(res?.data);
       setLoading(false);
     });
@@ -83,11 +82,10 @@ const Specifications = ({ product, setProduct }) => {
 
     // axiosService.put("/Specification/updateSpecification", body)
     httpRequest({
-      url: '/Specification/updateSpecification',
-      method: 'PUT',
+      url: "/Specification/updateSpecification",
+      method: "PUT",
       data: body,
-    })
-    .then((res) => {
+    }).then((res) => {
       if (res?.status === "Success") {
         toast.success("عملیات با موفقیت انجام شد", {
           position: "top-left",

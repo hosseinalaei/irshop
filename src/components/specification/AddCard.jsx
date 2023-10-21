@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import AddNewRoleModal from "./AddSpec";
+import { useNavigate } from "react-router-dom";
 
 const AddCard = ({ setShowToast, setShowAddModal, showAddModal, getSpecs }) => {
   // const [showAddModal, setShowAddModal] = useState(false);
+
+  const nav = useNavigate();
 
   return (
     <>
@@ -14,7 +17,8 @@ const AddCard = ({ setShowToast, setShowAddModal, showAddModal, getSpecs }) => {
               className="btn btn-clear d-flex flex-column flex-center"
               data-bs-toggle="modal"
               data-bs-target="#kt_modal_add_role"
-              onClick={() => setShowAddModal(true)}
+              onClick={() => nav("/admin/add-specification")}
+              // onClick={() => setShowAddModal(true)}
             >
               <img src="4.png" alt="" className="mw-100 mh-150px mb-7" />
               <div className="text-gray-600 fw-bold fs-3 text-hover-primary">
