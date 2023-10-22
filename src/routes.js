@@ -15,6 +15,8 @@ import AddNewPolicyPage from "./pages/policy/addPolicy/AddNewPolicyPage";
 import CreateSlider from "./components/slider/CreateSlider";
 import DashboardPage from "./pages/Dashboard";
 import AddSpecification from "./components/specification/AddSpecification";
+import GroupsList from "./components/specification/groupsSpecs/GroupsList";
+import Groups from "./components/specification/groupsSpecs/Groups";
 const routes = [
   {
     id: 1,
@@ -119,11 +121,31 @@ const routes = [
   },
   {
     id: 13,
+    collapse: true,
+    // state: "openProd",
     path: "/specification",
     layout: "/admin",
     name: "ویژگی‌ها",
     icon: "images",
-    component: <SpecificationPage />,
+    // component: <SpecificationPage />,
+    subMenu: [
+      {
+        id: 8,
+        path: "/specs",
+        layout: "/admin",
+        name: "مدیریت ویژگی‌ها",
+        component: <SpecificationPage />,
+        icon: "rectangle-list",
+      },
+      {
+        id: 9,
+        path: "/specs/groups",
+        layout: "/admin",
+        name: "مدیریت دسته‌بندی ویژگی‌ها",
+        component: <Groups />,
+        icon: "square-plus",
+      },
+    ],
   },
   {
     id: 14,
