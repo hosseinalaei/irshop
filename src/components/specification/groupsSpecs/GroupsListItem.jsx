@@ -11,9 +11,11 @@ export const GroupsListItem = ({ group }) => {
       <td>
         <div className="text-2xl badge-light-success">{group?.name}</div>
       </td>
-      <td>
+      <td className="flex">
         {group?.values?.map((item) => (
-          <div>{item?.value}</div>
+          <div className="px-4 py-2 mx-3 text-center bg-gray-200 rounded-lg">
+            {item?.value}
+          </div>
         ))}
       </td>
 
