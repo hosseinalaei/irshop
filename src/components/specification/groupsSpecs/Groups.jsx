@@ -4,24 +4,47 @@ import GroupsList from "./GroupsList";
 import Loading from "../../common/Loading";
 import { ToastContainer } from "react-toastify";
 import { NavLink, useNavigate } from "react-router-dom";
+import useAxios from "../../../hooks/useAxios";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const Groups = () => {
-  const groups = [
-    {
-      id: 1,
-      name: "باتری",
-      values: [
-        {
-          id: 1,
-          value: "25 Hrtz",
-        },
-        {
-          id: 2,
-          value: "12 Hrtz",
-        },
-      ],
-    },
-  ];
+  // const groups = [
+  //   {
+  //     id: 1,
+  //     name: "باتری",
+  //     values: [
+  //       {
+  //         id: 1,
+  //         value: "25 Hrtz",
+  //       },
+  //       {
+  //         id: 2,
+  //         value: "12 Hrtz",
+  //       },
+  //     ],
+  //   },
+  // ];
+
+  const [groups, setGroups] = useState([]);
+
+  const httpRequest = useAxios();
+
+  const getGroupSpecs = () => {
+    // setLoading(true);
+    // axiosService.get("/Specification/getAllSpecs")
+    httpRequest({
+      url: "/Specification/getAllAttributeGroup",
+      method: "GET",
+    }).then((res) => {
+      setGroups(res?.data);
+      // setLoading(false);
+    });
+  };
+
+  useEffect(() => {
+    getGroupSpecs();
+  }, []);
 
   const nav = useNavigate();
   return (
@@ -58,7 +81,9 @@ const Groups = () => {
               <div className="gap-2 py-5 card-header align-items-center gap-md-5">
                 <div className="card-title"></div>
                 <div className="card-toolbar">
-                  <Button onClick={() => nav("/admin/add-specification")}>
+                  <Button
+                    onClick={() => nav("/admin/specification/groups/add-group")}
+                  >
                     ویژگی جدید
                   </Button>
                 </div>

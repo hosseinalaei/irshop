@@ -19,7 +19,7 @@ const Specs = () => {
     setLoading(true);
     // axiosService.get("/Specification/getAllSpecs")
     httpRequest({
-      url: "/Specification/getAllSpecs",
+      url: "/Specification/getAllAttributes",
       method: "GET",
     }).then((res) => {
       setSpecs(res?.data);
@@ -70,7 +70,7 @@ const Specs = () => {
                     </Button>
                   </div>
                 </div>
-                <SpecsList specs={specs} getProducts={getSpecs} />
+                <SpecsList specs={specs} getSpecs={getSpecs} />
               </div>
             </div>
           </div>

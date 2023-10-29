@@ -148,49 +148,57 @@ const Specifications = ({ product, setProduct }) => {
           </div>
           <div className="relative row row-cols-1 row-cols-md-2 row-cols-xl-3 g-5 g-xl-9">
             {specs &&
-              specs?.map((item, index) => (
-                <div key={index} className="col-md-4">
-                  <div className="card card-flush h-md-100">
-                    <div className="card-header">
-                      <div className="card-title">
-                        <h2>
-                          {item?.specName} - ({item?.specTitle})
-                        </h2>
+              specs?.map((item, index) => {
+                console.log(
+                  "item?.isDeleteitem?.isDeleteitem?.isDelete",
+                  item?.isDelete
+                );
+                return (
+                  !item?.isDelete && (
+                    <div key={index} className="col-md-4">
+                      <div className="card card-flush h-md-100">
+                        <div className="card-header">
+                          <div className="card-title">
+                            <h2>
+                              {item?.specName} - ({item?.specTitle})
+                            </h2>
+                          </div>
+                        </div>
+                        <div className="pt-1 card-body">
+                          <div className="mb-5 text-gray-600 fw-bold">
+                            مقدار: {item?.specValue}
+                          </div>
+                        </div>
+                        <div className="flex-wrap pt-0 card-footer">
+                          <button
+                            type="button"
+                            className="my-1 btn btn-light btn-active-light-primary"
+                            onClick={() => showEditModalFun(item)}
+                          >
+                            ویرایش
+                          </button>
+                          <button
+                            type="button"
+                            className="my-1 btn btn-light btn-active-light-primary"
+                            onClick={() => setIsConfirmationOpen(true)}
+                          >
+                            حذف
+                          </button>
+                          <ConfirmationDialog
+                            isOpen={isConfirmationOpen}
+                            setIsOpen={setIsConfirmationOpen}
+                            message="از حذف محصول اطمینان دارید؟"
+                            onConfirm={() => deleteSpec(item)}
+                            onCancel={handleCancel}
+                            confirmText="بله"
+                            cancelText="خیر"
+                          />
+                        </div>
                       </div>
                     </div>
-                    <div className="pt-1 card-body">
-                      <div className="mb-5 text-gray-600 fw-bold">
-                        مقدار: {item?.specValue}
-                      </div>
-                    </div>
-                    <div className="flex-wrap pt-0 card-footer">
-                      <button
-                        type="button"
-                        className="my-1 btn btn-light btn-active-light-primary"
-                        onClick={() => showEditModalFun(item)}
-                      >
-                        ویرایش
-                      </button>
-                      <button
-                        type="button"
-                        className="my-1 btn btn-light btn-active-light-primary"
-                        onClick={() => setIsConfirmationOpen(true)}
-                      >
-                        حذف
-                      </button>
-                      <ConfirmationDialog
-                        isOpen={isConfirmationOpen}
-                        setIsOpen={setIsConfirmationOpen}
-                        message="از حذف محصول اطمینان دارید؟"
-                        onConfirm={() => deleteSpec(item)}
-                        onCancel={handleCancel}
-                        confirmText="بله"
-                        cancelText="خیر"
-                      />
-                    </div>
-                  </div>
-                </div>
-              ))}
+                  )
+                );
+              })}
 
             {(showAddModal || showEditModal) && (
               <div>

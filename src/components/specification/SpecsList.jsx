@@ -23,9 +23,12 @@ const SpecsList = ({ specs, getSpecs }) => {
       >
         <SpecsListHead />
         <tbody className="text-gray-600 fw-semibold">
-          {currentItems?.map((item, index) => (
-            <SpecsListItem key={index} spec={item} getSpecs={getSpecs} />
-          ))}
+          {currentItems?.map(
+            (item, index) =>
+              !item?.isDelete && (
+                <SpecsListItem key={index} spec={item} getSpecs={getSpecs} />
+              )
+          )}
           {/* <ProductsListItem />
         <ProductsListItem />
         <ProductsListItem /> */}

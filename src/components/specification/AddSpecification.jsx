@@ -18,16 +18,29 @@ const AddSpecification = () => {
 
   const httpRequest = useAxios();
   const addSpec = () => {
+    // const body = {
+    //   specName: spec?.specName,
+    //   specTitle: spec?.specTitle,
+    //   specValue: spec?.specValue,
+    //   isDelete: spec?.isDelete,
+    //   id: uuidv4(),
+    // };
+    const valueArray = spec?.specValue?.split(",");
     const body = {
-      specName: spec?.specName,
-      specTitle: spec?.specTitle,
-      specValue: spec?.specValue,
-      isDelete: spec?.isDelete,
       id: uuidv4(),
+      isDelete: spec?.isDelete,
+      name: spec?.specName,
+      value: valueArray?.map((item) => {
+        return {
+          id: uuidv4(),
+          isDelete: false,
+          name: item,
+        };
+      }),
     };
     // axiosService .post("/Specification/registerSpecification", body)
     httpRequest({
-      url: "/Specification/registerSpecification",
+      url: "/Specification/registerAttributes",
       method: "POST",
       data: body,
     }).then((res) => {

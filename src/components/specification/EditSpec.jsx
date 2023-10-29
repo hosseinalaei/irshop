@@ -24,11 +24,10 @@ const EditSpec = ({ setShowEditModal, selectedSpec, getSpecs }) => {
     };
     // axiosService.put("/Specification/updateSpecification", body)
     httpRequest({
-      url: '/Specification/updateSpecification',
-      method:'PUT',
+      url: "/Specification/updateSpecification",
+      method: "PUT",
       data: body,
-    })
-    .then((res) => {
+    }).then((res) => {
       if (res?.status === "Success") {
         toast.success("عملیات با موفقیت انجام شد", {
           position: "top-left",
@@ -64,7 +63,7 @@ const EditSpec = ({ setShowEditModal, selectedSpec, getSpecs }) => {
       <ToastContainer />
       <div
         style={{ height: "80%", overflow: "scroll" }}
-        className="fixed z-50 w-full p-0 -translate-x-1/2 -translate-y-1/2 bg-white shadow-2xl top-1/2 left-1/2 rounded-2xl"
+        className="fixed z-50 w-1/3 p-0 -translate-x-1/2 -translate-y-1/2 bg-white shadow-2xl top-1/2 left-1/2 rounded-2xl"
       >
         <div className="modal-dialog modal-dialog-centered mw-750px">
           <div className="modal-content ">
