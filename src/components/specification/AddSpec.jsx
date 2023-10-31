@@ -22,20 +22,19 @@ const AddSpec = ({ setShowAddModal, setShowToast, getSpecs }) => {
     };
     // axiosService .post("/Specification/registerSpecification", body)
     httpRequest({
-      url:'/Specification/registerSpecification',
-      method:'POST',
+      url: "/Specification/registerSpecification",
+      method: "POST",
       data: body,
-    })
-      .then((res) => {
-        if (res?.status === "Success") {
-          setShowToast("Success");
-          setTimeout(() => {
-            getSpecs();
-          }, 500);
-        } else {
-          setShowToast("error");
-        }
-      });
+    }).then((res) => {
+      if (res?.status === "Success") {
+        setShowToast("Success");
+        setTimeout(() => {
+          getSpecs();
+        }, 500);
+      } else {
+        setShowToast("error");
+      }
+    });
   };
 
   return (
