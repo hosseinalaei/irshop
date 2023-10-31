@@ -9,24 +9,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 const Groups = () => {
-  // const groups = [
-  //   {
-  //     id: 1,
-  //     name: "باتری",
-  //     values: [
-  //       {
-  //         id: 1,
-  //         value: "25 Hrtz",
-  //       },
-  //       {
-  //         id: 2,
-  //         value: "12 Hrtz",
-  //       },
-  //     ],
-  //   },
-  // ];
-
   const [groups, setGroups] = useState([]);
+  const [specs, setSpecs] = useState([]);
 
   const httpRequest = useAxios();
 
@@ -41,10 +25,42 @@ const Groups = () => {
       // setLoading(false);
     });
   };
+  const getSpecs = () => {
+    // setLoading(true);
+    // axiosService.get("/Specification/getAllSpecs")
+    httpRequest({
+      url: "/Specification/getAllAttributes",
+      method: "GET",
+    }).then((res) => {
+      setSpecs(res?.data);
+      // setLoading(false);
+    });
+  };
 
   useEffect(() => {
     getGroupSpecs();
+    getSpecs();
   }, []);
+
+  const [values, setValues] = useState([]);
+
+  useEffect(() => {
+    const valuesExp = groups?.reduce((result, group) => {
+      const groupObject = { ...group, spec: null }; // Create a group object with an initial "spec" property
+
+      groupObject.spec = group?.attributesId
+        ?.map((item) => specs?.find((spec) => spec?.id === item))
+        .filter((item) => item);
+
+      if (groupObject.spec.length > 0) {
+        result.push(groupObject);
+      }
+
+      return result;
+    }, []);
+    setValues(valuesExp);
+    console.log("valuesvaluesvaluesvaluesvaluesvaluesvalues", values);
+  }, [groups, specs]);
 
   const nav = useNavigate();
   return (
@@ -90,6 +106,8 @@ const Groups = () => {
               </div>
               <GroupsList
                 groups={groups}
+                values={values}
+                getGroups={getGroupSpecs}
                 // getProducts={getSpecs}
               />
             </div>

@@ -1,35 +1,40 @@
 import React, { useCallback, useState } from "react";
 // import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useDrag } from "react-dnd";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { DragDropContext } from "@hello-pangea/dnd";
 import { Droppable } from "@hello-pangea/dnd";
 import { Draggable } from "@hello-pangea/dnd";
 import useAxios from "../../../../hooks/useAxios";
 import { useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { toast } from "react-toastify";
 
 const AddGroup = () => {
+  const location = useLocation();
+  const selectedGroup = location.state;
   const [specs, setSpecs] = useState([]);
-  const [groupName, setGroupName] = useState([]);
+  const [groupName, setGroupName] = useState(selectedGroup?.name || []);
   const httpRequest = useAxios();
 
-  const [items1, setItems1] = useState([]);
-  // [
-  //   { id: "item-1", content: "Item 1" },
-  //   { id: "item-2", content: "Item 2" },
-  //   { id: "item-3", content: "Item 3" },
-  // ]
+  const [items1, setItems1] = useState(selectedGroup?.spec || []);
+
+  console.log(
+    "selectedGroupselectedGroupselectedGroupselectedGroup",
+    selectedGroup
+  );
 
   const [items2, setItems2] = useState([]);
   useEffect(() => {
     setItems2(specs);
   }, [specs]);
-  console.log("specsspecsspecsspecsspecsspecsspecs", specs);
+
+  useEffect(() => {
+    items2?.filter((item) => items1?.map((it) => it?.id !== item?.id));
+  }, [items1, items2]);
 
   const onDragEnd = (result) => {
-    if (!result.destination) return; // Item was not dropped into a valid droppable
-    console.log("rrrrrrrrrrrrrrrrrrrrrrr", result);
+    if (!result.destination) return;
 
     const sourceList = result.source.droppableId;
     const destinationList = result.destination.droppableId;
@@ -79,6 +84,48 @@ const AddGroup = () => {
     });
   };
 
+  const updateGroup = () => {
+    // setLoading(true);
+    const requestBody = {
+      id: selectedGroup?.id,
+      isDelete: selectedGroup?.isDelete,
+      attributesId: items2.map((item) => item?.id),
+      name: selectedGroup?.name,
+    };
+
+    // axiosService .put("/Policy/updatePolicy", requestBody)
+    httpRequest({
+      url: "/Specification/updateAttributeGroup",
+      method: "PUT",
+      data: requestBody,
+    }).then((res) => {
+      res?.status === "Success"
+        ? toast.success("عملیات با موفقیت انجام شد", {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            // progress: undefined,
+            theme: "light",
+            style: { fontFamily: "inherit" },
+          })
+        : toast.error("مشکلی رخ داده است", {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            // progress: undefined,
+            theme: "light",
+            style: { fontFamily: "inherit" },
+          });
+    });
+    // .finally(() => setLoading(false));
+  };
+
   useEffect(() => {
     getSpecs();
   }, []);
@@ -109,8 +156,8 @@ const AddGroup = () => {
         </div>
         <div className="p-10 card card-flush">
           <div className="w-full gap-2 py-5 card-header align-items-center gap-md-5">
-            <div className="card-title"></div>
-            <div className="mb-10 fv-row">
+            {/* <div className="card-title"></div> */}
+            <div className="w-1/3 mb-10 fv-row">
               <label className="mb-2 fs-5 fw-bold form-label">
                 <span className="required">نام گروه</span>
               </label>
@@ -123,7 +170,7 @@ const AddGroup = () => {
               />
             </div>
 
-            <div className="flex justify-center w-full mx-10">
+            <div className="flex justify-between w-full mx-10">
               {/* <div> */}
               <DragDropContext onDragEnd={onDragEnd}>
                 <Droppable droppableId="list-1" type="PERSON">
@@ -131,7 +178,7 @@ const AddGroup = () => {
                     <div
                       className={`mx-10 ${
                         snapshot.isDraggingOver ? "bg-blue-200" : "bg-gray-200"
-                      } px-10 py-5 rounded-lg`}
+                      } px-10 py-5 rounded-lg w-1/2 h-64`}
                       ref={provided.innerRef}
                       // style={{
                       //   backgroundColor: snapshot.isDraggingOver
@@ -140,7 +187,7 @@ const AddGroup = () => {
                       // }}
                       {...provided.droppableProps}
                     >
-                      <h2>ویژگی‌های گروه</h2>
+                      <h2>ویژگی‌های گروه:</h2>
                       {items1.map((item, index) => (
                         <Draggable
                           key={item.id}
@@ -167,7 +214,7 @@ const AddGroup = () => {
                       ref={provided.innerRef}
                       className={`mx-10 ${
                         snapshot.isDraggingOver ? "bg-blue-200" : "bg-gray-200"
-                      } px-10 py-5 rounded-lg`}
+                      } px-10 py-5 rounded-lg w-1/2 h-64`}
                       // style={{
                       //   backgroundColor: snapshot.isDraggingOver
                       //     ? "blue"
@@ -175,7 +222,7 @@ const AddGroup = () => {
                       // }}
                       {...provided.droppableProps}
                     >
-                      <h2>همه‌ی ویژگی‌ها</h2>
+                      <h2>همه‌ی ویژگی‌ها:</h2>
                       {items2.map((item, index) => (
                         <Draggable
                           key={item.id}
@@ -203,7 +250,7 @@ const AddGroup = () => {
           <button
             type="submit"
             onClick={() => {
-              addGroupSpec();
+              selectedGroup ? updateGroup() : addGroupSpec();
             }}
             className="px-10 py-2 text-2xl font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600"
           >

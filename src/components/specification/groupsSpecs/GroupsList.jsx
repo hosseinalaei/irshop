@@ -3,7 +3,7 @@ import GroupsListHead from "./GroupsListHead";
 import { GroupsListItem } from "./GroupsListItem";
 import Pagination from "../../common/Pagination";
 
-const GroupsList = ({ groups }) => {
+const GroupsList = ({ groups, values, getGroups }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
@@ -13,7 +13,7 @@ const GroupsList = ({ groups }) => {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = groups?.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = values?.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <div className="card card-flush">
@@ -29,6 +29,7 @@ const GroupsList = ({ groups }) => {
               <GroupsListItem
                 key={index}
                 group={item}
+                getGroups={getGroups}
                 // getSpecs={getSpecs}
               />
             ))}

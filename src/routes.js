@@ -18,6 +18,7 @@ import AddSpecification from "./components/specification/AddSpecification";
 import GroupsList from "./components/specification/groupsSpecs/GroupsList";
 import Groups from "./components/specification/groupsSpecs/Groups";
 import AddGroupPage from "./pages/specification/addGroup/AddGroupPage";
+import AddGroup from "./components/specification/groupsSpecs/addGroup/AddGroup";
 const routes = [
   {
     id: 1,
@@ -218,6 +219,24 @@ const routes = [
     name: "گروه جدید",
     icon: "message",
     component: <AddGroupPage />,
+  },
+  {
+    invisible: true,
+    id: 22,
+    path: "/specification/attributes/edit-attribute/:id",
+    layout: "/admin",
+    name: "ویرایش ویژگی",
+    icon: "message",
+    component: <AddSpecification />,
+  },
+  {
+    invisible: true,
+    id: 22,
+    path: "/specification/groups/edit-group/:id",
+    layout: "/admin",
+    name: "ویرایش گروه",
+    icon: "message",
+    component: <AddGroup />,
   },
 ];
 

@@ -95,7 +95,9 @@ const SpecsListItem = ({ spec, getSpecs }) => {
           <div className="flex ">
             <NavLink
               className="px-2 py-1 mx-2 text-blue-600 border-2 border-blue-600 rounded-lg hover:bg-blue-600 hover:text-white"
-              onClick={() => setEditItem(true)}
+              // onClick={() => setEditItem(true)}
+              to={`/admin/specification/attributes/edit-attribute/${spec?.id}`}
+              state={spec}
             >
               ویرایش
             </NavLink>
