@@ -10,7 +10,7 @@ const Specification = ({ product, setProduct }) => {
     // axiosService
     //   .get("/Specification/getAllSpecs")
     httpRequest({
-      url: "/Specification/getAllSpecs",
+      url: "/Specification/getActiveAttributeCategory",
       method: "GET",
     }).then((res) => setSpecs(res?.data));
   };
@@ -43,7 +43,8 @@ const Specification = ({ product, setProduct }) => {
           {Specs?.length > 0 ? (
             Specs?.map((item, index) => (
               <option key={index} value={item?.id}>
-                {item?.specTitle} - {item?.specValue}
+                {/* {item?.specTitle} - {item?.specValue} */}
+                {item?.name}
               </option>
             ))
           ) : (
