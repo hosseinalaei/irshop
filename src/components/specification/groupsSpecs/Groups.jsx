@@ -18,7 +18,7 @@ const Groups = () => {
     // setLoading(true);
     // axiosService.get("/Specification/getAllSpecs")
     httpRequest({
-      url: "/Specification/getAllAttributeGroup",
+      url: "/Specification/getActiveAttributegroup",
       method: "GET",
     }).then((res) => {
       setGroups(res?.data);

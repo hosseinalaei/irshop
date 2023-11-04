@@ -52,7 +52,7 @@ const AddSpecCategory = () => {
     // setLoading(true);
     // axiosService.get("/Specification/getAllSpecs")
     httpRequest({
-      url: "/Specification/getAllAttributeGroup",
+      url: "/Specification/getActiveAttributegroup",
       method: "GET",
     }).then((res) => {
       setSpecs(res?.data);
@@ -178,7 +178,7 @@ const AddSpecCategory = () => {
                     <div
                       className={`mx-10 ${
                         snapshot.isDraggingOver ? "bg-blue-200" : "bg-gray-200"
-                      } px-10 py-5 rounded-lg w-1/2 h-64`}
+                      } px-10 py-5 rounded-lg w-1/2 min-h-64`}
                       ref={provided.innerRef}
                       // style={{
                       //   backgroundColor: snapshot.isDraggingOver
@@ -214,7 +214,7 @@ const AddSpecCategory = () => {
                       ref={provided.innerRef}
                       className={`mx-10 ${
                         snapshot.isDraggingOver ? "bg-blue-200" : "bg-gray-200"
-                      } px-10 py-5 rounded-lg w-1/2 h-64`}
+                      } px-10 py-5 rounded-lg w-1/2 min-h-64`}
                       // style={{
                       //   backgroundColor: snapshot.isDraggingOver
                       //     ? "blue"
