@@ -19,6 +19,8 @@ import GroupsList from "./components/specification/groupsSpecs/GroupsList";
 import Groups from "./components/specification/groupsSpecs/Groups";
 import AddGroupPage from "./pages/specification/addGroup/AddGroupPage";
 import AddGroup from "./components/specification/groupsSpecs/addGroup/AddGroup";
+import Categories from "./components/specification/category/Categories";
+import AddSpecCategory from "./components/specification/category/addCategory/AddSpecCategory";
 const routes = [
   {
     id: 1,
@@ -155,6 +157,15 @@ const routes = [
         component: <Groups />,
         icon: "square-plus",
       },
+      {
+        // invisible: true,
+        id: 21,
+        path: "/specification/categories",
+        layout: "/admin",
+        name: "گروه‌بندی",
+        icon: "message",
+        component: <Categories />,
+      },
     ],
   },
   {
@@ -245,6 +256,24 @@ const routes = [
     name: "ویرایش گروه",
     icon: "message",
     component: <AddGroup />,
+  },
+  {
+    invisible: true,
+    id: 21,
+    path: "/specification/categories/add-category",
+    layout: "/admin",
+    name: "دسته‌بندی جدید",
+    icon: "message",
+    component: <AddSpecCategory />,
+  },
+  {
+    invisible: true,
+    id: 23,
+    path: "/specification/categories/edit-category/:id",
+    layout: "/admin",
+    name: "ویرایش دسته‌بندی",
+    icon: "message",
+    component: <AddSpecCategory />,
   },
 ];
 
