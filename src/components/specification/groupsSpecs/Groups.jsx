@@ -100,7 +100,7 @@ const Groups = () => {
                   <Button
                     onClick={() => nav("/admin/specification/groups/add-group")}
                   >
-                    ویژگی جدید
+                    گروه جدید
                   </Button>
                 </div>
               </div>
