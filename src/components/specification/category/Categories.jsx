@@ -102,7 +102,7 @@ const Categories = () => {
                       nav("/admin/specification/categories/add-category")
                     }
                   >
-                    ویژگی جدید
+                    دسته‌بندی جدید
                   </Button>
                 </div>
               </div>
