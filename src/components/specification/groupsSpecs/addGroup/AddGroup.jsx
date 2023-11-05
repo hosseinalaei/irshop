@@ -1,14 +1,14 @@
 import React, { useCallback, useState } from "react";
 // import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useDrag } from "react-dnd";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { DragDropContext } from "@hello-pangea/dnd";
 import { Droppable } from "@hello-pangea/dnd";
 import { Draggable } from "@hello-pangea/dnd";
 import useAxios from "../../../../hooks/useAxios";
 import { useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 const AddGroup = () => {
   const location = useLocation();
@@ -16,24 +16,51 @@ const AddGroup = () => {
   const [specs, setSpecs] = useState([]);
   const [groupName, setGroupName] = useState(selectedGroup?.name || []);
   const httpRequest = useAxios();
+  const navigate = useNavigate();
 
   const [items1, setItems1] = useState(selectedGroup?.spec || []);
 
-  console.log(
-    "selectedGroupselectedGroupselectedGroupselectedGroup",
-    selectedGroup
-  );
-
   const [items2, setItems2] = useState([]);
+
   useEffect(() => {
-    setItems2(specs);
+    if (specs?.length > 0) {
+      let filteredArray1 = specs.filter(
+        (obj1) => !items1.some((obj2) => obj2.id === obj1.id)
+      );
+
+      // setUpdatedArr(filteredArray1);
+      setItems2(filteredArray1);
+    }
   }, [specs]);
+
+  // useEffect(() => {
+  //   if (items2?.length > 0) {
+  //     let filteredArray1 = items2.filter(
+  //       (obj1) => !items1.some((obj2) => obj2.id === obj1.id)
+  //     );
+
+  //     setUpdatedArr(filteredArray1);
+
+  //     // Now filteredArray1 contains objects from array1 that don't have the same 'id' in array2
+  //     console.log("filteredArray1filteredArray1filteredArray1", filteredArray1);
+  //   }
+  // }, [items1]);
 
   useEffect(() => {
     items2?.filter((item) => items1?.map((it) => it?.id !== item?.id));
   }, [items1, items2]);
 
   const onDragEnd = (result) => {
+    // if (!result.destination) return;
+
+    // const sourceList = result.source.droppableId;
+    // const destinationList = result.destination.droppableId;
+    // const sourceItems = sourceList === "list-1" ? items1 : items2;
+    // const destinationItems = destinationList === "list-1" ? items1 : items2;
+
+    // const [movedItem] = sourceItems.splice(result.source.index, 1);
+    // destinationItems.splice(result.destination.index, 0, movedItem);
+
     if (!result.destination) return;
 
     const sourceList = result.source.droppableId;
@@ -44,8 +71,8 @@ const AddGroup = () => {
     const [movedItem] = sourceItems.splice(result.source.index, 1);
     destinationItems.splice(result.destination.index, 0, movedItem);
 
-    setItems1([...items1]);
-    setItems2([...items2]);
+    // setItems1([...items1]);
+    // setItems2([...items2]);
   };
 
   const getSpecs = () => {
@@ -89,8 +116,8 @@ const AddGroup = () => {
     const requestBody = {
       id: selectedGroup?.id,
       isDelete: selectedGroup?.isDelete,
-      attributesId: items2.map((item) => item?.id),
-      name: selectedGroup?.name,
+      attributesId: items1.map((item) => item?.id),
+      name: groupName,
     };
 
     // axiosService .put("/Policy/updatePolicy", requestBody)
@@ -99,29 +126,57 @@ const AddGroup = () => {
       method: "PUT",
       data: requestBody,
     }).then((res) => {
-      res?.status === "Success"
-        ? toast.success("عملیات با موفقیت انجام شد", {
-            position: "top-left",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            // progress: undefined,
-            theme: "light",
-            style: { fontFamily: "inherit" },
-          })
-        : toast.error("مشکلی رخ داده است", {
-            position: "top-left",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            // progress: undefined,
-            theme: "light",
-            style: { fontFamily: "inherit" },
-          });
+      if (res?.status === "Success") {
+        toast.success("عملیات با موفقیت انجام شد", {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          // progress: undefined,
+          theme: "light",
+          style: { fontFamily: "inherit" },
+        });
+        setTimeout(() => {
+          navigate("/admin/specs/groups");
+        }, 500);
+      } else {
+        toast.error("مشکلی رخ داده است", {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          // progress: undefined,
+          theme: "light",
+          style: { fontFamily: "inherit" },
+        });
+      }
+      // res?.status === "Success"
+      //   ? (toast.success("عملیات با موفقیت انجام شد", {
+      //       position: "top-left",
+      //       autoClose: 3000,
+      //       hideProgressBar: false,
+      //       closeOnClick: true,
+      //       pauseOnHover: true,
+      //       draggable: true,
+      //       // progress: undefined,
+      //       theme: "light",
+      //       style: { fontFamily: "inherit" },
+      //     }))
+      //   : toast.error("مشکلی رخ داده است", {
+      //       position: "top-left",
+      //       autoClose: 3000,
+      //       hideProgressBar: false,
+      //       closeOnClick: true,
+      //       pauseOnHover: true,
+      //       draggable: true,
+      //       // progress: undefined,
+      //       theme: "light",
+      //       style: { fontFamily: "inherit" },
+      //     });
     });
     // .finally(() => setLoading(false));
   };
@@ -131,134 +186,136 @@ const AddGroup = () => {
   }, []);
 
   return (
-    <div className="flex-column-fluid">
-      <div className="container-xxl">
-        <div className="m-3 page-title d-flex flex-column justify-content-center">
-          <h1 className="my-0 page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center">
-            لیست دسته‌بندی ویژگی‌ها
-          </h1>
+    <>
+      <ToastContainer />
+      <div className="flex-column-fluid">
+        <div className="container-xxl">
+          <div className="m-3 page-title d-flex flex-column justify-content-center">
+            <h1 className="my-0 page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center">
+              لیست دسته‌بندی ویژگی‌ها
+            </h1>
 
-          <ul className="pt-1 my-0 breadcrumb breadcrumb-separatorless fw-semibold fs-7">
-            <NavLink
-              to="/"
-              className="text-lg font-bold text-black hover:text-red-500"
-            >
-              ویژگی‌ها
-            </NavLink>
+            <ul className="pt-1 my-0 breadcrumb breadcrumb-separatorless fw-semibold fs-7">
+              <NavLink
+                to="/"
+                className="text-lg font-bold text-black hover:text-red-500"
+              >
+                ویژگی‌ها
+              </NavLink>
 
-            <li className="breadcrumb-item">/</li>
-            <li className="text-lg font-bold text-black hover:text-red-500">
-              دسته‌بندی ویژگی‌ها
-            </li>
+              <li className="breadcrumb-item">/</li>
+              <li className="text-lg font-bold text-black hover:text-red-500">
+                دسته‌بندی ویژگی‌ها
+              </li>
 
-            {/* <li className="breadcrumb-item text-muted">نقش‌ها</li> */}
-          </ul>
-        </div>
-        <div className="p-10 card card-flush">
-          <div className="w-full gap-2 py-5 card-header align-items-center gap-md-5">
-            {/* <div className="card-title"></div> */}
-            <div className="w-1/3 mb-10 fv-row">
-              <label className="mb-2 fs-5 fw-bold form-label">
-                <span className="required">نام گروه</span>
-              </label>
-              <input
-                className="form-control form-control-solid"
-                placeholder="نام گروه را وارد کنید"
-                name="spec_value"
-                onChange={(e) => setGroupName(e.target.value)}
-                value={groupName}
-              />
-            </div>
-
-            <div className="flex justify-between w-full mx-10">
-              {/* <div> */}
-              <DragDropContext onDragEnd={onDragEnd}>
-                <Droppable droppableId="list-1" type="PERSON">
-                  {(provided, snapshot) => (
-                    <div
-                      className={`mx-10 ${
-                        snapshot.isDraggingOver ? "bg-blue-200" : "bg-gray-200"
-                      } px-10 py-5 rounded-lg w-1/2 h-64`}
-                      ref={provided.innerRef}
-                      // style={{
-                      //   backgroundColor: snapshot.isDraggingOver
-                      //     ? "blue"
-                      //     : "grey",
-                      // }}
-                      {...provided.droppableProps}
-                    >
-                      <h2>ویژگی‌های گروه:</h2>
-                      {items1.map((item, index) => (
-                        <Draggable
-                          key={item.id}
-                          draggableId={item.id}
-                          index={index}
-                        >
-                          {(provided, snapshot) => (
-                            <div
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                            >
-                              {item.name}
-                            </div>
-                          )}
-                        </Draggable>
-                      ))}
-                    </div>
-                  )}
-                </Droppable>
-                <Droppable droppableId="list-2" type="PERSON">
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      className={`mx-10 ${
-                        snapshot.isDraggingOver ? "bg-blue-200" : "bg-gray-200"
-                      } px-10 py-5 rounded-lg w-1/2 h-64`}
-                      // style={{
-                      //   backgroundColor: snapshot.isDraggingOver
-                      //     ? "blue"
-                      //     : "grey",
-                      // }}
-                      {...provided.droppableProps}
-                    >
-                      <h2>همه‌ی ویژگی‌ها:</h2>
-                      {items2.map((item, index) => (
-                        <Draggable
-                          key={item.id}
-                          draggableId={item.id}
-                          index={index}
-                        >
-                          {(provided, snapshot) => (
-                            <div
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                            >
-                              {item.name}
-                            </div>
-                          )}
-                        </Draggable>
-                      ))}
-                    </div>
-                  )}
-                </Droppable>
-              </DragDropContext>
-              {/* </div> */}
-            </div>
+              {/* <li className="breadcrumb-item text-muted">نقش‌ها</li> */}
+            </ul>
           </div>
-          <button
-            type="submit"
-            onClick={() => {
-              selectedGroup ? updateGroup() : addGroupSpec();
-            }}
-            className="px-10 py-2 text-2xl font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600"
-          >
-            ثبت
-          </button>
+          <div className="p-10 card card-flush">
+            <div className="w-full gap-2 py-5 card-header align-items-center gap-md-5">
+              {/* <div className="card-title"></div> */}
+              <div className="w-1/3 mb-10 fv-row">
+                <label className="mb-2 fs-5 fw-bold form-label">
+                  <span className="required">نام گروه</span>
+                </label>
+                <input
+                  className="form-control form-control-solid"
+                  placeholder="نام گروه را وارد کنید"
+                  name="spec_value"
+                  onChange={(e) => setGroupName(e.target.value)}
+                  value={groupName}
+                />
+              </div>
+
+              <div className="flex justify-between w-full mx-10">
+                {/* <div> */}
+                <DragDropContext onDragEnd={onDragEnd}>
+                  <Droppable droppableId="list-1" type="COLUMN">
+                    {(provided, snapshot) => (
+                      <div
+                        className={`mx-10 ${
+                          snapshot.isDraggingOver
+                            ? "bg-blue-200"
+                            : "bg-gray-200"
+                        } px-10 py-5 rounded-lg w-1/2 `}
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                      >
+                        <h2>ویژگی‌های گروه:</h2>
+                        {items1.map((item, index) => (
+                          <Draggable
+                            key={item.id}
+                            draggableId={item.id}
+                            index={index}
+                          >
+                            {(provided, snapshot) => (
+                              <div
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                              >
+                                {item.name}
+                              </div>
+                            )}
+                          </Draggable>
+                        ))}
+                      </div>
+                    )}
+                  </Droppable>
+                  <Droppable droppableId="list-2" type="COLUMN">
+                    {(provided, snapshot) => (
+                      <div
+                        ref={provided.innerRef}
+                        className={`mx-10 ${
+                          snapshot.isDraggingOver
+                            ? "bg-blue-200"
+                            : "bg-gray-200"
+                        } px-10 py-5 rounded-lg w-1/2`}
+                        // style={{
+                        //   backgroundColor: snapshot.isDraggingOver
+                        //     ? "blue"
+                        //     : "grey",
+                        // }}
+                        {...provided.droppableProps}
+                      >
+                        <h2>همه‌ی ویژگی‌ها:</h2>
+                        {items2.map((item, index) => (
+                          <Draggable
+                            key={item.id}
+                            draggableId={item.id}
+                            index={index}
+                          >
+                            {(provided, snapshot) => (
+                              <div
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                              >
+                                {item.name}
+                              </div>
+                            )}
+                          </Draggable>
+                        ))}
+                      </div>
+                    )}
+                  </Droppable>
+                </DragDropContext>
+                {/* </div> */}
+              </div>
+            </div>
+            <button
+              type="submit"
+              onClick={() => {
+                selectedGroup ? updateGroup() : addGroupSpec();
+              }}
+              className="px-10 py-2 text-2xl font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600"
+            >
+              ثبت
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
