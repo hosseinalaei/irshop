@@ -8,7 +8,7 @@ import { Draggable } from "@hello-pangea/dnd";
 import useAxios from "../../../../hooks/useAxios";
 import { useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 const AddGroup = () => {
   const location = useLocation();
@@ -157,129 +157,136 @@ const AddGroup = () => {
   }, []);
 
   return (
-    <div className="flex-column-fluid">
-      <div className="container-xxl">
-        <div className="m-3 page-title d-flex flex-column justify-content-center">
-          <h1 className="my-0 page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center">
-            لیست دسته‌بندی ویژگی‌ها
-          </h1>
+    <>
+      <ToastContainer />
+      <div className="flex-column-fluid">
+        <div className="container-xxl">
+          <div className="m-3 page-title d-flex flex-column justify-content-center">
+            <h1 className="my-0 page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center">
+              لیست دسته‌بندی ویژگی‌ها
+            </h1>
 
-          <ul className="pt-1 my-0 breadcrumb breadcrumb-separatorless fw-semibold fs-7">
-            <NavLink
-              to="/"
-              className="text-lg font-bold text-black hover:text-red-500"
-            >
-              ویژگی‌ها
-            </NavLink>
+            <ul className="pt-1 my-0 breadcrumb breadcrumb-separatorless fw-semibold fs-7">
+              <NavLink
+                to="/"
+                className="text-lg font-bold text-black hover:text-red-500"
+              >
+                ویژگی‌ها
+              </NavLink>
 
-            <li className="breadcrumb-item">/</li>
-            <li className="text-lg font-bold text-black hover:text-red-500">
-              دسته‌بندی ویژگی‌ها
-            </li>
+              <li className="breadcrumb-item">/</li>
+              <li className="text-lg font-bold text-black hover:text-red-500">
+                دسته‌بندی ویژگی‌ها
+              </li>
 
-            {/* <li className="breadcrumb-item text-muted">نقش‌ها</li> */}
-          </ul>
-        </div>
-        <div className="p-10 card card-flush">
-          <div className="w-full gap-2 py-5 card-header align-items-center gap-md-5">
-            {/* <div className="card-title"></div> */}
-            <div className="w-1/3 mb-10 fv-row">
-              <label className="mb-2 fs-5 fw-bold form-label">
-                <span className="required">نام گروه</span>
-              </label>
-              <input
-                className="form-control form-control-solid"
-                placeholder="نام گروه را وارد کنید"
-                name="spec_value"
-                onChange={(e) => setGroupName(e.target.value)}
-                value={groupName}
-              />
-            </div>
-
-            <div className="flex justify-between w-full mx-10">
-              {/* <div> */}
-              <DragDropContext onDragEnd={onDragEnd}>
-                <Droppable droppableId="list-1" type="COLUMN">
-                  {(provided, snapshot) => (
-                    <div
-                      className={`mx-10 ${
-                        snapshot.isDraggingOver ? "bg-blue-200" : "bg-gray-200"
-                      } px-10 py-5 rounded-lg w-1/2 `}
-                      ref={provided.innerRef}
-                      {...provided.droppableProps}
-                    >
-                      <h2>ویژگی‌های گروه:</h2>
-                      {items1.map((item, index) => (
-                        <Draggable
-                          key={item.id}
-                          draggableId={item.id}
-                          index={index}
-                        >
-                          {(provided, snapshot) => (
-                            <div
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                            >
-                              {item.name}
-                            </div>
-                          )}
-                        </Draggable>
-                      ))}
-                    </div>
-                  )}
-                </Droppable>
-                <Droppable droppableId="list-2" type="COLUMN">
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      className={`mx-10 ${
-                        snapshot.isDraggingOver ? "bg-blue-200" : "bg-gray-200"
-                      } px-10 py-5 rounded-lg w-1/2`}
-                      // style={{
-                      //   backgroundColor: snapshot.isDraggingOver
-                      //     ? "blue"
-                      //     : "grey",
-                      // }}
-                      {...provided.droppableProps}
-                    >
-                      <h2>همه‌ی ویژگی‌ها:</h2>
-                      {items2.map((item, index) => (
-                        <Draggable
-                          key={item.id}
-                          draggableId={item.id}
-                          index={index}
-                        >
-                          {(provided, snapshot) => (
-                            <div
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                            >
-                              {item.name}
-                            </div>
-                          )}
-                        </Draggable>
-                      ))}
-                    </div>
-                  )}
-                </Droppable>
-              </DragDropContext>
-              {/* </div> */}
-            </div>
+              {/* <li className="breadcrumb-item text-muted">نقش‌ها</li> */}
+            </ul>
           </div>
-          <button
-            type="submit"
-            onClick={() => {
-              selectedGroup ? updateGroup() : addGroupSpec();
-            }}
-            className="px-10 py-2 text-2xl font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600"
-          >
-            ثبت
-          </button>
+          <div className="p-10 card card-flush">
+            <div className="w-full gap-2 py-5 card-header align-items-center gap-md-5">
+              {/* <div className="card-title"></div> */}
+              <div className="w-1/3 mb-10 fv-row">
+                <label className="mb-2 fs-5 fw-bold form-label">
+                  <span className="required">نام گروه</span>
+                </label>
+                <input
+                  className="form-control form-control-solid"
+                  placeholder="نام گروه را وارد کنید"
+                  name="spec_value"
+                  onChange={(e) => setGroupName(e.target.value)}
+                  value={groupName}
+                />
+              </div>
+
+              <div className="flex justify-between w-full mx-10">
+                {/* <div> */}
+                <DragDropContext onDragEnd={onDragEnd}>
+                  <Droppable droppableId="list-1" type="COLUMN">
+                    {(provided, snapshot) => (
+                      <div
+                        className={`mx-10 ${
+                          snapshot.isDraggingOver
+                            ? "bg-blue-200"
+                            : "bg-gray-200"
+                        } px-10 py-5 rounded-lg w-1/2 `}
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                      >
+                        <h2>ویژگی‌های گروه:</h2>
+                        {items1.map((item, index) => (
+                          <Draggable
+                            key={item.id}
+                            draggableId={item.id}
+                            index={index}
+                          >
+                            {(provided, snapshot) => (
+                              <div
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                              >
+                                {item.name}
+                              </div>
+                            )}
+                          </Draggable>
+                        ))}
+                      </div>
+                    )}
+                  </Droppable>
+                  <Droppable droppableId="list-2" type="COLUMN">
+                    {(provided, snapshot) => (
+                      <div
+                        ref={provided.innerRef}
+                        className={`mx-10 ${
+                          snapshot.isDraggingOver
+                            ? "bg-blue-200"
+                            : "bg-gray-200"
+                        } px-10 py-5 rounded-lg w-1/2`}
+                        // style={{
+                        //   backgroundColor: snapshot.isDraggingOver
+                        //     ? "blue"
+                        //     : "grey",
+                        // }}
+                        {...provided.droppableProps}
+                      >
+                        <h2>همه‌ی ویژگی‌ها:</h2>
+                        {items2.map((item, index) => (
+                          <Draggable
+                            key={item.id}
+                            draggableId={item.id}
+                            index={index}
+                          >
+                            {(provided, snapshot) => (
+                              <div
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                              >
+                                {item.name}
+                              </div>
+                            )}
+                          </Draggable>
+                        ))}
+                      </div>
+                    )}
+                  </Droppable>
+                </DragDropContext>
+                {/* </div> */}
+              </div>
+            </div>
+            <button
+              type="submit"
+              onClick={() => {
+                selectedGroup ? updateGroup() : addGroupSpec();
+              }}
+              className="px-10 py-2 text-2xl font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600"
+            >
+              ثبت
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
