@@ -26,7 +26,14 @@ const AddSpecCategory = () => {
 
   const [items2, setItems2] = useState([]);
   useEffect(() => {
-    setItems2(specs);
+    if (specs?.length > 0) {
+      let filteredArray1 = specs.filter(
+        (obj1) => !items1.some((obj2) => obj2.id === obj1.id)
+      );
+
+      // setUpdatedArr(filteredArray1);
+      setItems2(filteredArray1);
+    }
   }, [specs]);
 
   useEffect(() => {
@@ -44,8 +51,8 @@ const AddSpecCategory = () => {
     const [movedItem] = sourceItems.splice(result.source.index, 1);
     destinationItems.splice(result.destination.index, 0, movedItem);
 
-    setItems1([...items1]);
-    setItems2([...items2]);
+    // setItems1([...items1]);
+    // setItems2([...items2]);
   };
 
   const getSpecs = () => {
@@ -86,16 +93,17 @@ const AddSpecCategory = () => {
 
   const updateGroup = () => {
     // setLoading(true);
+    console.log("items1items1items1items1items1", items1);
     const requestBody = {
       id: selectedGroup?.id,
       isDelete: selectedGroup?.isDelete,
-      attributesId: items2.map((item) => item?.id),
-      name: selectedGroup?.name,
+      attributeGroupsId: items1.map((item) => item?.id),
+      name: groupName,
     };
 
     // axiosService .put("/Policy/updatePolicy", requestBody)
     httpRequest({
-      url: "/Specification/updateAttributeGroup",
+      url: "/Specification/updateAttributeCategory",
       method: "PUT",
       data: requestBody,
     }).then((res) => {
@@ -173,12 +181,12 @@ const AddSpecCategory = () => {
             <div className="flex justify-between w-full mx-10">
               {/* <div> */}
               <DragDropContext onDragEnd={onDragEnd}>
-                <Droppable droppableId="list-1" type="PERSON">
+                <Droppable droppableId="list-1" type="COLUMN">
                   {(provided, snapshot) => (
                     <div
                       className={`mx-10 ${
                         snapshot.isDraggingOver ? "bg-blue-200" : "bg-gray-200"
-                      } px-10 py-5 rounded-lg w-1/2 min-h-64`}
+                      } px-10 py-5 rounded-lg w-1/2`}
                       ref={provided.innerRef}
                       // style={{
                       //   backgroundColor: snapshot.isDraggingOver
@@ -208,13 +216,13 @@ const AddSpecCategory = () => {
                     </div>
                   )}
                 </Droppable>
-                <Droppable droppableId="list-2" type="PERSON">
+                <Droppable droppableId="list-2" type="COLUMN">
                   {(provided, snapshot) => (
                     <div
                       ref={provided.innerRef}
                       className={`mx-10 ${
                         snapshot.isDraggingOver ? "bg-blue-200" : "bg-gray-200"
-                      } px-10 py-5 rounded-lg w-1/2 min-h-64`}
+                      } px-10 py-5 rounded-lg w-1/2`}
                       // style={{
                       //   backgroundColor: snapshot.isDraggingOver
                       //     ? "blue"

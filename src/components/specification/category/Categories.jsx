@@ -18,7 +18,7 @@ const Categories = () => {
   const getCategorySpecs = () => {
     // setLoading(true);
     httpRequest({
-      url: "/Specification/getAllAttributeCategory",
+      url: "/Specification/getActiveAttributeCategory",
       method: "GET",
     }).then((res) => {
       setCategories(res?.data);

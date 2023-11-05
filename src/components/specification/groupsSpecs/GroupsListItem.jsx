@@ -16,7 +16,7 @@ export const GroupsListItem = ({ group, getGroups }) => {
     };
     // axiosService.put("/Category/updateCategory", body)
     httpRequest({
-      url: "/Specification/updateAttributes",
+      url: "/Specification/updateAttributeGroup",
       method: "PUT",
       data: body,
     })
@@ -66,11 +66,11 @@ export const GroupsListItem = ({ group, getGroups }) => {
       <td>
         <div className="text-2xl badge-light-success">{group?.name}</div>
       </td>
-      <td className="flex">
+      <td className="flex flex-wrap">
         {group?.spec?.map((item, index) => (
           <div
             key={index}
-            className="px-4 py-2 mx-3 text-center bg-gray-200 rounded-lg"
+            className="px-4 py-2 m-3 text-center bg-gray-200 rounded-lg"
           >
             {item?.name}
           </div>
