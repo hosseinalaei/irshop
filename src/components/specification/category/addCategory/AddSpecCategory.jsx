@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 // import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useDrag } from "react-dnd";
-import { NavLink, useHref, useLocation } from "react-router-dom";
+import { NavLink, useHref, useLocation, useNavigate } from "react-router-dom";
 import { DragDropContext } from "@hello-pangea/dnd";
 import { Droppable } from "@hello-pangea/dnd";
 import { Draggable } from "@hello-pangea/dnd";
@@ -17,7 +17,7 @@ const AddSpecCategory = () => {
   const [specs, setSpecs] = useState([]);
   const [groupName, setGroupName] = useState(selectedGroup?.name || []);
   const httpRequest = useAxios();
-
+  const navigate = useNavigate();
   const [items1, setItems1] = useState(selectedGroup?.group || []);
 
   // console.log(
@@ -108,29 +108,57 @@ const AddSpecCategory = () => {
       method: "PUT",
       data: requestBody,
     }).then((res) => {
-      res?.status === "Success"
-        ? toast.success("عملیات با موفقیت انجام شد", {
-            position: "top-left",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            // progress: undefined,
-            theme: "light",
-            style: { fontFamily: "inherit" },
-          })
-        : toast.error("مشکلی رخ داده است", {
-            position: "top-left",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            // progress: undefined,
-            theme: "light",
-            style: { fontFamily: "inherit" },
-          });
+      if (res?.status === "Success") {
+        toast.success("عملیات با موفقیت انجام شد", {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          // progress: undefined,
+          theme: "light",
+          style: { fontFamily: "inherit" },
+        });
+        setTimeout(() => {
+          navigate("/admin/specification/categories");
+        }, 500);
+      } else {
+        toast.error("مشکلی رخ داده است", {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          // progress: undefined,
+          theme: "light",
+          style: { fontFamily: "inherit" },
+        });
+      }
+      // res?.status === "Success"
+      //   ? toast.success("عملیات با موفقیت انجام شد", {
+      //       position: "top-left",
+      //       autoClose: 3000,
+      //       hideProgressBar: false,
+      //       closeOnClick: true,
+      //       pauseOnHover: true,
+      //       draggable: true,
+      //       // progress: undefined,
+      //       theme: "light",
+      //       style: { fontFamily: "inherit" },
+      //     })
+      //   : toast.error("مشکلی رخ داده است", {
+      //       position: "top-left",
+      //       autoClose: 3000,
+      //       hideProgressBar: false,
+      //       closeOnClick: true,
+      //       pauseOnHover: true,
+      //       draggable: true,
+      //       // progress: undefined,
+      //       theme: "light",
+      //       style: { fontFamily: "inherit" },
+      //     });
     });
     // .finally(() => setLoading(false));
   };
