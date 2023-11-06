@@ -19,7 +19,7 @@ const Specs = () => {
     setLoading(true);
     // axiosService.get("/Specification/getAllSpecs")
     httpRequest({
-      url: "/Specification/getAllAttributes",
+      url: "/Specification/getActiveAttributes",
       method: "GET",
     }).then((res) => {
       setSpecs(res?.data);

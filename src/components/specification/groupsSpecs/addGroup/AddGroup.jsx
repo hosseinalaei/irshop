@@ -79,7 +79,7 @@ const AddGroup = () => {
     // setLoading(true);
     // axiosService.get("/Specification/getAllSpecs")
     httpRequest({
-      url: "/Specification/getAllAttributes",
+      url: "/Specification/getActiveAttributes",
       method: "GET",
     }).then((res) => {
       setSpecs(res?.data);
@@ -101,12 +101,32 @@ const AddGroup = () => {
       data: body,
     }).then((res) => {
       if (res?.status === "Success") {
-        // setShowToast("Success");
+        toast.success("عملیات با موفقیت انجام شد", {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          // progress: undefined,
+          theme: "light",
+          style: { fontFamily: "inherit" },
+        });
         setTimeout(() => {
-          getSpecs();
+          navigate("/admin/specs/groups");
         }, 500);
       } else {
-        // setShowToast("error");
+        toast.error("مشکلی رخ داده است", {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          // progress: undefined,
+          theme: "light",
+          style: { fontFamily: "inherit" },
+        });
       }
     });
   };

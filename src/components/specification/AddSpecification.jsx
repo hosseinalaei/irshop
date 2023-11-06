@@ -22,9 +22,9 @@ const AddSpecification = () => {
   //   isDelete: false,
   // });
   const [spec, setSpec] = useState({
-    specName: "",
+    specName: selectedAtt.name,
     specTitle: "",
-    specValue: "",
+    specValue: selectedAtt.value.map((item) => item.name),
     isDelete: false,
   });
 
@@ -37,7 +37,7 @@ const AddSpecification = () => {
     //   isDelete: spec?.isDelete,
     //   id: uuidv4(),
     // };
-    const valueArray = spec?.specValue?.split(" , ");
+    const valueArray = spec?.specValue?.split(",");
     const body = {
       id: uuidv4(),
       isDelete: spec?.isDelete,
@@ -68,17 +68,14 @@ const AddSpecification = () => {
   };
 
   const updateAtt = () => {
+    const valueArray = spec?.specValue?.split(",");
     // setLoading(true);
     const requestBody = {
       id: selectedAtt?.id,
       isDelete: selectedAtt?.isDelete,
-      name: selectedAtt?.name,
-      value: selectedAtt?.value?.map((item) => {
-        return {
-          id: item?.id,
-          isDelete: item?.isDelete,
-          name: item?.name,
-        };
+      name: spec?.specName,
+      value: valueArray.map((item) => {
+        return { name: item };
       }),
     };
 
@@ -154,7 +151,10 @@ const AddSpecification = () => {
             />
           </div>
         </div>
-        <Button className="self-end w-1/5" onClick={() => addSpec()}>
+        <Button
+          className="self-end w-1/5"
+          onClick={() => (selectedAtt.id ? updateAtt() : addSpec())}
+        >
           ثبت
         </Button>
       </div>
