@@ -27,7 +27,7 @@ const ProductsList = ({ products, getProducts }) => {
         <tbody className="text-gray-600 fw-semibold">
           {currentItems?.map((item, index) => (
             <ProductsListItem
-              key={index}
+              key={item.id}
               product={item}
               getProducts={getProducts}
             />
