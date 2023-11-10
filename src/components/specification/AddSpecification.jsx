@@ -3,7 +3,7 @@ import Button from "../common/Button";
 import useAxios from "../../hooks/useAxios";
 import { v4 as uuidv4 } from "uuid";
 import { useLocation } from "react-router-dom";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { MuiChipsInput } from "mui-chips-input";
 
 const AddSpecification = () => {
@@ -179,6 +179,7 @@ const AddSpecification = () => {
           ثبت
         </Button>
       </div>
+      <ToastContainer />
     </>
   );
 };
