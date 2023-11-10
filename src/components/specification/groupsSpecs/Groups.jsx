@@ -59,7 +59,7 @@ const Groups = () => {
       return result;
     }, []);
     setValues(valuesExp);
-    console.log("valuesvaluesvaluesvaluesvaluesvaluesvalues", values);
+    // console.log("valuesvaluesvaluesvaluesvaluesvaluesvalues", values);
   }, [groups, specs]);
 
   const nav = useNavigate();
@@ -74,7 +74,7 @@ const Groups = () => {
           <div className="container-xxl">
             <div className="m-3 page-title d-flex flex-column justify-content-center">
               <h1 className="my-0 page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center">
-                لیست محصولات
+                لیست گروه‌ها
               </h1>
 
               <ul className="pt-1 my-0 breadcrumb breadcrumb-separatorless fw-semibold fs-7">
@@ -87,7 +87,7 @@ const Groups = () => {
 
                 <li className="breadcrumb-item">/</li>
                 <li className="text-lg font-bold text-black hover:text-red-500">
-                  محصولات
+                  گروه‌ها
                 </li>
 
                 {/* <li className="breadcrumb-item text-muted">نقش‌ها</li> */}
