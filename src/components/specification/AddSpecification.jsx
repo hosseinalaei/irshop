@@ -4,6 +4,7 @@ import useAxios from "../../hooks/useAxios";
 import { v4 as uuidv4 } from "uuid";
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
+import { MuiChipsInput } from "mui-chips-input";
 
 const AddSpecification = () => {
   // const [sepc, addSpec] = useState({
@@ -13,7 +14,7 @@ const AddSpecification = () => {
 
   const location = useLocation();
   const selectedAtt = location.state;
-  console.log("selectedAttselectedAttselectedAtt", selectedAtt);
+  // console.log("selectedAttselectedAttselectedAtt", selectedAtt);
 
   // const [spec, setSpec] = useState({
   //   specName: selectedAtt?.name || "",
@@ -22,27 +23,20 @@ const AddSpecification = () => {
   //   isDelete: false,
   // });
   const [spec, setSpec] = useState({
-    specName: selectedAtt.name,
+    specName: selectedAtt?.name,
     specTitle: "",
-    specValue: selectedAtt.value.map((item) => item.name),
+    specValue: selectedAtt?.value.map((item) => item.name),
     isDelete: false,
   });
 
   const httpRequest = useAxios();
   const addSpec = () => {
-    // const body = {
-    //   specName: spec?.specName,
-    //   specTitle: spec?.specTitle,
-    //   specValue: spec?.specValue,
-    //   isDelete: spec?.isDelete,
-    //   id: uuidv4(),
-    // };
-    const valueArray = spec?.specValue?.split(",");
+    // const valueArray = spec?.specValue?.split(",");
     const body = {
       id: uuidv4(),
       isDelete: spec?.isDelete,
       name: spec?.specName,
-      value: valueArray?.map((item) => {
+      value: spec?.specValue?.map((item) => {
         return {
           id: uuidv4(),
           isDelete: false,
@@ -68,13 +62,13 @@ const AddSpecification = () => {
   };
 
   const updateAtt = () => {
-    const valueArray = spec?.specValue?.split(",");
+    // const valueArray = spec?.specValue?.split(",");
     // setLoading(true);
     const requestBody = {
       id: selectedAtt?.id,
       isDelete: selectedAtt?.isDelete,
       name: spec?.specName,
-      value: valueArray.map((item) => {
+      value: spec?.specValue?.map((item) => {
         return { name: item };
       }),
     };
@@ -112,6 +106,14 @@ const AddSpecification = () => {
     // .finally(() => setLoading(false));
   };
 
+  const [chips, setChips] = React.useState([]);
+
+  const handleChange = (newChips) => {
+    setChips(newChips);
+  };
+
+  console.log("chipschipschips", chips);
+
   return (
     <>
       <div className="p-5 card card-flush">
@@ -139,21 +141,40 @@ const AddSpecification = () => {
               onChange={(e) => setSpec({ ...spec, specTitle: e.target.value })}
             />
           </div> */}
-          <div className="w-1/2 mb-5 mr-5">
+          <div className="flex flex-col w-1/2 mb-5 mr-5">
             <label className="required form-label">مقدار</label>
-            <input
+            {/* <input
               type="text"
               className="mb-2 form-control"
               placeholder="مقدار ویژگی"
               // value={spec?.specValue?.map((item) => item.name).join(",")}
               value={spec?.specValue}
               onChange={(e) => setSpec({ ...spec, specValue: e.target.value })}
+            /> */}
+            <MuiChipsInput
+              value={spec?.specValue}
+              onChange={(chip) => setSpec({ ...spec, specValue: chip })}
+              // size="small"
+              InputProps={{
+                className: "form-control !p-1.5 !pr-8 outline-none",
+              }}
+              // variant="outlined"
+              placeholder="مقدار را وارد کنید"
+              renderChip={(Component, key, props) => {
+                return (
+                  <Component
+                    {...props}
+                    key={key}
+                    style={{ direction: "ltr" }}
+                  />
+                );
+              }}
             />
           </div>
         </div>
         <Button
           className="self-end w-1/5"
-          onClick={() => (selectedAtt.id ? updateAtt() : addSpec())}
+          onClick={() => (selectedAtt?.id ? updateAtt() : addSpec())}
         >
           ثبت
         </Button>
