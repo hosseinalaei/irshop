@@ -28,14 +28,11 @@ const Specification = ({ product, setProduct }) => {
       <div className="pt-0 card-body">
         <select
           className="mb-2 form-select"
-          value={product?.specification}
+          value={product?.attributeCategoryId}
           onChange={(e) =>
             setProduct({
               ...product,
-              specification: [
-                ...product?.specification,
-                { productSpecificationId: e.target.value },
-              ],
+              attributeCategoryId: e.target.value,
             })
           }
         >
