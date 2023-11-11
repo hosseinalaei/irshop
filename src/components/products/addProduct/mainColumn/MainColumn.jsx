@@ -6,6 +6,7 @@ import SelectColor from "./SelectColor";
 import Details from "./Details";
 import Button from "../../../common/Button";
 import { NavLink } from "react-router-dom";
+import Specification from "../asideColumn/Specification";
 
 const MainColumn = ({
   product,
@@ -32,6 +33,7 @@ const MainColumn = ({
             />
             {/* <PricingSection product={product} setProduct={setProduct} /> */}
             <SelectColor product={product} setProduct={setProduct} />
+            <Specification product={product} setProduct={setProduct} />
             <Details product={product} setProduct={setProduct} />
           </div>
         </div>

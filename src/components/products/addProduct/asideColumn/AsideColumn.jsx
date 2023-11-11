@@ -18,7 +18,7 @@ const AsideColumn = ({ product, setProduct, selectedProduct }) => {
       <ProductStatus product={product} setProduct={setProduct} />
       <PolicySection product={product} setProduct={setProduct} />
       <SpecialSection product={product} setProduct={setProduct} />
-      <Specification product={product} setProduct={setProduct} />
+      {/* <Specification product={product} setProduct={setProduct} /> */}
     </div>
   );
 };

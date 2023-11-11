@@ -32,7 +32,7 @@ const AddProduct = () => {
     specification: selectedProduct?.productSpecification || [],
     details: selectedProduct?.productDetail || [],
   });
-  console.log("selectedProductselectedProduct", selectedProduct, product);
+  // console.log("selectedProductselectedProduct", selectedProduct, product);
 
   const httpRequest = useAxios();
 
@@ -170,7 +170,7 @@ const AddProduct = () => {
       productSelectedSpecification: product?.specification,
     };
 
-    console.log("requestBodyrequestBodyrequestBody", requestBody);
+    // console.log("requestBodyrequestBodyrequestBody", requestBody);
 
     // axiosService
     //   .post("/Products/registerProduct", requestBody)
