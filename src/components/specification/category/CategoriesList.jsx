@@ -6,7 +6,7 @@ import CategoriesListHead from "./CategoriesListHead";
 
 const CategoriesList = ({ categories, values, getCategories }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);

@@ -5,7 +5,7 @@ import Pagination from "../../common/Pagination";
 
 const GroupsList = ({ groups, values, getGroups }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);

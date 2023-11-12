@@ -88,11 +88,11 @@ const SelectColor = ({ product, setProduct }) => {
         price: item?.price,
       };
     });
-    console.log(
-      "modifiedColorsArraymodifiedColorsArraymodifiedColorsArray",
-      modifiedColorsArray,
-      inputGroups
-    );
+    // console.log(
+    //   "modifiedColorsArraymodifiedColorsArraymodifiedColorsArray",
+    //   modifiedColorsArray,
+    //   inputGroups
+    // );
     setProduct({ ...product, color: modifiedColorsArray });
   };
 
