@@ -21,7 +21,7 @@ const Specification = ({ product, setProduct }) => {
     getCategories();
   }, []);
 
-  const getGroups = (id, selectedCategory) => {
+  const getGroups = (id) => {
     const body = {
       id: id,
     };
@@ -29,10 +29,18 @@ const Specification = ({ product, setProduct }) => {
       url: "/Specification/getAttributegroupById",
       method: "POST",
       data: body,
-    }).then((res) => {
-      setGroups(res?.data);
+    }).then( (res) => {
+      
+      res?.data?.attributesId?.map(async (item) => {
 
-      res?.data?.attributesId?.map((item) => getSpecs(item));
+       const specs =  await getSpecs(item)
+        setGroups(prev => [...prev,{
+          group: res?.data,
+          values: specs
+        }]);
+
+      });
+      
 
       // setMain({[res?.data?.name]})
     });
@@ -41,32 +49,43 @@ const Specification = ({ product, setProduct }) => {
   useEffect(() => {
     console.log(
       "selectedCategoryselectedCategoryselectedCategory",
-      JSON.parse(selectedCategory),
+      selectedCategory,
+      // JSON.parse(selectedCategory),
       categories,
       groups
     );
 
-    JSON.parse(selectedCategory)?.attributeGroupsId?.map((item) =>
-      getGroups(item)
-    );
+    const category = categories?.find(item => item?.id === selectedCategory)
+
+    category?.attributeGroupsId?.map(item => getGroups(item) )
+
+
+    setGroups([])
+    console.log(category);
+
+    // JSON.parse(selectedCategory)?.attributeGroupsId?.map((item) =>
+    //   getGroups(item)
+    // );
   }, [selectedCategory]);
 
-  console.log("ssssssssssssssssssssssssssssssssss", Specs);
+  console.log("ssssssssssssssssssssssssssssssssss", Specs,groups);
 
-  const getSpecs = (id) => {
+  const getSpecs = async (id) => {
     const body = {
       id: id,
     };
-    httpRequest({
+ const res=await httpRequest({
       url: "/Specification/getAttributesbyId",
-      method: "GET",
+      method: "POST",
       data: body,
-    }).then((res) => setSpecs(res?.data));
+    })
+
+    return res?.data
   };
 
-  useEffect(() => {
-    getSpecs();
-  }, []);
+  // useEffect(() => {
+  //   getSpecs();
+  // }, []);
 
   return (
     <div className="py-4 card card-flush">
@@ -79,7 +98,7 @@ const Specification = ({ product, setProduct }) => {
         <div className="w-1/2">
           <select
             className="mb-2 form-select"
-            value={selectedCategory?.name}
+            value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
             // onChange={(e) =>
             //   setProduct({
@@ -94,7 +113,7 @@ const Specification = ({ product, setProduct }) => {
             <option></option>
             {categories?.length > 0 ? (
               categories?.map((item, index) => (
-                <option key={index} value={JSON?.stringify(item)}>
+                <option key={index} value={item.id}>
                   {/* {item?.specTitle} - {item?.specValue} */}
                   {item?.name}
                 </option>
@@ -106,10 +125,10 @@ const Specification = ({ product, setProduct }) => {
         </div>
 
         <div className="w-1/2 mx-2 ">
-          {JSON.parse(selectedCategory).attributeGroupsId?.map((item) => (
+          {groups?.map((item) => (
             <div className="relative p-5 mb-3 border border-black rounded-md">
               <div className="absolute text-lg bg-white right-5 -top-3 ">
-                {item?.name}
+                {item?.values?.name}
               </div>
 
               <div className="">
@@ -127,10 +146,9 @@ const Specification = ({ product, setProduct }) => {
                   }
                 >
                   <option></option>
-                  {Specs?.length > 0 ? (
-                    Specs?.map((item, index) => (
+                  {item?.values?.value?.length > 0 ? (
+                    item?.values?.value?.map((item, index) => (
                       <option key={index} value={item?.id}>
-                        {/* {item?.specTitle} - {item?.specValue} */}
                         {item?.name}
                       </option>
                     ))
