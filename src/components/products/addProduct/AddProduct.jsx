@@ -29,8 +29,18 @@ const AddProduct = () => {
     special: selectedProduct?.isSpecial || false,
     isDelete: false,
     price: selectedProduct?.price || "",
-    attributeCategoryId: selectedProduct?.attributeCategoryId || "",
+    productSpecific: selectedProduct?.productSpecific || {
+      attributeCategoryId: "",
+      spec: [
+        {
+          groupId: "",
+          value: "",
+        },
+      ],
+    },
+    // attributeCategoryId: selectedProduct?.attributeCategoryId || "",
     details: selectedProduct?.productDetail || [],
+    productCount: selectedProduct?.productCount || "",
   });
   // console.log("selectedProductselectedProduct", selectedProduct, product);
 
@@ -79,10 +89,11 @@ const AddProduct = () => {
       policyId: product?.policy,
       productGalleries: gallery.concat(selectedProduct?.productGalleries),
       productSelectedCategories: product?.categoryId,
-
+      productSpecific: product?.productSpecific,
       productColor: product?.color,
       productDetail: product?.details,
       attributeCategoryId: product?.attributeCategoryId,
+      productCount: product?.productCount,
     };
 
     // axiosService
@@ -168,6 +179,7 @@ const AddProduct = () => {
 
       productDetail: product?.details,
       attributeCategoryId: product?.attributeCategoryId,
+      productCount: product?.productCount,
     };
 
     // console.log("requestBodyrequestBodyrequestBody", requestBody);

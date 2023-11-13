@@ -29,18 +29,17 @@ const Specification = ({ product, setProduct }) => {
       url: "/Specification/getAttributegroupById",
       method: "POST",
       data: body,
-    }).then( (res) => {
-      
+    }).then((res) => {
       res?.data?.attributesId?.map(async (item) => {
-
-       const specs =  await getSpecs(item)
-        setGroups(prev => [...prev,{
-          group: res?.data,
-          values: specs
-        }]);
-
+        const specs = await getSpecs(item);
+        setGroups((prev) => [
+          ...prev,
+          {
+            group: res?.data,
+            values: specs,
+          },
+        ]);
       });
-      
 
       // setMain({[res?.data?.name]})
     });
@@ -55,12 +54,11 @@ const Specification = ({ product, setProduct }) => {
       groups
     );
 
-    const category = categories?.find(item => item?.id === selectedCategory)
+    const category = categories?.find((item) => item?.id === selectedCategory);
 
-    category?.attributeGroupsId?.map(item => getGroups(item) )
+    category?.attributeGroupsId?.map((item) => getGroups(item));
 
-
-    setGroups([])
+    setGroups([]);
     console.log(category);
 
     // JSON.parse(selectedCategory)?.attributeGroupsId?.map((item) =>
@@ -68,24 +66,78 @@ const Specification = ({ product, setProduct }) => {
     // );
   }, [selectedCategory]);
 
-  console.log("ssssssssssssssssssssssssssssssssss", Specs,groups);
+  console.log("ssssssssssssssssssssssssssssssssss", Specs, groups);
 
   const getSpecs = async (id) => {
     const body = {
       id: id,
     };
- const res=await httpRequest({
+    const res = await httpRequest({
       url: "/Specification/getAttributesbyId",
       method: "POST",
       data: body,
-    })
+    });
 
-    return res?.data
+    return res?.data;
   };
 
   // useEffect(() => {
   //   getSpecs();
   // }, []);
+
+  console.log(
+    "productSpecificproductSpecificproductSpecific",
+    product?.productSpecific
+  );
+
+  const addSpecs = (e, groupId, attId) => {
+    const findedSpec = product?.productSpecific?.spec?.findIndex(
+      (item) => item?.groupId === groupId
+    );
+
+    if (findedSpec === -1) {
+      product?.productSpecific?.spec?.push({
+        groupId,
+        value: e?.target?.value,
+      });
+    }
+
+    console.log(
+      "findedSpecfindedSpecfindedSpecfindedSpecfindedSpecfindedSpec",
+      findedSpec
+    );
+
+    const specs = product?.productSpecific?.spec?.map((item) => {
+      return item?.groupId === groupId
+        ? [
+            ...product?.productSpecific?.spec,
+            { ...item, value: e?.target?.value },
+          ]
+        : [...product?.productSpecific?.spec, {}];
+    });
+
+    console.log("specsspecsspecsspecsspecsspecsspecs", specs);
+
+    // const uniqueSpecs = product?.productSpecific?.spec.reduce((accumulator, current) => {
+    //   if (!accumulator.find((item) => item.groupId === current.groupId)) {
+    //     accumulator.push(current);
+    //   }
+    //   return accumulator;
+    // }, []);
+    // setProduct({
+    //   ...product,
+    //   productSpecific: {
+    //     attributeCategoryId: selectedCategory,
+    //     spec: [
+    //       ...product?.productSpecific?.spec,
+    //       {
+    //         groupId: item?.group?.id,
+    //         value: e.target?.value,
+    //       },
+    //     ],
+    //   },
+    // });
+  };
 
   return (
     <div className="py-4 card card-flush">
@@ -135,15 +187,17 @@ const Specification = ({ product, setProduct }) => {
                 <select
                   className="mb-2 form-select"
                   value={product?.specification}
-                  onChange={(e) =>
-                    setProduct({
-                      ...product,
-                      specification: [
-                        ...product?.specification,
-                        { productSpecificationId: e.target.value },
-                      ],
-                    })
-                  }
+                  onChange={(e) => addSpecs(e.target.value, item?.group?.id)}
+
+                  // onChange={(e) =>
+                  //   setProduct({
+                  //     ...product,
+                  //     specification: [
+                  //       ...product?.specification,
+                  //       { productSpecificationId: e.target.value },
+                  //     ],
+                  //   })
+                  // }
                 >
                   <option></option>
                   {item?.values?.value?.length > 0 ? (

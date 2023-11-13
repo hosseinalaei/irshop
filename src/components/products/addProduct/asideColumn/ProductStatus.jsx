@@ -23,7 +23,7 @@ const ProductStatus = ({ product, setProduct }) => {
           <h2>وضعیت</h2>
         </div>
       </div>
-      <div className="pt-0 card-body">
+      <div className="p-0 px-2 mb-2 card-body">
         <select
           className="mb-2 form-select"
           value={isExists}
@@ -35,6 +35,19 @@ const ProductStatus = ({ product, setProduct }) => {
           <option value={false}>ناموجود</option>
         </select>
         <div className="text-muted fs-7">وضعیت موجودی محصول را انتخاب کنید</div>
+      </div>
+      <div className="px-2 mb-10 fv-row">
+        <label className="required form-label">تعداد</label>
+        <input
+          type="text"
+          name="short-description"
+          className="mb-2 form-control"
+          placeholder="تعداد"
+          value={product?.productCount}
+          onChange={(e) =>
+            setProduct({ ...product, productCount: e.target.value })
+          }
+        />
       </div>
     </div>
   );
