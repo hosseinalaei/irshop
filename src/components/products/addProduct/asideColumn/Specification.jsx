@@ -81,63 +81,63 @@ const Specification = ({ product, setProduct }) => {
     return res?.data;
   };
 
-  // useEffect(() => {
-  //   getSpecs();
-  // }, []);
 
-  console.log(
-    "productSpecificproductSpecificproductSpecific",
-    product?.productSpecific
-  );
 
-  const addSpecs = (e, groupId, attId) => {
+  const addSpecs = (  attId, groupId) => {
     const findedSpec = product?.productSpecific?.spec?.findIndex(
       (item) => item?.groupId === groupId
     );
 
+    console.log("selectedCategoryselectedCategoryselectedCategoryselectedCategory",selectedCategory);
+
     if (findedSpec === -1) {
-      product?.productSpecific?.spec?.push({
-        groupId,
-        value: e?.target?.value,
-      });
+      setProduct({...product , productSpecific:{
+        attributeCategoryId:selectedCategory,
+        spec: [
+          ...product?.productSpecific?.spec,
+          {
+            groupId,
+            value:attId
+          }
+        ]
+      }} )
+      // product?.productSpecific?.spec?.push({
+      //   groupId,
+      //   value: e?.target?.value,
+      // });
+    } else {
+      // product?.productSpecific?.spec?.map((item,index) => {
+      //   return item?.groupId === findedSpec?.groupId && {...item, value: attId}
+      // }).filter(Boolean);
+
+     const updatedSpec = product?.productSpecific?.spec?.map((item,index) => index === findedSpec ? {...item, value:attId} : item)
+
+      setProduct({...product , productSpecific:{
+        ...product?.productSpecific,
+        spec: updatedSpec
+      }} )
+
+
+
     }
 
-    console.log(
-      "findedSpecfindedSpecfindedSpecfindedSpecfindedSpecfindedSpec",
-      findedSpec
-    );
+   
 
-    const specs = product?.productSpecific?.spec?.map((item) => {
-      return item?.groupId === groupId
-        ? [
-            ...product?.productSpecific?.spec,
-            { ...item, value: e?.target?.value },
-          ]
-        : [...product?.productSpecific?.spec, {}];
-    });
-
-    console.log("specsspecsspecsspecsspecsspecsspecs", specs);
-
-    // const uniqueSpecs = product?.productSpecific?.spec.reduce((accumulator, current) => {
-    //   if (!accumulator.find((item) => item.groupId === current.groupId)) {
-    //     accumulator.push(current);
-    //   }
-    //   return accumulator;
-    // }, []);
-    // setProduct({
-    //   ...product,
-    //   productSpecific: {
-    //     attributeCategoryId: selectedCategory,
-    //     spec: [
-    //       ...product?.productSpecific?.spec,
-    //       {
-    //         groupId: item?.group?.id,
-    //         value: e.target?.value,
-    //       },
-    //     ],
-    //   },
+    // const specs = product?.productSpecific?.spec?.map((item) => {
+    //   return item?.groupId === groupId
+    //     ? [
+    //         ...product?.productSpecific?.spec,
+    //         { ...item, value: e?.target?.value },
+    //       ]
+    //     : [...product?.productSpecific?.spec, {}];
     // });
+
+  
+
+   
   };
+
+  console.log("product",product);
 
   return (
     <div className="py-4 card card-flush">
@@ -189,15 +189,7 @@ const Specification = ({ product, setProduct }) => {
                   value={product?.specification}
                   onChange={(e) => addSpecs(e.target.value, item?.group?.id)}
 
-                  // onChange={(e) =>
-                  //   setProduct({
-                  //     ...product,
-                  //     specification: [
-                  //       ...product?.specification,
-                  //       { productSpecificationId: e.target.value },
-                  //     ],
-                  //   })
-                  // }
+                
                 >
                   <option></option>
                   {item?.values?.value?.length > 0 ? (
