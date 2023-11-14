@@ -117,7 +117,7 @@ const ProductsListItem = ({ product, getProducts, setProduct }) => {
       </td>
       <td>
         <div className="text-2xl badge-light-success">
-          {product?.productColor[0].price}
+          {product?.productColor[0]?.price}
         </div>
       </td>
       <td className="text-center">

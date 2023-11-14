@@ -176,7 +176,7 @@ const AddProduct = () => {
       productSelectedCategories: product?.categoryId,
 
       productColor: product?.color,
-
+      productSpecific: product?.productSpecific,
       productDetail: product?.details,
       attributeCategoryId: product?.attributeCategoryId,
       productCount: product?.productCount,
