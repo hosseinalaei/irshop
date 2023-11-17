@@ -1,14 +1,13 @@
 import useAxios from "../../../../hooks/useAxios";
-import { axiosService } from "../../../../services/axiosService";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 const Specification = ({ product, setProduct }) => {
   const httpRequest = useAxios();
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [groups, setGroups] = useState([]);
-  const [Specs, setSpecs] = useState([]);
-  const [main, setMain] = useState([]);
+
+  // console.log("productproductproductproductproductproductproduct", product);
 
   const getCategories = () => {
     httpRequest({
@@ -16,6 +15,20 @@ const Specification = ({ product, setProduct }) => {
       method: "GET",
     }).then((res) => setCategories(res?.data));
   };
+
+  useEffect(() => {
+    if (product?.productSpecific?.attributeCategoryId) {
+      setSelectedCategory(product?.productSpecific?.attributeCategoryId);
+      console.log(
+        "product?.productSpecificproduct?.productSpecific",
+        product?.productSpecific
+      );
+
+      product?.productSpecific?.spec?.map(
+        (item) => item?.groupId && getGroups(item?.groupId)
+      );
+    }
+  }, [product?.productSpecific?.attributeCategoryId]);
 
   useEffect(() => {
     getCategories();
@@ -46,27 +59,21 @@ const Specification = ({ product, setProduct }) => {
   };
 
   useEffect(() => {
-    console.log(
-      "selectedCategoryselectedCategoryselectedCategory",
-      selectedCategory,
-      // JSON.parse(selectedCategory),
-      categories,
-      groups
-    );
+    if (
+      selectedCategory &&
+      categories?.length > 0 &&
+      !product?.productSpecific?.attributeCategoryId
+    ) {
+      const category = categories?.find(
+        (item) => item?.id === selectedCategory
+      );
 
-    const category = categories?.find((item) => item?.id === selectedCategory);
+      selectedCategory &&
+        category?.attributeGroupsId?.map((item) => getGroups(item));
 
-    category?.attributeGroupsId?.map((item) => getGroups(item));
-
-    setGroups([]);
-    console.log(category);
-
-    // JSON.parse(selectedCategory)?.attributeGroupsId?.map((item) =>
-    //   getGroups(item)
-    // );
+      setGroups([]);
+    }
   }, [selectedCategory]);
-
-  console.log("ssssssssssssssssssssssssssssssssss", Specs, groups);
 
   const getSpecs = async (id) => {
     const body = {
@@ -81,63 +88,47 @@ const Specification = ({ product, setProduct }) => {
     return res?.data;
   };
 
-  // useEffect(() => {
-  //   getSpecs();
-  // }, []);
-
-  console.log(
-    "productSpecificproductSpecificproductSpecific",
-    product?.productSpecific
-  );
-
-  const addSpecs = (e, groupId, attId) => {
+  const addSpecs = (attId, groupId) => {
+    setSelectedSpec(attId);
     const findedSpec = product?.productSpecific?.spec?.findIndex(
-      (item) => item?.groupId === groupId
+      (item) => item?.value === attId
     );
 
     if (findedSpec === -1) {
-      product?.productSpecific?.spec?.push({
-        groupId,
-        value: e?.target?.value,
+      setProduct({
+        ...product,
+        productSpecific: {
+          attributeCategoryId: selectedCategory,
+          spec: [
+            ...product?.productSpecific?.spec,
+            {
+              groupId,
+              value: attId,
+            },
+          ],
+        },
+      });
+    } else {
+      const updatedSpec = product?.productSpecific?.spec?.map((item, index) =>
+        index === findedSpec ? { ...item, value: attId } : item
+      );
+
+      setProduct({
+        ...product,
+        productSpecific: {
+          ...product?.productSpecific,
+          spec: updatedSpec,
+        },
       });
     }
-
-    console.log(
-      "findedSpecfindedSpecfindedSpecfindedSpecfindedSpecfindedSpec",
-      findedSpec
-    );
-
-    const specs = product?.productSpecific?.spec?.map((item) => {
-      return item?.groupId === groupId
-        ? [
-            ...product?.productSpecific?.spec,
-            { ...item, value: e?.target?.value },
-          ]
-        : [...product?.productSpecific?.spec, {}];
-    });
-
-    console.log("specsspecsspecsspecsspecsspecsspecs", specs);
-
-    // const uniqueSpecs = product?.productSpecific?.spec.reduce((accumulator, current) => {
-    //   if (!accumulator.find((item) => item.groupId === current.groupId)) {
-    //     accumulator.push(current);
-    //   }
-    //   return accumulator;
-    // }, []);
-    // setProduct({
-    //   ...product,
-    //   productSpecific: {
-    //     attributeCategoryId: selectedCategory,
-    //     spec: [
-    //       ...product?.productSpecific?.spec,
-    //       {
-    //         groupId: item?.group?.id,
-    //         value: e.target?.value,
-    //       },
-    //     ],
-    //   },
-    // });
   };
+
+  console.log(
+    "product?.specificationproduct?.specificationproduct?.specification",
+    product?.specification
+  );
+
+  const [selectedSpec, setSelectedSpec] = useState(null);
 
   return (
     <div className="py-4 card card-flush">
@@ -151,21 +142,14 @@ const Specification = ({ product, setProduct }) => {
           <select
             className="mb-2 form-select"
             value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            // onChange={(e) =>
-            //   setProduct({
-            //     ...product,
-            //     specification: [
-            //       ...product?.specification,
-            //       { productSpecificationId: e.target.value },
-            //     ],
-            //   })
-            // }
+            onChange={(e) => {
+              setSelectedCategory(e.target.value);
+            }}
           >
             <option></option>
             {categories?.length > 0 ? (
               categories?.map((item, index) => (
-                <option key={index} value={item.id}>
+                <option key={item.id} value={item.id}>
                   {/* {item?.specTitle} - {item?.specValue} */}
                   {item?.name}
                 </option>
@@ -177,42 +161,64 @@ const Specification = ({ product, setProduct }) => {
         </div>
 
         <div className="w-1/2 mx-2 ">
-          {groups?.map((item) => (
-            <div className="relative p-5 mb-3 border border-black rounded-md">
-              <div className="absolute text-lg bg-white right-5 -top-3 ">
-                {item?.values?.name}
-              </div>
+          {groups
+            ?.reduce((unique, item) => {
+              const isDuplicate = unique.some(
+                (existingItem) => existingItem?.values?.id === item?.values?.id
+              );
 
-              <div className="">
-                <select
-                  className="mb-2 form-select"
-                  value={product?.specification}
-                  onChange={(e) => addSpecs(e.target.value, item?.group?.id)}
+              if (!isDuplicate) {
+                unique.push(item);
+              }
 
-                  // onChange={(e) =>
-                  //   setProduct({
-                  //     ...product,
-                  //     specification: [
-                  //       ...product?.specification,
-                  //       { productSpecificationId: e.target.value },
-                  //     ],
-                  //   })
-                  // }
+              return unique;
+            }, [])
+            ?.map((item) => {
+              let selected = product?.productSpecific?.spec
+                ?.map((i) => i?.groupId === item?.group?.id && i)
+                ?.filter(Boolean)[0];
+
+              // selected && setSelectedSpec(selected?.value);
+
+              console.log(
+                "selectedSpecselectedSpecselectedSpecselectedSpecselectedSpec",
+                selectedSpec
+              );
+
+              return (
+                <div
+                  key={item?.values?.id}
+                  className="relative p-5 mb-3 border border-black rounded-md"
                 >
-                  <option></option>
-                  {item?.values?.value?.length > 0 ? (
-                    item?.values?.value?.map((item, index) => (
-                      <option key={index} value={item?.id}>
-                        {item?.name}
-                      </option>
-                    ))
-                  ) : (
-                    <div>موردی وجود ندارد</div>
-                  )}
-                </select>
-              </div>
-            </div>
-          ))}
+                  <div className="absolute text-lg bg-white right-5 -top-3 ">
+                    {item?.values?.name}
+                  </div>
+
+                  <div className="">
+                    <select
+                      className="mb-2 form-select"
+                      value={selectedSpec ? selectedSpec : selected?.value}
+                      onChange={(e) => {
+                        addSpecs(item?.group?.id, e.target.value);
+                        // setSelectedSpec(e.target.value);
+                        // selected = selected && e.target.value;
+                      }}
+                    >
+                      <option></option>
+                      {item?.values?.value?.length > 0 ? (
+                        item?.values?.value?.map((item, index) => (
+                          <option key={index} value={item?.id}>
+                            {item?.name}
+                          </option>
+                        ))
+                      ) : (
+                        <div>موردی وجود ندارد</div>
+                      )}
+                    </select>
+                  </div>
+                </div>
+              );
+            })}
         </div>
       </div>
     </div>

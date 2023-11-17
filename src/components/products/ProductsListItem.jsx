@@ -21,9 +21,9 @@ const ProductsListItem = ({ product, getProducts, setProduct }) => {
     ];
     // axiosService.post("/Media/GetMedia", body)
     httpRequest({
-      url: '/Media/GetMedia',
-      method: 'POST',
-      data: body
+      url: "/Media/GetMedia",
+      method: "POST",
+      data: body,
     })
       .then((res) => {
         setImg(res?.data[0]);
@@ -43,11 +43,11 @@ const ProductsListItem = ({ product, getProducts, setProduct }) => {
 
     // axiosService.put("/Products/updateProduct", body)
     httpRequest({
-      url: '/Products/updateProduct',
-      method: 'PUT',
+      url: "/Products/updateProduct",
+      method: "PUT",
       data: body,
-    })  
-    .then((res) => {
+    })
+      .then((res) => {
         if (res?.status === "Success") {
           toast.success("عملیات با موفقیت انجام شد", {
             position: "top-left",
@@ -117,14 +117,14 @@ const ProductsListItem = ({ product, getProducts, setProduct }) => {
       </td>
       <td>
         <div className="text-2xl badge-light-success">
-          {product?.productColor[0].price}
+          {product?.productColor[0]?.price}
         </div>
       </td>
       <td className="text-center">
         <div className="flex ">
           <NavLink
             className="px-2 py-1 mx-2 text-blue-600 border-2 border-blue-600 rounded-lg hover:bg-blue-600 hover:text-white"
-            to={ `/admin/products/edit-product/${product?.id}`}
+            to={`/admin/products/edit-product/${product?.id}`}
             state={product}
           >
             ویرایش
