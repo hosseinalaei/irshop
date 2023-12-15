@@ -34,13 +34,10 @@ const Specification = ({ product, setProduct }) => {
           },
         ]);
       });
-
-
     });
   };
 
-
- 
+  console.log(groups);
 
   const getSpecs = async (id) => {
     const body = {
@@ -60,41 +57,34 @@ const Specification = ({ product, setProduct }) => {
   }, []);
 
   useEffect(() => {
-    product && product?.productSpecific && setSelectedCategory(product?.productSpecific?.attributeCategoryId)
-  }, [product])
-
-  
-
-
- 
-
-
-
-
-
-
-
+    product &&
+      product?.productSpecific &&
+      setSelectedCategory(product?.productSpecific?.attributeCategoryId);
+  }, [product]);
 
   useEffect(() => {
     if (categories?.length > 0 && selectedCategory) {
       // Clear groups before adding new ones
       setGroups([]);
-  
-      const category = categories?.find((item) => item?.id === selectedCategory);
-      console.log("categorycategorycategory", category, category?.attributeGroupsId);
-  
+
+      const category = categories?.find(
+        (item) => item?.id === selectedCategory
+      );
+      console.log("categorycategorycategory", category);
+
       // Use forEach to call getGroups separately for each group
       category?.attributeGroupsId?.forEach((item) => {
         getGroups(item);
       });
-  
-      console.log("selectedCategoryselectedCategoryselectedCategory", selectedCategory, categories, groups);
+
+      console.log(
+        "selectedCategoryselectedCategoryselectedCategory",
+        selectedCategory,
+        categories,
+        groups
+      );
     }
   }, [selectedCategory, categories]);
-
-
-
-
 
   const addSpecs = (attId, groupId) => {
     // const findedSpec = product?.productSpecific?.spec?.findIndex(
@@ -105,37 +95,39 @@ const Specification = ({ product, setProduct }) => {
       (item) => item?.groupId === groupId
     );
 
-    console.log("selectedCategoryselectedCategoryselectedCategoryselectedCategory", selectedCategory);
+    console.log(
+      "selectedCategoryselectedCategoryselectedCategoryselectedCategory",
+      selectedCategory
+    );
 
     if (findedSpec === -1) {
       setProduct({
-        ...product, productSpecific: {
+        ...product,
+        productSpecific: {
           attributeCategoryId: selectedCategory,
           spec: [
             ...product?.productSpecific?.spec,
             {
               groupId,
-              value: attId
-            }
-          ]
-        }
-      })
-
+              value: attId,
+            },
+          ],
+        },
+      });
     } else {
-
-      const updatedSpec = product?.productSpecific?.spec?.map((item, index) => index === findedSpec ? { ...item, value: attId } : item)
+      const updatedSpec = product?.productSpecific?.spec?.map((item, index) =>
+        index === findedSpec ? { ...item, value: attId } : item
+      );
 
       setProduct({
-        ...product, productSpecific: {
+        ...product,
+        productSpecific: {
           ...product?.productSpecific,
-          spec: updatedSpec
-        }
-      })
-
+          spec: updatedSpec,
+        },
+      });
     }
-
   };
-
 
   return (
     <div className="py-4 card card-flush">
@@ -150,7 +142,6 @@ const Specification = ({ product, setProduct }) => {
             className="mb-2 form-select"
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-
           >
             <option></option>
             {categories?.length > 0 ? (
@@ -166,34 +157,36 @@ const Specification = ({ product, setProduct }) => {
         </div>
 
         <div className="w-1/2 mx-2 ">
-          {groups?.map((item) => (
-            <div className="relative p-5 mb-3 border border-black rounded-md">
-              <div className="absolute text-lg bg-white right-5 -top-3 ">
-                {item?.values?.name}
+          {groups
+            ?.filter(function (item, pos) {
+              return groups.findIndex(el => el.values.id === item.values.id) == pos;
+            })
+            .map((item) => (
+              <div className="relative p-5 mb-3 border border-black rounded-md">
+                <div className="absolute text-lg bg-white right-5 -top-3 ">
+                  {item?.values?.name}
+                </div>
+
+                <div className="">
+                  <select
+                    className="mb-2 form-select"
+                    value={product?.specification}
+                    onChange={(e) => addSpecs(e.target.value, item?.group?.id)}
+                  >
+                    <option></option>
+                    {item?.values?.value?.length > 0 ? (
+                      item?.values?.value?.map((item, index) => (
+                        <option key={index} value={item?.id}>
+                          {item?.name}
+                        </option>
+                      ))
+                    ) : (
+                      <div>موردی وجود ندارد</div>
+                    )}
+                  </select>
+                </div>
               </div>
-
-              <div className="">
-                <select
-                  className="mb-2 form-select"
-                  value={product?.specification}
-                  onChange={(e) => addSpecs(e.target.value, item?.group?.id)}
-
-
-                >
-                  <option></option>
-                  {item?.values?.value?.length > 0 ? (
-                    item?.values?.value?.map((item, index) => (
-                      <option key={index} value={item?.id}>
-                        {item?.name}
-                      </option>
-                    ))
-                  ) : (
-                    <div>موردی وجود ندارد</div>
-                  )}
-                </select>
-              </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
     </div>
