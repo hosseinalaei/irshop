@@ -43,7 +43,7 @@ const MainColumn = ({
         <NavLink
           className="mx-5 text-xl font-semibold text-black"
           to={{
-            pathname: `/products`,
+            pathname: `/admin/products`,
           }}
         >
           بازگشت
