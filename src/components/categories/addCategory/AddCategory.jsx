@@ -35,7 +35,10 @@ const AddCategory = () => {
     httpRequest({
       method: "POST",
       url: "/Media/PostMedia",
-      body,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      data: body,
       timeout: 10000,
     });
   };
@@ -202,7 +205,7 @@ const AddCategory = () => {
             <NavLink
               className="mx-5 text-xl font-semibold text-black"
               to={{
-                pathname: `/categories`,
+                pathname: `/admin/categories`,
               }}
             >
               بازگشت
