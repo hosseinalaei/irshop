@@ -3,8 +3,7 @@ import Logo from "./Logo";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const SidebarMenu = ({menu}) => {
-  
+const SidebarMenu = ({ menu }) => {
   const location = useLocation();
   const nav = useNavigate();
   const [openSubMenus, setOpenSubMenus] = useState([]);
@@ -19,13 +18,13 @@ const SidebarMenu = ({menu}) => {
   };
 
   const isSubMenuOpen = (itemId) => openSubMenus.includes(itemId);
-  const renderMenu = menu.filter(el => el.invisible !== true)
+  const renderMenu = menu.filter((el) => el.invisible !== true);
   return (
     <>
       <div
         className={`flex-col h-full overflow-y-scroll bg-white rounded-2xl hidden md:flex`}
       >
-        <div className="sticky top-0 z-20 px-4 py-3 bg-white d-flex flex-stack px-lg-6 py-lg-8">
+        <div className="sticky top-0 z-20 px-4 py-3 bg-white d-flex flex-stack px-lg-6 py-lg-8 justify-content-center">
           <Logo />
 
           {/* <UserMenu /> */}
@@ -37,10 +36,13 @@ const SidebarMenu = ({menu}) => {
               <div key={item?.id}>
                 <NavLink
                   key={item?.id}
-                  to={item?.subMenu ? '' : item?.layout+item.path}
-                  onClick={(e) => {item?.subMenu && toggleSubMenu(e, item?.id)}}
+                  to={item?.subMenu ? "" : item?.layout + item.path}
+                  onClick={(e) => {
+                    item?.subMenu && toggleSubMenu(e, item?.id);
+                  }}
                   className={`flex items-center justify-between w-full px-10 py-2 rounded-lg cursor-pointer text-slate-500 hover:bg-gray-100 ${
-                    location?.pathname === item?.layout+item.path && "bg-gray-200"
+                    location?.pathname === item?.layout + item.path &&
+                    "bg-gray-200"
                   }`}
                 >
                   <div className="flex">
@@ -71,7 +73,7 @@ const SidebarMenu = ({menu}) => {
                     } transition-all ease-linear duration-300`}
                   >
                     {item?.subMenu?.map((subMenu, index) => (
-                      <NavLink key={index} to={subMenu.layout+ subMenu.path}>
+                      <NavLink key={index} to={subMenu.layout + subMenu.path}>
                         <div
                           className={`text-slate-500 py-2  w-full px-16 whitespace-nowrap cursor-pointer rounded-lg hover:bg-gray-100 ${
                             location?.pathname === subMenu?.url && "bg-gray-200"

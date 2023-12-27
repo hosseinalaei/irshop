@@ -18,8 +18,8 @@ const Roles = () => {
   const [selectedRole, setSelectedRole] = useState({});
   const [loading, setLoading] = useState(true);
   const [showToast, setShowToast] = useState("");
-  const httpRequest =  useAxios();
-  const {setAccessToken} = useContext(AuthContext);
+  const httpRequest = useAxios();
+  const { setAccessToken } = useContext(AuthContext);
 
   useEffect(() => {
     if (showToast === "Success") {
@@ -53,31 +53,27 @@ const Roles = () => {
     setShowEditModal(true);
     setSelectedRole(item);
   };
-  const accessToken = localStorage.getItem('user-token');
+  const accessToken = localStorage.getItem("user-token");
 
   const getRoles = () => {
-    
-  httpRequest({
-    url: '/Role/getActiveRoles',
-    method: 'GET',
-  }).then(res =>{
-    setRoles(res.data);
-    setLoading(false);
-  })
+    httpRequest({
+      url: "/Role/getActiveRoles",
+      method: "GET",
+    }).then((res) => {
+      setRoles(res.data);
+      setLoading(false);
+    });
 
-
-
-
-  // axios({
-  //   baseURL:'https://138.201.167.230:5050',
-  //   url: '/Role/getActiveRoles',
-  //   method: 'GET',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'Access-Control-Allow-Origin': '*',
-  //     Accept: 'application/json',
-  //     Authorization: `Bearer ${accessToken}`
-  //   }})
+    // axios({
+    //   baseURL:'https://138.201.167.230:5050',
+    //   url: '/Role/getActiveRoles',
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'Access-Control-Allow-Origin': '*',
+    //     Accept: 'application/json',
+    //     Authorization: `Bearer ${accessToken}`
+    //   }})
     // setLoading(true);
     // axiosService.get("/Role/getActiveRoles").then((res) => {
     //   setRoles(res?.data);
@@ -85,10 +81,8 @@ const Roles = () => {
     // });
   };
 
- 
-
   useEffect(() => {
-    const token = localStorage.getItem('user-token');
+    const token = localStorage.getItem("user-token");
     setAccessToken(token);
     getRoles();
   }, []);
@@ -103,12 +97,12 @@ const Roles = () => {
 
     // axiosService.put("/Role/updateRole", body)
     httpRequest({
-      url: '/Role/updateRole',
-      method:'PUT',
-      data: body
-    })
-    .then((res) => {
+      url: "/Role/updateRole",
+      method: "PUT",
+      data: body,
+    }).then((res) => {
       if (res?.status === "Success") {
+        setIsConfirmationOpen({ id: "" });
         toast.success("عملیات با موفقیت انجام شد", {
           position: "top-left",
           autoClose: 3000,
@@ -138,7 +132,7 @@ const Roles = () => {
       }
     });
   };
-  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState({ id: "" });
 
   const handleCancel = () => {
     setIsConfirmationOpen(false);
@@ -200,23 +194,28 @@ const Roles = () => {
                       <button
                         type="button"
                         className="my-1 btn btn-light btn-active-light-primary"
-                        onClick={() => setIsConfirmationOpen(true)}
+                        onClick={() => setIsConfirmationOpen({ id: item?.id })}
                       >
                         حذف
                       </button>
-                      <ConfirmationDialog
-                        isOpen={isConfirmationOpen}
-                        setIsOpen={setIsConfirmationOpen}
-                        message="از حذف محصول اطمینان دارید؟"
-                        onConfirm={() => deleteRole(item?.id)}
-                        onCancel={handleCancel}
-                        confirmText="بله"
-                        cancelText="خیر"
-                      />
                     </div>
                   </div>
                 </div>
               ))}
+
+            {isConfirmationOpen?.id && (
+              <div className="flex items-center justify-center">
+                <ConfirmationDialog
+                  isOpen={isConfirmationOpen}
+                  setIsOpen={() => setIsConfirmationOpen({ id: "" })}
+                  message="از حذف محصول اطمینان دارید؟"
+                  onConfirm={() => deleteRole(isConfirmationOpen?.id)}
+                  onCancel={handleCancel}
+                  confirmText="بله"
+                  cancelText="خیر"
+                />
+              </div>
+            )}
 
             {(showAddModal || showEditModal) && (
               <div>

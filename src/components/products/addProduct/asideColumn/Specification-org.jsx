@@ -1,44 +1,18 @@
 import useAxios from "../../../../hooks/useAxios";
 import React, { useEffect, useState } from "react";
-import SelectComponent from "./SelectComponent";
 
 const Specification = ({ product, setProduct }) => {
   const httpRequest = useAxios();
-  const [categoriesSpec, setCategoriesSpec] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [groups, setGroups] = useState([]);
-  const [selectedValue, setSelectedValue] = useState();
 
-  const [selectedSpecs, setSelectedSpecs] = useState({
-    categoryId: "",
-    groups: [
-      // {
-      //   groupId:"",
-      //   specId:""
-      // }
-    ],
-  });
-
-  // {
-  //   categoryId: "",
-  //   groups:[
-  //     {
-  //       groupId:"",
-  //       specId:""
-  //     }
-  //   ]
-  // }
-
-  const getCategoriesSpec = () => {
+  const getCategories = () => {
     httpRequest({
       url: "/Specification/getActiveAttributeCategory",
       method: "GET",
-    }).then((res) => setCategoriesSpec(res?.data));
+    }).then((res) => setCategories(res?.data));
   };
-
-  useEffect(() => {
-    getCategoriesSpec();
-  }, []);
 
   const getGroups = (id) => {
     console.log("sssssssssssssssssssssssssssssssssssssss");
@@ -63,7 +37,7 @@ const Specification = ({ product, setProduct }) => {
     });
   };
 
-  // console.log("ggggggggg", groups);
+  console.log(groups);
 
   const getSpecs = async (id) => {
     const body = {
@@ -79,69 +53,52 @@ const Specification = ({ product, setProduct }) => {
   };
 
   useEffect(() => {
-    // console.log("productproductproduct", product);
+    getCategories();
+  }, []);
+
+  useEffect(() => {
     product &&
       product?.productSpecific &&
       setSelectedCategory(product?.productSpecific?.attributeCategoryId);
-
-    if (product) {
-      // groups?.map((group) => {
-      product?.productSpecific?.spec?.map((item) => {
-        // console.log(
-        //   "111111111111111",
-        //   item
-        //   // group,
-        //   // group?.group?.id === item?.groupId
-        // );
-
-        setSelectedValue({
-          groupId: item?.groupId,
-          specId: item?.value,
-        });
-      });
-      // });
-    }
-  }, [product, groups]);
+  }, [product]);
 
   useEffect(() => {
-    if (categoriesSpec?.length > 0 && selectedCategory) {
+    if (categories?.length > 0 && selectedCategory) {
       // Clear groups before adding new ones
       setGroups([]);
 
-      const category = categoriesSpec?.find(
+      const category = categories?.find(
         (item) => item?.id === selectedCategory
       );
-      // console.log("categorycategorycategory", category);
+      console.log("categorycategorycategory", category);
 
       // Use forEach to call getGroups separately for each group
       category?.attributeGroupsId?.forEach((item) => {
         getGroups(item);
       });
 
-      // console.log(
-      //   "selectedCategoryselectedCategoryselectedCategory",
-      //   selectedCategory,
-      //   categories,
-      //   groups
-      // );
+      console.log(
+        "selectedCategoryselectedCategoryselectedCategory",
+        selectedCategory,
+        categories,
+        groups
+      );
     }
-  }, [selectedCategory, categoriesSpec]);
+  }, [selectedCategory, categories]);
 
   const addSpecs = (attId, groupId) => {
     // const findedSpec = product?.productSpecific?.spec?.findIndex(
     //   (item) => item?.groupId === groupId
     // );
 
-    // console.log("44444444", attId, groupId);
-
     const findedSpec = (product?.productSpecific?.spec || []).findIndex(
       (item) => item?.groupId === groupId
     );
 
-    // console.log(
-    //   "selectedCategoryselectedCategoryselectedCategoryselectedCategory",
-    //   selectedCategory
-    // );
+    console.log(
+      "selectedCategoryselectedCategoryselectedCategoryselectedCategory",
+      selectedCategory
+    );
 
     if (findedSpec === -1) {
       setProduct({
@@ -171,27 +128,6 @@ const Specification = ({ product, setProduct }) => {
       });
     }
   };
-  console.log("product", product);
-
-  const getSelectedSpec = (groupId, specId) => {
-    console.log(groupId, specId);
-
-    const findedIndex = selectedSpecs?.groups?.findIndex(
-      (item) => item?.groupId === groupId
-    );
-    if (findedIndex !== -1) {
-      const updatedGroup = selectedSpecs?.groups?.map((group) => {
-        return group?.groupId === groupId ? { ...group, specId } : group;
-      });
-
-      setSelectedSpecs({ ...selectedSpecs, groups: updatedGroup });
-    } else {
-      setSelectedSpecs({
-        ...selectedSpecs,
-        groups: [...selectedSpecs?.groups, { groupId, specId }],
-      });
-    }
-  };
 
   return (
     <div className="py-4 card card-flush">
@@ -204,18 +140,12 @@ const Specification = ({ product, setProduct }) => {
         <div className="w-1/2">
           <select
             className="mb-2 form-select"
-            value={selectedSpecs?.categoryId}
-            onChange={(e) => {
-              // setSelectedCategory(e.target.value);
-              setSelectedSpecs({
-                ...selectedSpecs,
-                categoryId: e.target.value,
-              });
-            }}
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
           >
             <option></option>
-            {categoriesSpec?.length > 0 ? (
-              categoriesSpec?.map((item, index) => (
+            {categories?.length > 0 ? (
+              categories?.map((item, index) => (
                 <option key={index} value={item.id}>
                   {item?.name}
                 </option>
@@ -230,29 +160,35 @@ const Specification = ({ product, setProduct }) => {
           {groups
             ?.filter(function (item, pos) {
               return (
-                groups.findIndex((el) => el.values.id === item.values.id) ===
-                pos
+                groups.findIndex((el) => el.values.id === item.values.id) == pos
               );
             })
-            .map((item) => {
-              // console.log("itemmmmmmmm", item);
-              return (
-                <div className="relative p-5 mb-3 border border-black rounded-md">
-                  <div className="absolute text-lg bg-white right-5 -top-3 ">
-                    {item?.values?.name}
-                  </div>
-
-                  <div className="">
-                    <SelectComponent
-                      options={item?.values?.value}
-                      onChange={(value) =>
-                        getSelectedSpec(item?.group?.id, value)
-                      }
-                    />
-                  </div>
+            .map((item) => (
+              <div className="relative p-5 mb-3 border border-black rounded-md">
+                <div className="absolute text-lg bg-white right-5 -top-3 ">
+                  {item?.values?.name}
                 </div>
-              );
-            })}
+
+                <div className="">
+                  <select
+                    className="mb-2 form-select"
+                    value={product?.specification}
+                    onChange={(e) => addSpecs(e.target.value, item?.group?.id)}
+                  >
+                    <option></option>
+                    {item?.values?.value?.length > 0 ? (
+                      item?.values?.value?.map((item, index) => (
+                        <option key={index} value={item?.id}>
+                          {item?.name}
+                        </option>
+                      ))
+                    ) : (
+                      <div>موردی وجود ندارد</div>
+                    )}
+                  </select>
+                </div>
+              </div>
+            ))}
         </div>
       </div>
     </div>
