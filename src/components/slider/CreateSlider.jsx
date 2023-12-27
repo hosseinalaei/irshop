@@ -63,6 +63,7 @@ const CreateSlider = () => {
       description: slider?.description,
       link: slider?.link,
     };
+    console.log("body", body);
 
     // axiosService.post("/Slider/createSlider", body)
     httpRequest({

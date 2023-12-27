@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { MuiChipsInput } from "mui-chips-input";
 
-const AddSpecification = () => {
+const AddSpecification = ({ getSpecs }) => {
   // const [sepc, addSpec] = useState({
   //   name: "",
   //   value: "",
@@ -50,6 +50,20 @@ const AddSpecification = () => {
       method: "POST",
       data: body,
     }).then((res) => {
+      if (res?.status === "Success") {
+        // getSpecs();
+        toast.success("عملیات با موفقیت انجام شد", {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          // progress: undefined,
+          theme: "light",
+          style: { fontFamily: "inherit" },
+        });
+      }
       // if (res?.status === "Success") {
       //   setShowToast("Success");
       //   setTimeout(() => {

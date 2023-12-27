@@ -203,20 +203,6 @@ const Roles = () => {
                 </div>
               ))}
 
-            {isConfirmationOpen?.id && (
-              <div className="flex items-center justify-center">
-                <ConfirmationDialog
-                  isOpen={isConfirmationOpen}
-                  setIsOpen={() => setIsConfirmationOpen({ id: "" })}
-                  message="از حذف محصول اطمینان دارید؟"
-                  onConfirm={() => deleteRole(isConfirmationOpen?.id)}
-                  onCancel={handleCancel}
-                  confirmText="بله"
-                  cancelText="خیر"
-                />
-              </div>
-            )}
-
             {(showAddModal || showEditModal) && (
               <div>
                 <div
@@ -243,10 +229,24 @@ const Roles = () => {
               <EditRole
                 setShowEditModal={setShowEditModal}
                 selectedRole={selectedRole}
+                getRoles={getRoles}
               />
               // </div>
             )}
           </div>
+          {isConfirmationOpen?.id && (
+            <div className="flex items-center justify-center">
+              <ConfirmationDialog
+                isOpen={isConfirmationOpen}
+                setIsOpen={() => setIsConfirmationOpen({ id: "" })}
+                message="از حذف نقش اطمینان دارید؟"
+                onConfirm={() => deleteRole(isConfirmationOpen?.id)}
+                onCancel={handleCancel}
+                confirmText="بله"
+                cancelText="خیر"
+              />
+            </div>
+          )}
         </>
       )}
     </>

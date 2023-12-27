@@ -3,7 +3,7 @@ import { axiosService } from "../../services/axiosService";
 import { ToastContainer, toast } from "react-toastify";
 import useAxios from "../../hooks/useAxios";
 
-const EditRole = ({ setShowEditModal, selectedRole }) => {
+const EditRole = ({ setShowEditModal, selectedRole, getRoles }) => {
   const [editedRole, setEditedRole] = useState({
     name: selectedRole?.name,
     title: selectedRole?.title,
@@ -24,24 +24,13 @@ const EditRole = ({ setShowEditModal, selectedRole }) => {
     };
     // axiosService.put("/Role/updateRole", body)
     httpRequest({
-      url:'/Role/updateRole',
-      method: 'PUT',
+      url: "/Role/updateRole",
+      method: "PUT",
       data: body,
-    })
-    .then((res) => {
-      res?.status === "Success"
-        ? toast.success("عملیات با موفقیت انجام شد", {
-            position: "top-left",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            // progress: undefined,
-            theme: "light",
-            style: { fontFamily: "inherit" },
-          })
-        : toast.error("مشکلی رخ داده است", {
+    }).then((res) => {
+      if (res?.status === "Success") {
+        setTimeout(() => {
+          toast.success("عملیات با موفقیت انجام شد", {
             position: "top-left",
             autoClose: 3000,
             hideProgressBar: false,
@@ -52,6 +41,21 @@ const EditRole = ({ setShowEditModal, selectedRole }) => {
             theme: "light",
             style: { fontFamily: "inherit" },
           });
+          getRoles();
+        }, 500);
+      } else {
+        toast.error("مشکلی رخ داده است", {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          // progress: undefined,
+          theme: "light",
+          style: { fontFamily: "inherit" },
+        });
+      }
     });
   };
   return (
