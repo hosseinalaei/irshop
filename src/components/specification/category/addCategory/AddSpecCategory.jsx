@@ -85,6 +85,20 @@ const AddSpecCategory = () => {
         // setShowToast("Success");
         setTimeout(() => {
           getSpecs();
+          toast.success("عملیات با موفقیت انجام شد", {
+            position: "top-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            // progress: undefined,
+            theme: "light",
+            style: { fontFamily: "inherit" },
+          });
+          setTimeout(() => {
+            navigate("/admin/specification/categories");
+          }, 500);
         }, 500);
       } else {
         // setShowToast("error");
@@ -109,6 +123,7 @@ const AddSpecCategory = () => {
       data: requestBody,
     }).then((res) => {
       if (res?.status === "Success") {
+        getSpecs();
         toast.success("عملیات با موفقیت انجام شد", {
           position: "top-left",
           autoClose: 3000,

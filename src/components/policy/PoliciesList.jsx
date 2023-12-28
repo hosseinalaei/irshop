@@ -20,8 +20,8 @@ const PoliciesList = () => {
   const getPolicies = () => {
     // axiosService.get("/Policy/getActivePolicies")
     httpRequest({
-      url: '/Policy/getActivePolicies',
-      method: 'GET'
+      url: "/Policy/getActivePolicies",
+      method: "GET",
     })
       .then((res) => {
         setPolicies(res?.data);
@@ -42,11 +42,10 @@ const PoliciesList = () => {
 
     // axiosService.put("/Policy/updatePolicy", body)
     httpRequest({
-      url: '/Policy/updatePolicy',
-      method: 'PUT',
-      data:body,
-    })
-    .then((res) => {
+      url: "/Policy/updatePolicy",
+      method: "PUT",
+      data: body,
+    }).then((res) => {
       if (res?.status === "Success") {
         toast.success("عملیات با موفقیت انجام شد", {
           position: "top-left",
@@ -120,7 +119,7 @@ const PoliciesList = () => {
                         <h2>{item?.title}</h2>
                       </div>
                       <div className="mb-0 card-title">
-                        <h2>تعداد محصول : {item?.productCount}</h2>
+                        <h2>تعداد محصول : {item?.basketProductCount}</h2>
                       </div>
                     </div>
                     <hr className="mt-0" />
@@ -187,7 +186,7 @@ const PoliciesList = () => {
                       <ConfirmationDialog
                         isOpen={isConfirmationOpen}
                         setIsOpen={setIsConfirmationOpen}
-                        message="از حذف محصول اطمینان دارید؟"
+                        message="از حذف سیاست اطمینان دارید؟"
                         onConfirm={() => deletePolicy(item?.id)}
                         onCancel={handleCancel}
                         confirmText="بله"
