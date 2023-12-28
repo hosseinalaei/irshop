@@ -3,7 +3,12 @@ import { axiosService } from "../../services/axiosService";
 import useAxios from "../../hooks/useAxios";
 // import { ToastContainer, toast } from "react-toastify";
 
-const EditUser = ({ setShowEditModal, selectedUser, setShowToast }) => {
+const EditUser = ({
+  setShowEditModal,
+  selectedUser,
+  setShowToast,
+  getUsers,
+}) => {
   const [editedRole, setEditedRole] = useState({
     firstName: selectedUser?.firstName,
     lastName: selectedUser?.lastName,
@@ -25,10 +30,9 @@ const EditUser = ({ setShowEditModal, selectedUser, setShowToast }) => {
   const getRoles = () => {
     // axiosService.get("/Role/getActiveRoles")
     httpRequest({
-      url: '/Role/getActiveRoles',
-      method:'GET'
-    })
-    .then((res) => {
+      url: "/Role/getActiveRoles",
+      method: "GET",
+    }).then((res) => {
       setRoles(res?.data);
     });
   };
@@ -81,17 +85,21 @@ const EditUser = ({ setShowEditModal, selectedUser, setShowToast }) => {
     const body = {
       id: id,
       userRoles: editedRole?.userRoles,
+      firstName: editedRole?.firstName,
+      lastName: editedRole?.lastName,
     };
 
     // axiosService.post("/User/updateUser", body)
     httpRequest({
-      url: '/User/updateUser',
-      method: 'POST',
+      url: "/User/updateUser",
+      method: "POST",
       data: body,
-    })
-    .then((res) => {
+    }).then((res) => {
       if (res?.status === "Success") {
-        setShowToast("Success");
+        setTimeout(() => {
+          setShowToast("Success");
+          getUsers();
+        }, 500);
       } else {
         setShowToast("error");
       }
