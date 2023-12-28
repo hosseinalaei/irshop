@@ -18,6 +18,8 @@ const CreateSlider = () => {
   const [sliderBackImageName, setSliderBackImageName] = useState(null);
   const [sliderImageName, setSliderImageName] = useState(null);
 
+  console.log("sliderImageNamesliderImageNamesliderImageName", sliderImageName);
+
   const httpRequest = useAxios();
 
   const deleteImage = (index) => {
@@ -55,9 +57,9 @@ const CreateSlider = () => {
     setLoading(true);
     console.log(file);
     const body = {
-      sliderImageName: file[0]?.name,
-      sliderBackImageName: file[0]?.name,
-      sliderAvatarImageName: file[0]?.name,
+      sliderImageName: sliderImageName?.name,
+      sliderBackImageName: sliderBackImageName?.name,
+      sliderAvatarImageName: sliderAvatarImageName?.name,
       title: slider?.title,
       summary: slider?.summary,
       description: slider?.description,
@@ -69,9 +71,9 @@ const CreateSlider = () => {
     httpRequest({
       url: "/Slider/createSlider",
       method: "POST",
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
+      // headers: {
+      //   "Content-Type": "multipart/form-data",
+      // },
       data: body,
     })
       .then((res) => {
@@ -94,6 +96,15 @@ const CreateSlider = () => {
             // progress: undefined,
             theme: "light",
             style: { fontFamily: "inherit" },
+          });
+          setSliderImageName(null);
+          setSliderBackImageName(null);
+          setSliderAvatarImageName(null);
+          setSlider({
+            title: "",
+            summary: "",
+            description: "",
+            link: "",
           });
         } else if (res?.status === "Error") {
           toast.error("مشکلی رخ داده است", {
