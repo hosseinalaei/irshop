@@ -17,10 +17,10 @@ const UsersList = () => {
 
   const getUsers = () => {
     // axiosService.get("/User/getAllUsers")
-   httpRequest({
-    url: '/User/getAllUsers',
-    method: 'GET',
-   })
+    httpRequest({
+      url: "/User/getAllUsers",
+      method: "GET",
+    })
       .then((res) => {
         setUsers(res?.data);
         setLoading(false);
@@ -109,6 +109,7 @@ const UsersList = () => {
           setShowEditModal={setShowEditModal}
           setShowToast={setShowToast}
           selectedUser={selectedUser}
+          getUsers={getUsers}
         />
       )}
     </>
