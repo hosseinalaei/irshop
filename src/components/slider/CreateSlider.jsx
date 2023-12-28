@@ -42,10 +42,13 @@ const CreateSlider = () => {
     body.append("id", id);
     // axiosService.post("/Media/PostMedia", body, "multipart/form-data");
     httpRequest({
-      url:'/Media/PostMedia',
-      method:'POST',
-      data: body
-    })
+      url: "/Media/PostMedia",
+      method: "POST",
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      data: body,
+    });
   };
 
   const createSlider = () => {
@@ -60,11 +63,15 @@ const CreateSlider = () => {
       description: slider?.description,
       link: slider?.link,
     };
+    console.log("body", body);
 
     // axiosService.post("/Slider/createSlider", body)
     httpRequest({
-      url: '/Slider/createSlider',
-      method:'POST',
+      url: "/Slider/createSlider",
+      method: "POST",
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
       data: body,
     })
       .then((res) => {

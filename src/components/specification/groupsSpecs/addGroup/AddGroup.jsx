@@ -102,6 +102,7 @@ const AddGroup = () => {
       data: body,
     }).then((res) => {
       if (res?.status === "Success") {
+        getSpecs();
         toast.success("عملیات با موفقیت انجام شد", {
           position: "top-left",
           autoClose: 3000,
@@ -148,6 +149,7 @@ const AddGroup = () => {
       data: requestBody,
     }).then((res) => {
       if (res?.status === "Success") {
+        getSpecs();
         toast.success("عملیات با موفقیت انجام شد", {
           position: "top-left",
           autoClose: 3000,

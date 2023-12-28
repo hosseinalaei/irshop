@@ -33,7 +33,6 @@ const AddPolicy = () => {
     id: selectedPolicy?.id,
   });
 
-
   const httpRequest = useAxios();
 
   const addPolicy = () => {
@@ -60,9 +59,9 @@ const AddPolicy = () => {
 
     // axiosService .post("/AdminProducts/registerPolicy", requestBody)
     httpRequest({
-      url:'/AdminProducts/registerPolicy',
-      method: 'POST',
-      data: requestBody
+      url: "/Policy/registerPolicy",
+      method: "POST",
+      data: requestBody,
     })
       .then((res) =>
         res?.status === "Success"
@@ -116,9 +115,9 @@ const AddPolicy = () => {
 
     // axiosService .put("/Policy/updatePolicy", requestBody)
     httpRequest({
-      url:'/Policy/updatePolicy',
-      method:'PUT',
-      data: requestBody
+      url: "/Policy/updatePolicy",
+      method: "PUT",
+      data: requestBody,
     })
       .then((res) => {
         res?.status === "Success"
@@ -221,7 +220,15 @@ const AddPolicy = () => {
                 </div>
               </div>
             </form>
-            <div className="mt-5 d-flex justify-content-end">
+            <div className="items-center mt-5 d-flex justify-content-end">
+              <NavLink
+                className="mx-5 text-xl font-semibold text-black"
+                to={{
+                  pathname: `/admin/policies`,
+                }}
+              >
+                بازگشت
+              </NavLink>
               <Button
                 className="px-10 text-2xl"
                 onClick={() => (selectedPolicy ? updatePolicy() : addPolicy())}

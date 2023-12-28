@@ -32,10 +32,10 @@ const AddProduct = () => {
     productSpecific: selectedProduct?.productSpecific || {
       attributeCategoryId: "",
       spec: [
-        {
-          groupId: "",
-          value: "",
-        },
+        // {
+        //   groupId: "",
+        //   value: "",
+        // },
       ],
     },
     // attributeCategoryId: selectedProduct?.attributeCategoryId || "",

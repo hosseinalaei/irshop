@@ -6,7 +6,7 @@ import SelectColor from "./SelectColor";
 import Details from "./Details";
 import Button from "../../../common/Button";
 import { NavLink } from "react-router-dom";
-import Specification from "../asideColumn/Specification";
+import Specification from "../asideColumn/Specification-org";
 
 const MainColumn = ({
   product,
@@ -43,7 +43,7 @@ const MainColumn = ({
         <NavLink
           className="mx-5 text-xl font-semibold text-black"
           to={{
-            pathname: `/products`,
+            pathname: `/admin/products`,
           }}
         >
           بازگشت
