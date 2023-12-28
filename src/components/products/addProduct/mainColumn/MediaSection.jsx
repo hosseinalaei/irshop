@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { axiosService } from "../../../../services/axiosService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "../../../common/Button";
@@ -15,7 +15,7 @@ const MediaSection = ({
   const [img, setImg] = useState([]);
   const httpRequest = useAxios();
 
-  const getPic = (id) => {
+  const getPic = useCallback((id) => {
     const body = [
       {
         id,
@@ -30,11 +30,31 @@ const MediaSection = ({
       data: body,
     })
       .then((res) => {
-        // console.log("res", res);
+        console.log("res", res?.data[0]);
         setImg((prev) => [...prev, res?.data[0]]);
       })
       .catch((err) => console.log(err));
-  };
+  }, []);
+  // const getPic = (id) => {
+  //   const body = [
+  //     {
+  //       id,
+  //       mediaFieldName: "productGalleryImageName",
+  //     },
+  //   ];
+  //   // axiosService
+  //   //   .post("/Media/GetMedia", body)
+  //   httpRequest({
+  //     url: "/Media/GetMedia",
+  //     method: "POST",
+  //     data: body,
+  //   })
+  //     .then((res) => {
+  //       // console.log("res", res);
+  //       setImg((prev) => [...prev, res?.data[0]]);
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
 
   useEffect(() => {
     selectedProduct?.productGalleries?.length > 0 &&
@@ -180,30 +200,44 @@ const MediaSection = ({
                 <img
                   src={URL.createObjectURL(item)}
                   className="w-20 h-20 m-2"
+                  alt=""
                 />
               </div>
             ))}
         </div>
-        <div className="flex flex-wrap w-3/5">
-          {img?.length > 0 &&
-            Array.from(img).map((item, index) => {
-              // console.log("itemmmmmmmmm", item, index);
-              return (
-                <div className="relative" key={index}>
-                  <FontAwesomeIcon
-                    icon="times"
-                    color="red"
-                    onClick={() => deleteBackendImage(index)}
-                    className="absolute p-1 text-2xl rounded-full cursor-pointer left-1 -top-2 hover:bg-slate-200"
-                  />
-                  <img
-                    src={`data:image/jpeg;base64,${item?.mediaFieldName}`}
-                    className="w-20 h-20 m-2"
-                  />
-                </div>
-              );
-            })}
-        </div>
+        {useMemo(() => {
+          return (
+            <div className="flex flex-wrap w-3/5">
+              {img?.length > 0 &&
+                Array.from(img)
+                  ?.filter(function (item, pos) {
+                    return (
+                      Array.from(img)?.findIndex(
+                        (el) => el?.id === item?.id
+                      ) === pos
+                    );
+                  })
+                  .map((item, index) => {
+                    console.log("itemmmmmmmmm", item, index);
+                    return (
+                      <div className="relative" key={index}>
+                        <FontAwesomeIcon
+                          icon="times"
+                          color="red"
+                          onClick={() => deleteBackendImage(index)}
+                          className="absolute p-1 text-2xl rounded-full cursor-pointer left-1 -top-2 hover:bg-slate-200"
+                        />
+                        <img
+                          src={`data:image/jpeg;base64,${item?.mediaFieldName}`}
+                          className="w-20 h-20 m-2"
+                          alt=""
+                        />
+                      </div>
+                    );
+                  })}
+            </div>
+          );
+        }, [img?.length])}
       </div>
     </div>
   );
