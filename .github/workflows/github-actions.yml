@@ -22,6 +22,5 @@ jobs:
     runs-on: irshop
     needs: build
     steps:
-      - run: sudo unlink /opt/irshop
-      - run: sudo ln -s ${{ github.workspace }} /opt/irshop
+      - run: sudo ln -sfn ${{ github.workspace }} /opt/irshop
       - run: sudo systemctl restart irshop.service
