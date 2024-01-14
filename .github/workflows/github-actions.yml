@@ -19,7 +19,7 @@ jobs:
   
   deploy:
 
-    runs-on: bootstrap
+    runs-on: irshop
     needs: build
     steps:
       - run: sudo rm -rf /opt/irshop
