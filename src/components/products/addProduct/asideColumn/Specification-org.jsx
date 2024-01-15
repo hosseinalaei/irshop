@@ -86,7 +86,8 @@ const Specification = ({ product, setProduct }) => {
     }
   }, [selectedCategory, categories]);
 
-  const addSpecs = (attId, groupId) => {
+  const addSpecs = (attId, groupId, valueName) => {
+    console.log("vvvvvvvvvvv", valueName);
     // const findedSpec = product?.productSpecific?.spec?.findIndex(
     //   (item) => item?.groupId === groupId
     // );
@@ -95,10 +96,10 @@ const Specification = ({ product, setProduct }) => {
       (item) => item?.groupId === groupId
     );
 
-    console.log(
-      "selectedCategoryselectedCategoryselectedCategoryselectedCategory",
-      selectedCategory
-    );
+    // console.log(
+    //   "selectedCategoryselectedCategoryselectedCategoryselectedCategory",
+    //   selectedCategory
+    // );
 
     if (findedSpec === -1) {
       setProduct({
@@ -116,9 +117,9 @@ const Specification = ({ product, setProduct }) => {
       });
     } else {
       const updatedSpec = product?.productSpecific?.spec?.map((item, index) =>
-        index === findedSpec ? { ...item, value: attId } : item
+        index === findedSpec ? { ...item, value: attId, valueName } : item
       );
-
+      console.log("updated", updatedSpec);
       setProduct({
         ...product,
         productSpecific: {
@@ -158,37 +159,67 @@ const Specification = ({ product, setProduct }) => {
 
         <div className="w-1/2 mx-2 ">
           {groups
-            ?.filter(function (item, pos) {
+            ?.filter((item, pos) => {
               return (
                 groups.findIndex((el) => el.values.id === item.values.id) == pos
               );
             })
-            .map((item) => (
-              <div className="relative p-5 mb-3 border border-black rounded-md">
-                <div className="absolute text-lg bg-white right-5 -top-3 ">
-                  {item?.values?.name}
-                </div>
+            .map((item) => {
+              console.log("product?.specification", product);
+              return (
+                <div className="relative p-5 mb-3 border border-black rounded-md">
+                  <div className="absolute text-lg bg-white right-5 -top-3 ">
+                    {item?.values?.name}
+                  </div>
 
-                <div className="">
-                  <select
-                    className="mb-2 form-select"
-                    value={product?.specification}
-                    onChange={(e) => addSpecs(e.target.value, item?.group?.id)}
-                  >
-                    <option></option>
-                    {item?.values?.value?.length > 0 ? (
-                      item?.values?.value?.map((item, index) => (
-                        <option key={index} value={item?.id}>
-                          {item?.name}
-                        </option>
-                      ))
-                    ) : (
-                      <div>موردی وجود ندارد</div>
-                    )}
-                  </select>
+                  <div className="">
+                    <select
+                      className="mb-2 form-select"
+                      // defaultValue={product?.specification}
+                      onChange={(e) =>
+                        addSpecs(
+                          e.target.value,
+                          item?.group?.id,
+                          item.values.value.filter(
+                            (item) => item.id === e.target.value
+                          )[0].name
+                        )
+                      }
+                      // onChange={(e) =>
+                      //   console.log(
+                      //     e.target.value,
+                      //     item?.group?.id,
+                      //     item.values.value.filter(
+                      //       (item) => item.id === e.target.value
+                      //     )[0].name
+                      //   )
+                      // }
+                    >
+                      {!item?.values?.value && <option></option>}
+                      {item?.values?.value?.length > 0 ? (
+                        item?.values?.value?.map((spec) => (
+                          <option
+                            key={spec?.id}
+                            value={spec?.id}
+                            onClick={(e) =>
+                              console.log(
+                                e.target.value,
+                                item?.group?.id,
+                                spec?.name
+                              )
+                            }
+                          >
+                            {spec?.name}
+                          </option>
+                        ))
+                      ) : (
+                        <div>موردی وجود ندارد</div>
+                      )}
+                    </select>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
         </div>
       </div>
     </div>
