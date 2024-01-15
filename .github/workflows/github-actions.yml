@@ -1,0 +1,27 @@
+name: Build and Deploy Pipeline
+
+on: [push]
+
+jobs:
+
+  build:
+
+    runs-on: irshop
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+      - run: npm ci
+      - run: CI=false npm run build
+  
+  deploy:
+
+    runs-on: irshop
+    needs: build
+    steps:
+      - run: rm -rf /opt/irshop
+      - run: ln -sfn ${{ github.workspace }} /opt/irshop
+      - run: systemctl restart irshop.service
