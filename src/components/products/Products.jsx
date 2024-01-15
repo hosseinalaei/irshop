@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import ProductsList from "./ProductsList";
-import Loading from "../common/Loading";
-import { axiosService } from "../../services/axiosService";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import Button from "../common/Button";
 import useAxios from "../../hooks/useAxios";
+import Button from "../common/Button";
+import Loading from "../common/Loading";
+import ProductsList from "./ProductsList";
 
 const Products = () => {
   const nav = useNavigate();
@@ -19,7 +18,7 @@ const Products = () => {
       method: "GET",
     })
       .then((res) => {
-        setProducts(res?.data);
+        setProducts(res?.data.reverse());
         setLoading(false);
       })
       .finally(() => setLoading(false));
