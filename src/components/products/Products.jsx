@@ -18,7 +18,7 @@ const Products = () => {
       method: "GET",
     })
       .then((res) => {
-        setProducts(res?.data.reverse());
+        setProducts(res?.data);
         setLoading(false);
       })
       .finally(() => setLoading(false));
