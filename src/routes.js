@@ -35,7 +35,7 @@ const routes = [
     id: 2,
     path: "/dashboard",
     layout: "/admin",
-    name: "داشبورد۲",
+    name: "داشبورد",
     icon: "house",
     component: <DashboardPage />,
   },
