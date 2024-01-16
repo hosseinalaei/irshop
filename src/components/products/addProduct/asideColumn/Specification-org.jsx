@@ -195,7 +195,7 @@ const Specification = ({ product, setProduct }) => {
                       //   )
                       // }
                     >
-                      {!item?.values?.value && <option></option>}
+                      <option>انتخاب کنید</option>
                       {item?.values?.value?.length > 0 ? (
                         item?.values?.value?.map((spec) => (
                           <option
